@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-label="GLM-5.4 Art Direction Lab Banner">
+  <defs>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#ece1cc" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="360" fill="#111110"/>
+  <rect width="1280" height="360" fill="url(#grid)"/>
+
+  <!-- Outer blueprint frame -->
+  <rect x="28" y="24" width="1224" height="312" fill="none" stroke="#ece1cc" stroke-opacity="0.22" stroke-width="1"/>
+
+  <!-- Left architectural emblem -->
+  <g transform="translate(88, 96)">
+    <rect x="0" y="0" width="168" height="168" fill="#171819" stroke="#ece1cc" stroke-opacity="0.45" stroke-width="1.5"/>
+    <line x1="84" y1="0" x2="84" y2="168" stroke="#ece1cc" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="6 4"/>
+    <line x1="0" y1="84" x2="168" y2="84" stroke="#ece1cc" stroke-opacity="0.25" stroke-width="1" stroke-dasharray="6 4"/>
+    <rect x="34" y="34" width="100" height="100" fill="none" stroke="#d9944e" stroke-width="2.5"/>
+    <circle cx="84" cy="84" r="14" fill="none" stroke="#ece1cc" stroke-width="2"/>
+    <circle cx="84" cy="84" r="5" fill="#d9944e"/>
+    <line x1="16" y1="152" x2="52" y2="152" stroke="#ece1cc" stroke-opacity="0.6" stroke-width="1.5"/>
+  </g>
+
+  <!-- Typography block (clean spacing, zero overlap) -->
+  <text x="304" y="114" fill="#d9944e" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" font-size="14" letter-spacing="3.5">T3 CODE  ×  GLM-5.4  ×  GOOGLE FLOW</text>
+  <text x="304" y="182" fill="#ece1cc" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" letter-spacing="2">GLM-5.4 Art Direction Lab</text>
+  <text x="304" y="226" fill="#b9ab93" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" letter-spacing="0.5">Parallel frontend builds with anything-frontend-art-direction &amp; 13 local original assets</text>
+
+  <!-- Bottom pills row -->
+  <g transform="translate(304, 256)">
+    <rect x="0" y="0" width="164" height="32" rx="4" fill="#1c1b19" stroke="#ece1cc" stroke-opacity="0.28"/>
+    <text x="82" y="21" text-anchor="middle" fill="#ece1cc" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1.2">01 FLOWCHART</text>
+
+    <rect x="180" y="0" width="212" height="32" rx="4" fill="#1c1b19" stroke="#d9944e" stroke-opacity="0.6"/>
+    <text x="286" y="21" text-anchor="middle" fill="#d9944e" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1.2">02 KOKUYO LP (6 ASSETS)</text>
+
+    <rect x="408" y="0" width="218" height="32" rx="4" fill="#1c1b19" stroke="#ece1cc" stroke-opacity="0.28"/>
+    <text x="517" y="21" text-anchor="middle" fill="#ece1cc" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="1.2">03 KAIRO HP (7 ASSETS)</text>
+  </g>
+
+  <!-- Right top blueprint code -->
+  <text x="1220" y="56" text-anchor="end" fill="#8a7f6d" font-family="ui-monospace, Consolas, monospace" font-size="12" letter-spacing="2">DWG LAB-54 · 100% LOCAL ASSETS</text>
+</svg>

@@ -1,17 +1,29 @@
 <div align="center">
 
+<img src="./docs/header.svg" alt="GLM-5.4 Art Direction Lab" width="100%" />
+
 # 🎨 GLM-5.4 Art Direction Lab
 
 **T3 Code 上の GLM-5.4 × `anything-frontend-art-direction` スキル × Google Flow オリジナルアセット（全13点）によるフロントエンド並列実験アーカイブ**
 
+[![Live Gallery](https://img.shields.io/badge/Live%20Gallery-GitHub%20Pages-171819.svg)](https://sunwood-ai-labs.github.io/glm54-art-direction-lab/)
+[![Deploy Pages](https://github.com/Sunwood-ai-labs/glm54-art-direction-lab/actions/workflows/pages.yml/badge.svg)](https://github.com/Sunwood-ai-labs/glm54-art-direction-lab/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-171819.svg)](./LICENSE)
 [![Model: GLM-5.4](https://img.shields.io/badge/Model-GLM--5.4-a65e2e.svg)](https://z.ai)
 [![Skill: anything-frontend-art-direction](https://img.shields.io/badge/Skill-anything--frontend--art--direction-2f4858.svg)](https://github.com/RNA4219/anything-frontend-art-direction)
-[![Assets: Google Flow](https://img.shields.io/badge/Assets-Google%20Flow%20(13%20local)-3d5a80.svg)](https://flow.google.com/)
 
 [English](./README.md) · [日本語](./README.ja.md)
 
 </div>
+
+---
+
+## 🌐 ライブデモ（GitHub Pages）
+
+- **ギャラリーポータル**: https://sunwood-ai-labs.github.io/glm54-art-direction-lab/
+- **01. フローチャート（純 GLM-5.4）**: https://sunwood-ai-labs.github.io/glm54-art-direction-lab/flowchart/
+- **02. LP — 黒曜焙煎所（100% 純 GLM-5.4）**: https://sunwood-ai-labs.github.io/glm54-art-direction-lab/lp-pure-glm54/
+- **03. ホームページ — 回路建築設計事務所（100% 純 GLM-5.4）**: https://sunwood-ai-labs.github.io/glm54-art-direction-lab/homepage-pure-glm54/
 
 ---
 
