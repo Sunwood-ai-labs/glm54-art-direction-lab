@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GLM-5.4 Art Direction Lab — T3 Code × anything-frontend-art-direction × Google Flow</title>
+<meta name="description" content="Experimental showcase of 100% pure GLM-5.4 frontend builds guided by anything-frontend-art-direction in T3 Code, using 13 original images and videos generated with Google Flow.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4ef;
+  --surface: #fbfbf8;
+  --ink: #171819;
+  --ink-2: #4b5054;
+  --ink-3: #6c7276;
+  --rule: #d6d4cd;
+  --accent: #a65e2e;
+  --min: "Shippori Mincho", "Yu Mincho", serif;
+  --sans: "IBM Plex Sans JP", "Hiragino Sans", sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.85 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
+header { border-bottom: 1px solid var(--ink); padding: clamp(32px, 5vw, 64px) 0 32px; }
+.eyebrow { font: 500 11px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+h1 { margin: 0; font: 700 clamp(28px, 4.2vw, 50px)/1.25 var(--min); letter-spacing: .06em; }
+.lead { margin: 18px 0 0; max-width: 52em; color: var(--ink-2); font-size: 15px; }
+.meta-row { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font: 500 12px/1.6 var(--mono); color: var(--ink-3); }
+.meta-row strong { color: var(--ink); font-weight: 500; }
+
+main { padding: clamp(40px, 6vw, 72px) 0 80px; }
+.sec-title { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--ink); padding-top: 14px; margin: 0 0 28px; }
+.sec-title h2 { margin: 0; font: 700 clamp(20px, 2.4vw, 28px)/1.4 var(--min); letter-spacing: .08em; }
+.sec-title span { font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--ink-3); text-transform: uppercase; }
+
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--rule); transition: border-color .2s ease, transform .2s ease; }
+.card:hover { border-color: var(--ink); transform: translateY(-2px); }
+.thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #141414; border-bottom: 1px solid var(--rule); }
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tag { position: absolute; left: 10px; top: 10px; background: rgba(23,24,25,.84); color: #f5f4ef; padding: 4px 8px; font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+.no { font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--accent); margin-bottom: 8px; }
+.card h3 { margin: 0 0 10px; font: 700 20px/1.45 var(--min); letter-spacing: .06em; }
+.card p { margin: 0 0 18px; font-size: 13.5px; color: var(--ink-2); flex: 1; }
+.specs { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 500 11px/1.6 var(--mono); color: var(--ink-3); padding-top: 12px; border-top: 1px solid var(--rule); margin-bottom: 16px; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--ink); color: var(--bg); text-decoration: none; font: 500 12px/1 var(--mono); letter-spacing: .12em; border: 1px solid var(--ink); }
+.btn:hover { background: var(--bg); color: var(--ink); }
+.btn--sub { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn--sub:hover { border-color: var(--ink); }
+
+.archive { margin-top: 64px; }
+.archive-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.archive-item { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--rule); text-decoration: none; }
+.archive-item:hover { border-color: var(--ink); }
+.archive-item b { display: block; font: 600 15px/1.5 var(--min); }
+.archive-item small { display: block; font-size: 12.5px; color: var(--ink-2); }
+.archive-item span { font: 500 11px/1 var(--mono); color: var(--accent); white-space: nowrap; }
+
+footer { border-top: 1px solid var(--rule); padding: 28px 0 44px; font: 400 12px/1.8 var(--mono); color: var(--ink-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 980px) { .grid, .archive-list { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow">T3 Code × GLM-5.4 × anything-frontend-art-direction × Google Flow</p>
+    <h1>GLM-5.4 Art Direction Lab</h1>
+    <p class="lead">
+      T3 Code 上で <strong>GLM-5.4</strong> に <code>anything-frontend-art-direction</code> スキルを適用し、フローチャート・LP・ホームページの3題材を並列で制作した実験アーカイブです。外部Webアセットは一切使わず、<strong>Google Flow</strong> で生成した全13点のオリジナル画像・動画のみで完結しています。
+    </p>
+    <div class="meta-row">
+      <span><strong>MODEL</strong> glm-5.4 (Z.ai Anthropic API)</span>
+      <span><strong>RETRY</strong> CLAUDE_CODE_MAX_RETRIES=100</span>
+      <span><strong>ASSETS</strong> 13 local files (3 MP4 + 10 JPG)</span>
+      <span><strong>EXTERNAL ASSETS</strong> 0</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="sec-title">
+    <h2>100% 純 GLM-5.4 成果物ギャラリー</h2>
+    <span>Pure GLM-5.4 Self-Completed Builds</span>
+  </div>
+
+  <div class="grid">
+    <article class="card">
+      <div class="thumb">
+        <span class="tag">Flowchart · Pure GLM-5.4</span>
+        <img src="./docs/screenshots/flowchart-initial.png" alt="自律AIエージェント開発パイプライン フローチャート">
+      </div>
+      <div class="body">
+        <span class="no">01 / INTERACTIVE FLOWCHART</span>
+        <h3>自律AI開発パイプライン図面</h3>
+        <p>JIS 工業製図面（DWG AP-FLT-001）の佇まいで構成したインタラクティブ・フローチャート。座標グリッド・表題欄・並列ハッチング・朱色の自己修復ループ・フィルタ＆詳細パネルを実装。</p>
+        <div class="specs">
+          <span>48.5 KB</span><span>Inline SVG</span><span>0 external URLs</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="./flowchart/">OPEN DEMO →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="thumb">
+        <span class="tag">LP · Pure GLM-5.4</span>
+        <img src="./docs/screenshots/lp-hero.png" alt="黒曜焙煎所 KOKUYO ROASTERY LP">
+      </div>
+      <div class="body">
+        <span class="no">02 / LANDING PAGE</span>
+        <h3>黒曜焙煎所 KOKUYO ROASTERY</h3>
+        <p>夜間専門スペシャルティコーヒー豆定期便の LP。ハンドドリップ＆冷却盤のオリジナル動画2本、黒鉄焙煎機・パッケージ・深夜デスク写真、一晩の工程タイムラインと3種ブレンド比較を自力実装。</p>
+        <div class="specs">
+          <span>71.3 KB</span><span>6/6 local assets (2 MP4 + 4 JPG)</span><span>0 errors</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="./lp-pure-glm54/">OPEN PURE DEMO →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="thumb">
+        <span class="tag">Homepage · Pure GLM-5.4</span>
+        <img src="./docs/screenshots/hp-works.png" alt="回路建築設計事務所 KAIRO STUDIO ホームページ">
+      </div>
+      <div class="body">
+        <span class="no">03 / STUDIO HOMEPAGE</span>
+        <h3>回路建築設計事務所 KAIRO STUDIO</h3>
+        <p>東京・神保町の建築＆空間設計スタジオ公式サイト。建築フィルム動画、非対称スタッガード写真グリッド、ドット方眼SVG平面図・断面図付き詳細モーダル、3原則図解、アトリエ紹介まで完全実装。</p>
+        <div class="specs">
+          <span>110.9 KB</span><span>7/7 local assets (1 MP4 + 6 JPG)</span><span>0 errors</span>
+        </div>
+        <div class="actions">
+          <a class="btn" href="./homepage-pure-glm54/">OPEN PURE DEMO →</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <section class="archive">
+    <div class="sec-title">
+      <h2>比較用アーカイブ（初期版＋アセット統合版）</h2>
+      <span>Earlier Variants for Side-by-Side Comparison</span>
+    </div>
+    <div class="archive-list">
+      <a class="archive-item" href="./lp/">
+        <div>
+          <b>LP 縦書き版（黒曜焙煎所 v1）</b>
+          <small>初期 GLM-5.4 縦書き「夜を、煎る。」ベースに全6アセットを統合した比較版（54.8 KB）</small>
+        </div>
+        <span>OPEN →</span>
+      </a>
+      <a class="archive-item" href="./homepage/">
+        <div>
+          <b>HP 縦書きモノグラフ版（回路建築設計事務所 v1）</b>
+          <small>初期 GLM-5.4 縦書きヒーロー＋見開きカード（写真＋平面図SVG）の比較版（87.9 KB）</small>
+        </div>
+        <span>OPEN →</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <span>GLM-5.4 Art Direction Lab — Built in T3 Code with anything-frontend-art-direction</span>
+  <span>All images &amp; videos generated locally via Google Flow · MIT License</span>
+</footer>
+</body>
+</html>

@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回路建築設計事務所｜KAIRO STUDIO — 東京・神保町の建築＆空間設計</title>
+<meta name="description" content="回路建築設計事務所（KAIRO STUDIO）は、東京・神保町の建築＆空間設計事務所。住宅、公共建築、展示会場の構成まで、光と風、人の動きを回路として設計します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=IBM+Plex+Sans+JP:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ tokens: paper / ink / concrete / timber, taken from the plate ============ */
+:root{
+  --paper:#f4f3ef; --paper-2:#fbfbf9; --sheet:#ebebe8;
+  --ink:#1b1c1d; --ink-2:#4a4f52; --ink-3:#626769;
+  --rule:#d5d4cf; --rule-2:#b9b8b3;
+  --concrete:#b4b7b8; --wood:#8a5a33;
+  --mx:clamp(16px,3.4vw,56px); --gut:clamp(16px,2.2vw,36px);
+  --min:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+  --sans:"IBM Plex Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+  --mono:"IBM Plex Mono","IBM Plex Sans JP",Consolas,monospace;
+  --hh:60px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--hh) + 12px)}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.9 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1680px;margin-inline:auto;padding-inline:var(--mx)}
+.mono{font-family:var(--mono);font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:11px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:var(--mx);top:-100px;background:var(--ink);color:var(--paper);padding:8px 14px;z-index:50;font-size:13px}
+.skip:focus{top:8px}
+
+/* ============ header: one rule, four words ============ */
+.hdr{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:var(--hh)}
+.brand{display:inline-flex;align-items:baseline;gap:14px;text-decoration:none;white-space:nowrap}
+.brand b{font:500 15px/1 var(--min);letter-spacing:.3em}
+.brand span{font:500 10px/1 var(--mono);letter-spacing:.22em;color:var(--ink-3)}
+.nav{display:flex;gap:clamp(12px,2.4vw,36px)}
+.nav a{position:relative;display:block;padding:8px 0 6px;color:var(--ink-3);text-decoration:none;font-size:13px;letter-spacing:.14em;white-space:nowrap}
+.nav a::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="true"]{color:var(--ink)}
+.nav a[aria-current="true"]::before{transform:scaleX(1)}
+
+/* ============ hero: plate on the left, the name set vertically on paper ============ */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) clamp(176px,17vw,250px);gap:clamp(20px,2.4vw,44px);align-items:stretch;min-height:calc(100vh - var(--hh) - 2 * var(--mx));min-height:calc(100svh - var(--hh) - 2 * var(--mx));padding-block:var(--mx)}
+.plate{display:flex;flex-direction:column;margin:0;min-height:0}
+.plate-img{position:relative;flex:1;min-height:360px;background:var(--concrete);overflow:hidden}
+.plate-img img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:100% 50%}
+.plate-cap{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:baseline;gap:8px 22px;padding-top:14px;border-top:1px solid var(--ink);margin-top:16px}
+.plate-cap .cap-no{color:var(--ink-3);white-space:nowrap}
+.plate-cap .cap-t{font-size:13px;line-height:1.8;color:var(--ink-2)}
+.cap-l{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:13px;letter-spacing:.14em;white-space:nowrap;border-bottom:1px solid var(--ink);padding-bottom:2px}
+.cap-l svg{width:18px;height:8px;fill:none;stroke:currentColor;stroke-width:1.2}
+.cap-l:hover{gap:14px}
+.cap-l{transition:gap .25s ease}
+.hero-side{display:flex;flex-direction:column;justify-content:space-between;gap:32px;min-width:0}
+.hero-v{display:flex;justify-content:flex-end;gap:clamp(12px,1.4vw,20px)}
+.hero-vsub{writing-mode:vertical-rl;margin:0;color:var(--ink-3);line-height:1;letter-spacing:.26em}
+.hero-name{writing-mode:vertical-rl;margin:0;font:600 clamp(30px,3.3vw,50px)/1.22 var(--min);letter-spacing:.26em}
+.hero-foot{padding-top:20px;border-top:1px solid var(--rule)}
+.hero-lead{margin:0 0 18px;font:500 15px/2.05 var(--min);letter-spacing:.08em;color:var(--ink)}
+.hero-meta{margin:0;color:var(--ink-3)}
+
+/* ============ section head: grid bubble, title, sheet note ============ */
+.sec{padding-top:clamp(72px,9vw,148px)}
+.sec-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;gap:clamp(14px,2vw,30px);border-top:1px solid var(--ink);padding-top:14px;margin-bottom:clamp(28px,4vw,60px)}
+.sec-no{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid var(--ink);border-radius:50%;font:500 12px/1 var(--mono);align-self:start}
+.sec-title{margin:0;font:500 clamp(26px,3.4vw,46px)/1.3 var(--min);letter-spacing:.14em}
+.sec-title small{display:inline-block;margin-left:16px;font:500 11px/1 var(--mono);letter-spacing:.26em;color:var(--ink-3);vertical-align:.5em;text-transform:uppercase}
+.sec-meta{font:500 11px/1.7 var(--mono);letter-spacing:.16em;color:var(--ink-3);text-align:right;text-transform:uppercase}
+.cols{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gut)}
+/* ---- works: filter row, then a grid of drawing sheets ---- */
+.filters{display:flex;flex-wrap:wrap;align-items:stretch;gap:0 clamp(18px,2.6vw,40px);border-bottom:1px solid var(--rule);margin-bottom:clamp(24px,3.4vw,52px)}
+.filters p{margin:0 0 0 auto;align-self:center;font-size:12px;color:var(--ink-3);letter-spacing:.08em;padding:10px 0}
+.f-btn{appearance:none;background:none;border:0;border-bottom:2px solid transparent;margin:0 0 -1px;padding:12px 2px 14px;color:var(--ink-3);font:500 13px/1 var(--sans);letter-spacing:.16em;cursor:pointer}
+.f-btn sup{margin-left:6px;font:400 10px/1 var(--mono);color:var(--ink-3);vertical-align:.7em}
+.f-btn:hover{color:var(--ink)}
+.f-btn[aria-pressed="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.works{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(32px,4.6vw,80px) var(--gut);list-style:none;margin:0;padding:0}
+.work{grid-column:span 6}
+.work[data-span="7"]{grid-column:span 7}
+.work[data-span="5"]{grid-column:span 5}
+.work[data-span="4"]{grid-column:span 4}
+.work.is-hidden{display:none}
+.work-link{display:block;text-decoration:none;color:inherit}
+.work-media{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:stretch}
+.work-photo{position:relative;aspect-ratio:4/3;background:var(--concrete);border:1px solid var(--rule-2);overflow:hidden;margin:0}
+.work-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.work-link:hover .work-photo img{transform:scale(1.025)}
+.work-photo .sheet-tag{position:absolute;left:8px;top:8px;transform:none;padding:3px 7px;background:rgba(244,243,239,.88);color:var(--ink)}
+.sheet{position:relative;aspect-ratio:4/3;background:var(--sheet);border:1px solid var(--rule-2);padding:clamp(10px,1.2vw,18px);transition:border-color .25s ease}
+.work[data-span="4"] .work-media{grid-template-columns:minmax(0,1fr)}
+.work[data-span="4"] .sheet{aspect-ratio:16/10}
+.work[data-span="5"] .sheet{aspect-ratio:5/4}
+.sheet svg{display:block;width:100%;height:100%}
+.sheet-tag{position:absolute;left:0;top:0;transform:translateY(-100%);padding:0 10px 7px 0;font:500 10px/1 var(--mono);letter-spacing:.2em;color:var(--ink-3);text-transform:uppercase}
+.work-link:hover .sheet,.work-link:focus-visible .sheet,.work-link:hover .work-photo{border-color:var(--ink)}
+.phi-film{grid-column:1/-1;margin-top:clamp(36px,5vw,72px);padding-top:24px;border-top:1px solid var(--rule);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:var(--gut);align-items:end}
+.phi-film-box{position:relative;aspect-ratio:16/9;background:var(--ink);border:1px solid var(--rule-2);overflow:hidden}
+.phi-film-box video{width:100%;height:100%;object-fit:cover;display:block}
+.phi-film-btn{position:absolute;right:12px;bottom:12px;background:rgba(244,243,239,.9);color:var(--ink);border:1px solid var(--ink);padding:7px 14px;font:500 11px/1 var(--mono);letter-spacing:.14em;cursor:pointer}
+.phi-film-btn:hover{background:var(--ink);color:var(--paper)}
+.studio-plate{grid-column:1/-1;margin:0 0 clamp(24px,3.5vw,48px)}
+.studio-plate img{width:100%;aspect-ratio:21/9;object-fit:cover;border:1px solid var(--rule-2);display:block}
+.studio-plate figcaption{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--ink);margin-top:12px;font-size:12px;color:var(--ink-2)}
+.dlg-photo{margin:0;border:1px solid var(--rule-2);overflow:hidden;background:var(--concrete)}
+.dlg-photo img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.work-bar{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:4px 16px;margin-top:18px;padding-top:12px;border-top:1px solid var(--ink)}
+.work-sub{grid-column:2;display:flex;justify-content:space-between;align-items:baseline;gap:4px 16px;flex-wrap:wrap;margin:0}
+.work-desc{display:none;grid-column:2;margin:16px 0 0;font:500 15px/2 var(--min);letter-spacing:.04em;color:var(--ink-2);max-width:38em}
+.work[data-span="12"]{grid-column:1/-1}
+.work[data-span="12"] .work-link{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gut);align-items:start}
+.work[data-span="12"] .work-media{grid-column:1/span 6;grid-template-columns:1.1fr .9fr}
+.work[data-span="12"] .work-bar{grid-column:7/span 6;border-top:0;margin-top:0;padding-top:8px}
+.work[data-span="12"] .work-title{font-size:clamp(22px,2.4vw,36px)}
+.work[data-span="12"] .work-sub{display:block}
+.work[data-span="12"] .work-sub .work-en{display:block;margin-top:2px}
+.work[data-span="12"] .work-desc{display:block}
+.work-no{font:500 12px/1 var(--mono);letter-spacing:.1em}
+.work-title{margin:0;font:500 clamp(18px,1.7vw,25px)/1.5 var(--min);letter-spacing:.1em}
+.work-meta{font-size:12px;line-height:1.9;color:var(--ink-2);letter-spacing:.06em}
+.work-en{margin:0;font:400 11px/1.8 var(--mono);letter-spacing:.12em;color:var(--ink-3)}
+.work-link:hover .route{stroke-dasharray:var(--len);animation:draw 1.2s ease-out both}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+
+/* ---- drawing conventions carried into the screen: line weight is the hierarchy ---- */
+.dr{stroke-linecap:butt;stroke-linejoin:miter;text-anchor:middle}
+.dr .axis{stroke:var(--ink-3);stroke-width:.55;stroke-dasharray:8 2.4 1.2 2.4;fill:none}   /* 一点鎖線 = 通り芯 */
+.dr .bub{fill:var(--sheet);stroke:var(--ink-2);stroke-width:.7}
+.dr .bl{fill:var(--ink-2);stroke:none;font:500 7px var(--mono)}
+.dr .w{stroke:var(--ink);stroke-width:3;fill:none}      /* cut wall */
+.dr .w2{stroke:var(--ink);stroke-width:1.4;fill:none}   /* partition */
+.dr .solid{fill:var(--ink);stroke:none}
+.dr .g{stroke:var(--ink-2);stroke-width:.6;fill:none}    /* glass */
+.dr .f{stroke:var(--ink-3);stroke-width:.55;fill:none}   /* fixture */
+.dr .dash{stroke:var(--ink-3);stroke-width:.6;stroke-dasharray:3 2;fill:none}
+.dr .door{stroke:var(--ink-2);stroke-width:.55;fill:none}
+.dr .hatch{fill:url(#p-hatch);stroke:var(--ink-3);stroke-width:.5}
+.dr .soil{fill:url(#p-soil);stroke:var(--ink-3);stroke-width:.5}
+.dr .grass{fill:url(#p-grass);stroke:var(--ink-3);stroke-width:.5}
+.dr .wood{fill:url(#p-wood);stroke:var(--ink-2);stroke-width:.5}
+.dr .pave{fill:url(#p-pave);stroke:var(--ink-3);stroke-width:.5}
+.dr .tile{fill:url(#p-tile);stroke:none}
+.dr .dim{stroke:var(--ink-3);stroke-width:.5;fill:none}
+.dr .tick{stroke:var(--ink-2);stroke-width:.9}
+.dr .lbl{fill:var(--ink-2);stroke:none;font:500 6.4px var(--sans);letter-spacing:.1em}
+.dr .lblm{fill:var(--ink-3);stroke:none;font:500 5.6px var(--mono);letter-spacing:.08em}
+.dr .ray{stroke:var(--ink-2);stroke-width:.4;stroke-dasharray:5 3;opacity:.6;fill:none}
+.dr .inv{fill:var(--paper)}
+.dr .st1{stroke:var(--ink-2);stroke-width:3.2;fill:none}
+.dr .st2{stroke:var(--ink-2);stroke-width:1.8;fill:none}
+.dr .st3{stroke:var(--ink-3);stroke-width:1.1;fill:none}
+.members-wrap{grid-column:1/-1;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gut);margin-top:clamp(36px,5vw,80px);padding-top:22px;border-top:1px solid var(--rule)}
+.mw-a{grid-column:span 5}
+.mw-b{grid-column:span 7}
+@media (max-width:1100px){.mw-a,.mw-b{grid-column:1/-1}}
+.dr .route{stroke:var(--wood);stroke-width:1.3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.dr .rd{fill:var(--wood);stroke:none}
+.dr--thumb .lbl,.dr--thumb .lblm,.dr--thumb .dim,.dr--thumb .tick,.dr--thumb .bl{display:none}
+.dr--full .lbl{font-size:7px}
+
+/* ---- philosophy: a lead sentence, a column of whitespace, three principles ---- */
+.phi-lead{grid-column:1/span 9;margin:0;font:400 clamp(23px,3vw,42px)/1.8 var(--min);letter-spacing:.08em;text-wrap:pretty}
+.phi-lead em{font-style:normal;font-weight:600}
+.phi-side{grid-column:10/span 3;display:flex;justify-content:flex-end}
+.phi-vert{writing-mode:vertical-rl;margin:0;height:22em;font:400 15px/2.1 var(--min);letter-spacing:.26em;color:var(--ink-2)}
+.prins{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ink);margin-top:clamp(44px,6vw,100px)}
+.prin{padding:clamp(20px,2.4vw,36px) clamp(18px,2.4vw,40px) 4px}
+.prin+.prin{border-left:1px solid var(--rule)}
+.prin:first-child{padding-left:0}
+.prin-no{display:block;font:500 12px/1 var(--mono);letter-spacing:.2em;color:var(--ink-2);margin-bottom:20px}
+.prin figure{margin:0 0 24px}
+.prin svg{display:block;width:100%;height:auto}
+.prin h3{margin:0 0 16px;font:500 clamp(20px,2vw,28px)/1.5 var(--min);letter-spacing:.12em}
+.prin p{margin:0;font:500 15px/2.05 var(--min);letter-spacing:.05em;text-wrap:pretty}
+.prin-pr{margin-top:22px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;line-height:1.9;color:var(--ink-2)}
+.prin-pr b{display:block;font:500 10px/1 var(--mono);letter-spacing:.22em;color:var(--ink-3);margin-bottom:6px}
+/* ---- studio: intro, history on an axis, access map, members ---- */
+.stu-intro{grid-column:1/span 4}
+.stu-intro p{margin:0;font:500 15px/2.05 var(--min);letter-spacing:.05em}
+.kv{margin:28px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 20px;font-size:13px;line-height:1.8}
+.kv dt{color:var(--ink-3);border-top:1px solid var(--rule);padding:9px 0}
+.kv dd{margin:0;border-top:1px solid var(--rule);padding:9px 0}
+.blk{grid-column:span 4}
+.blk h3{margin:0;font:500 20px/1.5 var(--min);letter-spacing:.16em}
+.blk-en{display:block;margin:4px 0 18px;font:500 10px/1 var(--mono);letter-spacing:.24em;color:var(--ink-3);text-transform:uppercase}
+.hist{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.hist li{display:grid;grid-template-columns:58px 1px minmax(0,1fr);gap:0 18px;border-bottom:1px solid var(--rule)}
+.hist .yr{padding:11px 0;font:500 13px/2 var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.hist .ax{background:repeating-linear-gradient(to bottom,var(--ink-3) 0 8px,transparent 8px 12px,var(--ink-3) 12px 13px,transparent 13px 17px)}
+.hist p{margin:0;padding:11px 0;font-size:13px;line-height:2}
+.map{margin:0}
+.map svg{display:block;width:100%;height:auto;border:1px solid var(--rule-2);background:var(--sheet)}
+.stops{list-style:none;margin:14px 0 0;padding:0;font-size:13px;line-height:1.9}
+.stops li{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--rule);padding:8px 0}
+.stops b{font-weight:400}
+.stops span{font:500 12px/2 var(--mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+.comp{display:grid;grid-template-columns:6fr 2fr 3fr 1fr;height:26px;border:1px solid var(--ink);margin-bottom:14px}
+.comp i{display:block}
+.comp i+i{border-left:1px solid var(--ink)}
+.c1{background:var(--ink)}
+.c2{background:repeating-linear-gradient(45deg,var(--ink) 0 1.5px,transparent 1.5px 5px)}
+.c3{background:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 5px)}
+.c4{background:radial-gradient(var(--ink) 1px,transparent 1.3px) 0 0/5px 5px}
+.legend{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:0 12px;font-size:13px}
+.legend li{display:contents}
+.legend .sw{width:16px;height:16px;border:1px solid var(--ink);align-self:center}
+.legend .sw+i{border-left:0}
+.legend .n{font:500 12px/2.3 var(--mono);font-variant-numeric:tabular-nums}
+.members{list-style:none;margin:22px 0 0;padding:0;border-top:1px solid var(--rule)}
+.members li{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 58px;gap:0 14px;border-bottom:1px solid var(--rule);padding:9px 0;font-size:13px;line-height:1.9}
+.members b{font:500 15px/1.6 var(--min);letter-spacing:.2em;font-weight:500}
+.members span{color:var(--ink-2)}
+.members em{font:500 12px/2 var(--mono);font-style:normal;color:var(--ink-3);text-align:right}
+
+/* ---- contact: form as a sheet to be filled in ---- */
+.ct-info{grid-column:1/span 5}
+.ct-info p{margin:0 0 20px;font:500 15px/2.05 var(--min);letter-spacing:.05em}
+.ct-form{grid-column:6/span 7}
+.fld{margin-bottom:24px}
+.fld>label,.choices legend{display:block;font-size:13px;letter-spacing:.1em;margin-bottom:8px;padding:0}
+.req{font-weight:400;color:var(--ink-3);margin-left:10px;font-size:11px;letter-spacing:.08em}
+.in{width:100%;padding:12px 14px;border:1px solid var(--rule-2);border-radius:0;background:var(--paper-2);color:var(--ink);font:400 16px/1.6 var(--sans);appearance:none}
+textarea.in{min-height:180px;resize:vertical}
+.in::placeholder{color:#8a8f92}
+[data-invalid="true"] .in{border:2px solid var(--ink);padding:11px 13px}
+.err{display:none;margin:6px 0 0;padding-left:16px;font-size:12px;line-height:1.7;font-weight:500;position:relative}
+.err::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;background:var(--ink)}
+[data-invalid="true"]>.err{display:block}
+.choices{border:0;margin:0;padding:0}
+.choices>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px}
+.choices label{display:flex;align-items:center;gap:10px;font-size:14px;cursor:pointer;margin:0;letter-spacing:.04em}
+.choices input,.chk input{width:16px;height:16px;margin:0;flex:none;accent-color:var(--ink)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.8;margin:28px 0}
+.chk input{margin-top:5px}
+.chk summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.policy{font-size:12px;color:var(--ink-2);margin-top:-14px}
+.policy summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px;width:fit-content}
+.policy p{margin:8px 0 0;line-height:1.9}
+.members.mw-b{margin-top:0}
+.sum{display:none;border:1px solid var(--ink);padding:14px 18px;margin-bottom:24px;font-size:14px}
+.sum ul{margin:8px 0 0;padding-left:1.2em}
+.sum a{color:var(--ink)}
+[data-invalid="true"]>.sum{display:block}
+.btn{appearance:none;border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:15px 40px;font:500 14px/1 var(--sans);letter-spacing:.34em;cursor:pointer;transition:background .2s,color .2s}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn-note{margin:12px 0 0;font-size:12px;color:var(--ink-3)}
+.done{border-top:1px solid var(--ink);padding-top:22px}
+.done h3{margin:0 0 12px;font:500 22px/1.5 var(--min);letter-spacing:.12em}
+.done p{margin:0 0 10px;font-size:14px;line-height:2;color:var(--ink-2)}
+
+/* ---- work detail: one sheet laid over the page ---- */
+.dlg{position:fixed;inset:clamp(8px,2vw,28px);width:auto;height:auto;max-width:none;max-height:none;margin:0;padding:0;border:1px solid var(--ink);background:var(--paper);color:var(--ink);overflow:auto;overscroll-behavior:contain}
+.dlg::backdrop{background:rgba(27,28,29,.58)}
+.dlg[open]{animation:dlg-in .35s ease-out}
+@keyframes dlg-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+body:has(.dlg[open]){overflow:hidden}
+.dlg-head{position:sticky;top:0;z-index:2;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:clamp(12px,2vw,24px);padding:12px clamp(14px,2.4vw,32px);background:var(--paper);border-bottom:1px solid var(--ink)}
+.dlg-head .work-no{align-self:start;padding-top:6px}
+.dlg-title{margin:0;font:500 clamp(20px,2.2vw,32px)/1.4 var(--min);letter-spacing:.12em}
+.dlg-en{margin:2px 0 0;font:400 11px/1.6 var(--mono);letter-spacing:.14em;color:var(--ink-3)}
+.dlg-x{appearance:none;background:none;border:1px solid var(--ink);padding:10px 16px;font:500 12px/1 var(--sans);letter-spacing:.2em;color:var(--ink);cursor:pointer}
+.dlg-x:hover{background:var(--ink);color:var(--paper)}
+.dlg-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(16px,2vw,32px);padding:clamp(14px,2.4vw,32px)}
+.dlg-draw{grid-column:1/span 7;display:flex;flex-direction:column;gap:clamp(14px,2vw,28px);min-width:0}
+.dlg-text{grid-column:8/span 5;min-width:0}
+.sheet--dlg{aspect-ratio:auto;padding:clamp(12px,1.6vw,24px)}
+.sheet--dlg svg{width:100%;height:auto}
+.dlg-lead{margin:0 0 18px;font:500 clamp(17px,1.5vw,21px)/1.95 var(--min);letter-spacing:.08em}
+.dlg-text h4{margin:26px 0 8px;font:500 10px/1 var(--mono);letter-spacing:.24em;color:var(--ink-3);text-transform:uppercase}
+.dlg-text p{margin:0;font-size:14px;line-height:2;color:var(--ink-2)}
+.dlg-circuit{margin-top:22px;padding-top:16px;border-top:1px solid var(--ink)}
+.dlg-circuit p{color:var(--ink);font:500 14px/2.05 var(--min);letter-spacing:.04em}
+.spec{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.spec th,.spec td{padding:8px 0;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;font-weight:400}
+.spec th{width:34%;color:var(--ink-3);padding-right:12px}
+.dlg-foot{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ink)}
+.dlg-nav{display:flex;align-items:center;gap:14px;padding:16px clamp(14px,2.4vw,32px);text-decoration:none;font:500 14px/1.5 var(--min);letter-spacing:.08em}
+.dlg-nav+.dlg-nav{border-left:1px solid var(--ink);justify-content:flex-end;text-align:right}
+.dlg-nav span{font:500 11px/1 var(--mono);color:var(--ink-3)}
+.dlg-nav:hover{background:var(--paper-2)}
+
+/* ---- footer, reveal ---- */
+.ftr{margin-top:clamp(72px,9vw,148px);border-top:1px solid var(--ink)}
+.ftr .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 40px;padding-block:28px var(--mx)}
+.ftr-name{margin:0;font:500 15px/1.9 var(--min);letter-spacing:.24em}
+.ftr-addr{margin:6px 0 0;font-size:12px;color:var(--ink-3);line-height:1.9}
+.ftr .nav{gap:24px}
+.ftr .nav a{font-size:12px}
+.ftr-copy{grid-column:1/-1;border-top:1px solid var(--rule);padding-top:12px;font:400 11px/1.8 var(--mono);letter-spacing:.12em;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.js .rv{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.is-in{opacity:1;transform:none}
+
+/* ---- wide to narrow: re-stack in reading order ---- */
+@media (max-width:1100px){
+  .work,.work[data-span]{grid-column:span 6}
+  .stu-intro,.blk{grid-column:span 6}
+  .ct-info,.ct-form{grid-column:1/-1}
+  .ct-form{max-width:760px}
+}
+@media (max-width:860px){
+  :root{--hh:56px}
+  .brand span{display:none}
+  .hero{grid-template-columns:minmax(0,1fr);gap:28px}
+  .plate-img{flex:none;min-height:0;aspect-ratio:4/5}
+  .plate-cap{grid-template-columns:minmax(0,1fr);gap:4px}
+  .hero-side{gap:28px}
+  .hero-v{display:flex;flex-direction:column;justify-content:flex-start;gap:12px}
+  .hero-vsub{writing-mode:horizontal-tb;order:-1;line-height:1.6;letter-spacing:.12em;font-size:10px}
+  .hero-name{writing-mode:horizontal-tb;font-size:clamp(25px,7.2vw,36px);letter-spacing:.2em;line-height:1.45}
+  .sec-head{grid-template-columns:auto minmax(0,1fr)}
+  .sec-meta{grid-column:1/-1;text-align:left}
+  .sec-title small{display:block;margin:8px 0 0}
+  .phi-lead{grid-column:1/-1}
+  .phi-side{grid-column:1/-1;justify-content:flex-start;margin-top:36px}
+  .prins{grid-template-columns:minmax(0,1fr)}
+  .prin,.prin:first-child{padding:24px 0 8px}
+  .prin+.prin{border-left:0;border-top:1px solid var(--rule)}
+  .work,.work[data-span]{grid-column:1/-1}
+  .work-media,.phi-film{grid-template-columns:minmax(0,1fr)}
+  .work .sheet,.work[data-span="4"] .sheet,.work[data-span="5"] .sheet,.work[data-span="12"] .sheet{aspect-ratio:4/3}
+  .work[data-span="12"] .work-link{display:block}
+  .work[data-span="12"] .work-bar{grid-column:auto;border-top:1px solid var(--ink);margin-top:18px;padding-top:12px}
+  .work[data-span="12"] .work-title{font-size:clamp(18px,1.7vw,25px)}
+  .stu-intro,.blk{grid-column:1/-1}
+  .dlg-body{grid-template-columns:minmax(0,1fr)}
+  .dlg-draw,.dlg-text{grid-column:auto}
+  .dlg-head{grid-template-columns:minmax(0,1fr) auto}
+  .dlg-head .work-no{display:none}
+  .ftr .wrap{grid-template-columns:minmax(0,1fr)}
+  .ftr .nav{justify-content:flex-start;flex-wrap:wrap}
+}
+@media (max-width:560px){
+  .brand b{font-size:12px;letter-spacing:.14em}
+  .nav{gap:9px}
+  .nav a{font-size:12px;letter-spacing:.04em;padding-left:2px;padding-right:2px}
+  .hdr .wrap{gap:10px}
+  .work-sub{display:block}
+  .work-sub .work-en{display:block;margin-top:2px}
+  .choices>div{grid-template-columns:minmax(0,1fr)}
+  .members li{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 48px}
+}
+@media (max-width:350px){.brand{display:none}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .nav a::before,.sheet,.btn,.cap-l{transition:none}
+  .work-link:hover .route,.dlg[open]{animation:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#works">本文へ移動</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="p-hatch" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="4" stroke="#626769" stroke-width=".5"/></pattern>
+    <pattern id="p-soil" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".45" fill="#626769"/><circle cx="4.5" cy="4" r=".4" fill="#626769"/></pattern>
+    <pattern id="p-wood" width="3" height="3" patternUnits="userSpaceOnUse"><line x1="0" y1="0" x2="0" y2="3" stroke="#4a4f52" stroke-width=".7"/></pattern>
+    <pattern id="p-pave" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M10 0H0V10" fill="none" stroke="#626769" stroke-width=".4"/></pattern>
+    <pattern id="p-grass" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M1 3.6l1-2M3 3.8l1-2" fill="none" stroke="#626769" stroke-width=".45"/></pattern>
+    <pattern id="p-tile" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="translate(9 9)"><path d="M18 0H0V18" fill="none" stroke="#1b1c1d" stroke-width=".22"/></pattern>
+  </defs>
+</svg>
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="brand" href="#top"><b>回路建築設計事務所</b><span>KAIRO STUDIO</span></a>
+    <nav class="nav" aria-label="サイト内">
+      <a href="#works">作品</a>
+      <a href="#philosophy">思想</a>
+      <a href="#studio">事務所</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap" aria-labelledby="hero-name">
+    <figure class="plate">
+      <div class="plate-img">
+        <img src="../assets/kairo-architecture.jpg" width="2752" height="1536" fetchpriority="high" alt="神保町しおりホールのエントランスホール。杉の縦ルーバー、ガラスの外の中庭の木、打放しコンクリートの壁と壁に沿った長いベンチ。床にルーバーの影が落ちている。">
+      </div>
+      <figcaption class="plate-cap">
+        <span class="mono cap-no">Plate 01</span>
+        <span class="cap-t">神保町しおりホール ／ エントランスホール。西日に杉のルーバーを立て、光を一度篩にかけて打放しコンクリートの壁へ届けた。</span>
+        <a class="cap-l" href="#work-shiori" data-open="shiori">図面を見る<svg viewBox="0 0 18 8" aria-hidden="true"><path d="M0 4h16M13 1l3 3-3 3"/></svg></a>
+      </figcaption>
+    </figure>
+    <div class="hero-side">
+      <div class="hero-v">
+        <p class="hero-vsub mono">KAIRO STUDIO — Architecture &amp; Space</p>
+        <h1 class="hero-name" id="hero-name">回路建築設計事務所</h1>
+      </div>
+      <div class="hero-foot">
+        <p class="hero-lead">光と風、人の動きを<br>回路として設計する。<br>東京・神保町の建築設計事務所。</p>
+        <p class="hero-meta mono">Est. 2013 — Jimbocho, Tokyo</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="works" aria-labelledby="works-t">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-no" aria-hidden="true">1</span>
+        <h2 class="sec-title" id="works-t">選ばれた作品<small>Selected Works</small></h2>
+        <p class="sec-meta">Selected 06 of 42<br>2021 — 2025</p>
+      </header>
+      <div class="filters" role="group" aria-label="作品の絞り込み">
+        <button class="f-btn" type="button" data-cat="all" aria-pressed="true">すべて<sup></sup></button>
+        <button class="f-btn" type="button" data-cat="住宅" aria-pressed="false">住宅<sup></sup></button>
+        <button class="f-btn" type="button" data-cat="公共" aria-pressed="false">公共<sup></sup></button>
+        <button class="f-btn" type="button" data-cat="展示" aria-pressed="false">展示<sup></sup></button>
+        <p id="works-count" aria-live="polite"></p>
+      </div>
+      <ul class="works" id="works-list"></ul>
+      <noscript><p>作品の一覧を表示するには JavaScript を有効にしてください。</p></noscript>
+    </div>
+  </section>
+
+  <section class="sec" id="philosophy" aria-labelledby="phi-t">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-no" aria-hidden="true">2</span>
+        <h2 class="sec-title" id="phi-t">設計思想<small>Philosophy</small></h2>
+        <p class="sec-meta">Three principles<br>since 2013</p>
+      </header>
+      <div class="cols">
+        <p class="phi-lead rv">建築は、箱ではなく<em>回路</em>である。光も、風も、人の足取りも、建物の中を一巡して外へ出ていく。その一行き帰りを設計すること。</p>
+        <div class="phi-side rv">
+          <p class="phi-vert">余白は、余った場所ではない。<br>光と風と視線の、通るための場所である。</p>
+        </div>
+        <div class="prins">
+          <article class="prin rv">
+            <span class="prin-no">PRINCIPLE 01</span>
+            <figure>
+              <svg class="dr" viewBox="0 0 220 124" role="img" aria-label="窓から入った光が壁に届き、別の開口から出ていく回路の概念図">
+                <path class="w" d="M20 20H200M200 20V100M120 100H200M20 100V74M20 48V20M96 100H20"/>
+                <rect class="hatch" x="192" y="21.5" width="7" height="77"/>
+                <path class="ray" d="M0 46L192 84.4M0 52L192 90.4M0 58L192 96.4"/>
+                <path class="route" d="M3 58L186 94V108H108V118"/>
+                <circle class="rd" cx="3" cy="58" r="2.4"/>
+                <path class="rd" d="M104 116l4 6 4-6z"/>
+                <text class="lbl" x="54" y="50">入り口</text>
+                <text class="lbl" transform="rotate(-90 212 60)" x="212" y="60">受け止める面</text>
+                <text class="lbl" x="136" y="112" text-anchor="start">出口</text>
+              </svg>
+            </figure>
+            <h3>光を回路にする</h3>
+            <p>窓は穴ではなく、光の入り口と出口の組です。光を一枚の壁で受け止めるのではなく、入り口・通り道・受け止める面の三つを必ずセットで配置します。朝は東の縁側へ、午後は西のルーバーへ。一日のうちに光の通り道が移り、部屋の表情が変わります。</p>
+            <p class="prin-pr"><b>Practice — 神保町しおりホール</b>西日の強いファサードに杉のルーバーを立て、光を一度篩にかけてから打放しコンクリートの壁へ届けた。</p>
+          </article>
+          <article class="prin rv">
+            <span class="prin-no">PRINCIPLE 02</span>
+            <figure>
+              <svg class="dr" viewBox="0 0 220 124" role="img" aria-label="建てる部分をL字にまとめ、残りの余白に寸法線を入れた敷地の概念図">
+                <rect class="axis" x="16" y="16" width="188" height="88"/>
+                <rect class="solid" x="16" y="16" width="50" height="88"/>
+                <rect class="solid" x="66" y="74" width="138" height="30"/>
+                <path class="f" d="M152 48a8 8 0 1 0 .1 0z"/>
+                <path class="dim" d="M66 41v-6M204 41v-6M66 38H204"/>
+                <path class="tick" d="M63 41l6-6M201 41l6-6"/>
+                <text class="lblm" x="135" y="34">余白 6,000</text>
+                <path class="dim" d="M97 16h6M97 74h6M100 16V74"/>
+                <path class="tick" d="M97 19l6-6M97 77l6-6"/>
+                <text class="lblm" transform="rotate(-90 106 45)" x="106" y="45">3,600</text>
+                <text class="lbl inv" x="41" y="63">建てる部分</text>
+                <text class="lbl inv" x="135" y="93">建てる部分</text>
+              </svg>
+            </figure>
+            <h3>余白を設計する</h3>
+            <p>壁や屋根と同じ精度で、何もない部分を決めます。余白は余った場所ではなく、光や風、人の視線が通るために確保した通路です。敷地が狭いほど、建てる面積より先に空ける面積を決める。</p>
+            <p class="prin-pr"><b>Practice — 千駄木 回路の家</b>延床面積の約三割を屋根のない中庭に充て、部屋をその周囲に一巡りさせた。</p>
+          </article>
+          <article class="prin rv">
+            <span class="prin-no">PRINCIPLE 03</span>
+            <figure>
+              <svg class="dr" viewBox="0 0 220 124" role="img" aria-label="コンクリート、真鍮、杉の三つの材料の風化の進み方を年数で示す折れ線の概念図">
+                <path class="f" d="M24 104H208M24 104V16M24 16l-3 6h6zM208 104l-6-3v6z"/>
+                <path class="f" d="M85 104v-3M147 104v-3M24 60h3"/>
+                <path class="g" d="M24 30L208 40"/>
+                <path class="dash" d="M24 30L208 78"/>
+                <path class="axis" d="M24 30L85 70L208 90"/>
+                <text class="lblm" x="24" y="114">0</text>
+                <text class="lblm" x="85" y="114">10</text>
+                <text class="lblm" x="147" y="114">20</text>
+                <text class="lblm" x="208" y="114">30 年</text>
+                <text class="lbl" x="204" y="35" text-anchor="end">コンクリート</text>
+                <text class="lbl" x="204" y="100" text-anchor="end">真鍮</text>
+                <text class="lbl" x="204" y="74" text-anchor="end">杉</text>
+              </svg>
+            </figure>
+            <h3>素材の時間を数える</h3>
+            <p>コンクリート、杉、真鍮、紙。材料はそれぞれの速度で風化します。引き渡した日だけが完成の姿ではなく、五年後、三十年後の表情まで見込んで材料を選び、継ぎ目と手入れの位置を図面に書き込みます。</p>
+            <p class="prin-pr"><b>Practice — 富士見坂こども園</b>外壁に無塗装のガルバリウム鋼板を選び、雨筋の流れる向きが揃うよう縦仕舞いにした。</p>
+          </article>
+        </div>
+        <div class="phi-film rv">
+          <div class="phi-film-box">
+            <video id="kairo-film" autoplay muted loop playsinline poster="../assets/kairo-architecture.jpg" aria-label="打放しコンクリートと杉の縦ルーバーの間を、朝の斜光がゆっくりと移ろう建築映像記録">
+              <source src="../assets/kairo-light-motion.mp4" type="video/mp4">
+            </video>
+            <button class="phi-film-btn" type="button" id="kairo-film-btn" aria-pressed="false">PAUSE FILM</button>
+          </div>
+          <div>
+            <p class="mono" style="color:var(--ink-3);margin:0 0 10px">FILM 01 — LIGHT CIRCUIT STUDY</p>
+            <h3 style="margin:0 0 12px;font:500 clamp(19px,1.8vw,26px)/1.5 var(--min);letter-spacing:.12em">光が壁を渡る、八秒間の記録。</h3>
+            <p style="margin:0;font-size:14px;line-height:2;color:var(--ink-2)">杉ルーバーの隙間から落ちる影は、時刻とともに床と打放しコンクリートの壁を静かに移動します。図面上の破線で描いた光の回路が、空間の中でどう振る舞うかを定点映像で確かめています。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="sec" id="studio" aria-labelledby="studio-t">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-no" aria-hidden="true">3</span>
+        <h2 class="sec-title" id="studio-t">事務所概要<small>Studio Profile</small></h2>
+        <p class="sec-meta">Est. 2013 — Jinbocho, Tokyo<br>12 architects &amp; staff</p>
+      </header>
+      <div class="cols">
+        <figure class="studio-plate rv">
+          <img src="../assets/kairo-studio.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="東京・神保町の回路建築設計事務所のアトリエ内部。大きな木製作業台に白い建築模型とトレーシングペーパーが並ぶ。">
+          <figcaption><span class="mono">PLATE — JIMBOCHO ATELIER</span><span>神田神保町2丁目の設計アトリエ。白いスタディ模型と1/50断面図を並べ、光と動線を検証する。</span></figcaption>
+        </figure>
+        <div class="stu-intro rv">
+          <p>回路建築設計事務所は、2013年に東京・神保町で開設した一級建築士事務所です。住宅から公共建築、展示会場の構成まで、規模を問わず「回路」を鍵に設計しています。図面は主宰とスタッフ全員で引き、竣工後も一年ごとに建物を訪ねています。</p>
+          <dl class="kv">
+            <dt>名称</dt><dd>回路建築設計事務所</dd>
+            <dt>設立</dt><dd>2013年</dd>
+            <dt>主宰</dt><dd>水原 環</dd>
+            <dt>登録</dt><dd>一級建築士事務所（東京都）</dd>
+            <dt>所属</dt><dd>12名</dd>
+          </dl>
+        </div>
+        <div class="blk rv">
+          <h3>沿革</h3><span class="blk-en">History</span>
+          <ul class="hist">
+            <li><span class="yr">2013</span><span class="ax" aria-hidden="true"></span><p>水原環が神保町の旧印刷所2階に事務所を開設。書店と出版社の内装改装から始める。</p></li>
+            <li><span class="yr">2016</span><span class="ax" aria-hidden="true"></span><p>一級建築士事務所として東京都に登録。5名体制になる。</p></li>
+            <li><span class="yr">2019</span><span class="ax" aria-hidden="true"></span><p>「書庫の家」に着工。住宅の設計に本格的に取り組む。</p></li>
+            <li><span class="yr">2021</span><span class="ax" aria-hidden="true"></span><p>「書庫の家」が完成。住宅・公共・展示の三分野がそろう。</p></li>
+            <li><span class="yr">2022</span><span class="ax" aria-hidden="true"></span><p>初の公共建築「富士見坂こども園」が完成。</p></li>
+            <li><span class="yr">2024</span><span class="ax" aria-hidden="true"></span><p>「神保町しおりホール」が完成。</p></li>
+            <li><span class="yr">2025</span><span class="ax" aria-hidden="true"></span><p>10周年記念展「回路 — 紙の建築」展を神保町で開催。</p></li>
+            <li><span class="yr">2026</span><span class="ax" aria-hidden="true"></span><p>神田神保町2丁目の現在地へ移転。12名体制になる。</p></li>
+          </ul>
+        </div>
+        <div class="blk rv">
+          <h3>アクセス</h3><span class="blk-en">Access — Jinbocho</span>
+          <figure class="map">
+            <svg class="dr" viewBox="0 0 320 214" role="img" aria-label="神保町駅の北西、明大通り沿いにある事務所の位置図（概略）">
+              <rect class="hatch" x="62" y="24" width="80" height="30"/>
+              <path class="st3" d="M0 62L150 72L296 98"/>
+              <path class="st1" d="M0 118L320 134"/>
+              <path class="st2" d="M150 0L164 214"/>
+              <path class="g" d="M250 214C262 184 292 168 320 162M257 214C269 188 296 174 320 169"/>
+              <circle class="bub" cx="157" cy="126" r="5.5"/><circle class="solid" cx="157" cy="126" r="2.2"/>
+              <circle class="bub" cx="298" cy="192" r="5.5"/><circle class="solid" cx="298" cy="192" r="2.2"/>
+              <circle class="bub" cx="256" cy="196" r="5.5"/><circle class="solid" cx="256" cy="196" r="2.2"/>
+              <rect class="solid" x="107" y="78" width="10" height="10"/>
+              <circle class="rd" cx="112" cy="83" r="2.3"/>
+              <path class="dim" d="M119 83H146V60H178"/>
+              <text class="lbl" x="181" y="63" text-anchor="start">回路建築設計事務所</text>
+              <text class="lbl" x="102" y="43">旧書店街</text>
+              <text class="lblm" transform="rotate(2.9 34 112)" x="34" y="112">靖国通り</text>
+              <text class="lblm" transform="rotate(85.9 176 34)" x="176" y="34">白山通り</text>
+              <text class="lblm" x="40" y="57">明大通り</text>
+              <text class="lblm" x="298" y="152">神田川</text>
+              <text class="lbl" x="166" y="140" text-anchor="start">神保町駅</text>
+              <text class="lbl" x="306" y="183" text-anchor="end">御茶ノ水駅</text>
+              <text class="lbl" x="247" y="211" text-anchor="end">新御茶ノ水駅</text>
+              <text class="lbl" x="190" y="46">明治大学</text>
+              <circle class="g" cx="296" cy="22" r="10"/>
+              <path class="solid" d="M296 12l4.5 15-4.5-4-4.5 4z"/>
+              <text class="lblm" x="296" y="46">N</text>
+              <rect class="solid" x="12" y="196" width="22" height="3"/>
+              <rect class="f" x="34" y="196" width="22" height="3"/>
+              <text class="lblm" x="12" y="210">0</text>
+              <text class="lblm" x="56" y="210">100 m</text>
+            </svg>
+          </figure>
+          <address style="font-style:normal;margin:12px 0 0;font-size:13px;line-height:1.9">〒101-0051 東京都千代田区神田神保町2-3-7 神保町Kビル3F</address>
+          <ul class="stops">
+            <li><b>都営三田線・新宿線／東京メトロ半蔵門線「神保町」</b><span>徒歩 3 分</span></li>
+            <li><b>JR中央・総武線「御茶ノ水」</b><span>徒歩 9 分</span></li>
+            <li><b>東京メトロ丸ノ内線「新御茶ノ水」</b><span>徒歩 10 分</span></li>
+          </ul>
+        </div>
+        <div class="members-wrap rv">
+          <div class="mw-a">
+            <h3>メンバー構成</h3><span class="blk-en">Members — 12</span>
+            <div class="comp" role="img" aria-label="一級建築士6名、建築士補2名、空間・図面担当3名、事務1名">
+              <i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i>
+            </div>
+            <ul class="legend">
+              <li><i class="sw c1"></i><span>一級建築士</span><span class="n">6</span></li>
+              <li><i class="sw c2"></i><span>建築士補</span><span class="n">2</span></li>
+              <li><i class="sw c3"></i><span>空間・図面担当</span><span class="n">3</span></li>
+              <li><i class="sw c4"></i><span>事務</span><span class="n">1</span></li>
+            </ul>
+          </div>
+          <ul class="members mw-b">
+            <li><b>水原 環</b><span>主宰 ・ 一級建築士</span><em>2013 —</em></li>
+            <li><b>佐伯 幹</b><span>パートナー ・ 一級建築士</span><em>2015 —</em></li>
+            <li><b>大久保 澄江</b><span>一級建築士</span><em>2017 —</em></li>
+            <li><b>竹内 悠</b><span>一級建築士</span><em>2019 —</em></li>
+            <li><b>高村 紗英</b><span>一級建築士</span><em>2021 —</em></li>
+            <li><b>新井 健</b><span>一級建築士</span><em>2022 —</em></li>
+            <li><b>三宅 乃愛</b><span>建築士補</span><em>2023 —</em></li>
+            <li><b>西 拓海</b><span>建築士補</span><em>2024 —</em></li>
+            <li><b>ほか4名</b><span>空間・図面担当3名、事務1名</span><em>—</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="sec" id="contact" aria-labelledby="ct-t">
+    <div class="wrap">
+      <header class="sec-head">
+        <span class="sec-no" aria-hidden="true">4</span>
+        <h2 class="sec-title" id="ct-t">お問い合わせ<small>Contact</small></h2>
+        <p class="sec-meta">Reply within 3 business days<br>Mon — Fri 10:00 — 18:00</p>
+      </header>
+      <div class="cols">
+        <div class="ct-info rv">
+          <p>住宅の新築・改装、公共建築、展示会場の構成など、設計のご相談を受け付けています。初回のご相談はオンラインで60分、無料です。まずは敷地の場所とご希望の時期をお聞かせください。</p>
+          <dl class="kv">
+            <dt>所在地</dt><dd>東京都千代田区神田神保町2-3-7 神保町Kビル3F</dd>
+            <dt>受付時間</dt><dd>平日 10:00 — 18:00（土日祝を除く）</dd>
+            <dt>対応地域</dt><dd>東京都および近県（遠方はご相談ください）</dd>
+            <dt>見学</dt><dd>事務所の見学は予約制です。フォームよりご予約ください。</dd>
+          </dl>
+        </div>
+        <form class="ct-form rv" id="ct-form" novalidate>
+          <div class="sum" id="ct-sum" tabindex="-1" role="alert">入力内容をご確認ください。<ul id="ct-sum-list"></ul></div>
+          <div class="fld" data-field="name">
+            <label for="f-name">お名前<span class="req">必須</span></label>
+            <input class="in" id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+            <p class="err" id="e-name">お名前を入力してください。</p>
+          </div>
+          <div class="fld">
+            <label for="f-org">会社・団体名<span class="req">任意</span></label>
+            <input class="in" id="f-org" name="org" type="text" autocomplete="organization">
+          </div>
+          <div class="fld" data-field="email">
+            <label for="f-email">メールアドレス<span class="req">必須</span></label>
+            <input class="in" id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+            <p class="err" id="e-email">メールアドレスの形式をご確認ください。</p>
+          </div>
+          <fieldset class="fld choices" data-field="kind">
+            <legend>お問い合わせの種類<span class="req">必須</span></legend>
+            <div>
+              <label><input type="radio" name="kind" value="住宅の設計" required>住宅の設計</label>
+              <label><input type="radio" name="kind" value="公共建築の設計">公共建築の設計</label>
+              <label><input type="radio" name="kind" value="展示・空間の構成">展示・空間の構成</label>
+              <label><input type="radio" name="kind" value="その他">その他</label>
+            </div>
+            <p class="err" id="e-kind">種類をひとつ選んでください。</p>
+          </fieldset>
+          <div class="fld" data-field="msg">
+            <label for="f-msg">ご相談の内容<span class="req">必須</span></label>
+            <textarea class="in" id="f-msg" name="msg" required aria-describedby="e-msg"></textarea>
+            <p class="err" id="e-msg">ご相談の内容を入力してください。</p>
+          </div>
+          <div class="fld" data-field="agree">
+            <label class="chk"><input type="checkbox" id="f-agree" name="agree" required aria-describedby="e-agree"><span>個人情報の取り扱いに同意する<span class="req">必須</span></span></label>
+            <details class="policy">
+              <summary>個人情報の取り扱いについて</summary>
+              <p>ご入力いただいた内容は、お問い合わせへの回答と、その後のご相談以外の目的には使用しません。第三者へ提供することはありません。希望される場合は、ご連絡いただければ速やかに削除します。</p>
+            </details>
+            <p class="err" id="e-agree">個人情報の取り扱いへの同意をお願いします。</p>
+          </div>
+          <button class="btn" type="submit">送信する</button>
+          <p class="btn-note">送信後、3営業日以内にご入力のメールアドレスへご連絡します。</p>
+          <div class="done" id="ct-done" tabindex="-1" hidden>
+            <h3>送信内容を受け付けました</h3>
+            <p id="ct-done-sum"></p>
+            <p>3営業日以内にご入力のメールアドレスへご連絡します。しばらく経っても連絡がない場合は、迷惑メールの設定をご確認ください。</p>
+            <p>※このページは試作版です。入力内容はサーバーへ送信されていません。</p>
+            <button class="btn" type="button" id="ct-again" style="margin-top:12px">入力をやり直す</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div>
+      <p class="ftr-name">回路建築設計事務所</p>
+      <p class="ftr-addr">〒101-0051 東京都千代田区神田神保町2-3-7 神保町Kビル3F<br>ARCHITECTURE &amp; SPACE — TOKYO, JIMBOCHO</p>
+    </div>
+    <nav class="nav" aria-label="サイト内（フッター）">
+      <a href="#works">作品</a>
+      <a href="#philosophy">思想</a>
+      <a href="#studio">事務所</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+    <div class="ftr-copy"><span>© 2026 KAIRO STUDIO — 回路建築設計事務所</span><span>一級建築士事務所（東京都）</span></div>
+  </div>
+</footer>
+
+<dialog class="dlg" id="dlg" aria-labelledby="dlg-title">
+  <div class="dlg-head">
+    <span class="work-no" id="dlg-no"></span>
+    <div>
+      <h2 class="dlg-title" id="dlg-title"></h2>
+      <p class="dlg-en" id="dlg-en"></p>
+    </div>
+    <button class="dlg-x" type="button" id="dlg-x">閉じる</button>
+  </div>
+  <div class="dlg-body">
+    <div class="dlg-draw">
+      <figure class="dlg-photo" id="dlg-photo"></figure>
+      <div class="sheet sheet--dlg"><span class="sheet-tag">1F Plan — Scale 1/200</span><div id="dlg-plan"></div></div>
+      <div class="sheet sheet--dlg"><span class="sheet-tag">Section — Scale 1/200</span><div id="dlg-sec"></div></div>
+    </div>
+    <div class="dlg-text" id="dlg-text"></div>
+  </div>
+  <div class="dlg-foot">
+    <a class="dlg-nav" href="#works" id="dlg-prev"></a>
+    <a class="dlg-nav" href="#works" id="dlg-next"></a>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+  document.documentElement.classList.add('js');
+
+  /* ---------- small SVG builders (plans and sections are drawn, not decorated) ---------- */
+  const r = (n) => Math.round(n * 100) / 100;
+  const o = (a) => Object.keys(a).filter((k) => a[k] !== undefined).map((k) => ' ' + k + '="' + a[k] + '"').join('');
+  const el = (t, a, inner) => '<' + t + o(a) + (inner === undefined ? '/>' : '>' + inner + '</' + t + '>');
+  const L = (x1, y1, x2, y2, c) => el('line', { x1: r(x1), y1: r(y1), x2: r(x2), y2: r(y2), class: c });
+  const P = (d, c) => el('path', { d, class: c });
+  const R = (x, y, w, h, c) => el('rect', { x, y, width: w, height: h, class: c });
+  const C = (cx, cy, rr, c) => el('circle', { cx, cy, r: rr, class: c });
+  const T = (x, y, s, c, a, extra) => el('text', Object.assign({ x, y, class: c, 'text-anchor': a || 'middle' }, extra || {}), s);
+  const rad = (d) => d * Math.PI / 180;
+  const door = (hx, hy, rr, a0, a1) => {
+    const p = (a) => [r(hx + rr * Math.cos(rad(a))), r(hy + rr * Math.sin(rad(a)))];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    return P('M' + x0 + ' ' + y0 + 'A' + rr + ' ' + rr + ' 0 0 ' + (a1 > a0 ? 1 : 0) + ' ' + x1 + ' ' + y1 + 'M' + hx + ' ' + hy + 'L' + x1 + ' ' + y1, 'door');
+  };
+  const tree = (x, y, rr) => C(x, y, rr, 'f') + C(x, y, rr * 0.55, 'f') + C(x, y, 1.3, 'f');
+  const tick = (x, y) => P('M' + (x - 4) + ' ' + (y + 4) + 'l8 -8', 'tick');
+  const axV = (x, l, y1, y2) => P('M' + x + ' ' + y1 + 'V' + y2, 'axis') + C(x, y1 - 11, 7, 'bub') + T(x, y1 - 8.5, l, 'bl');
+  const axH = (y, l, x1, x2, bx) => P('M' + (bx + 8) + ' ' + y + 'H' + x2, 'axis') + C(bx, y, 7, 'bub') + T(bx, y + 2.5, l, 'bl');
+  const dimH = (x1, x2, y, s) => L(x1, y, x2, y, 'dim') + tick(x1, y) + tick(x2, y) + T((x1 + x2) / 2, y - 3, s, 'lblm');
+  const dimV = (y1, y2, x, s) => L(x, y1, x, y2, 'dim') + P('M' + (x - 4) + ' ' + (y1 + 4) + 'l8 -8M' + (x - 4) + ' ' + (y2 + 4) + 'l8 -8', 'tick') +
+    T(x - 3, (y1 + y2) / 2, s, 'lblm', 'middle', { transform: 'rotate(-90 ' + (x - 3) + ' ' + (y1 + y2) / 2 + ')' });
+  const arrow = (x, y, dx, dy) => {
+    const m = Math.hypot(dx, dy) || 1, ux = dx / m, uy = dy / m, px = -uy, py = ux, bx = x - ux * 6.5, by = y - uy * 6.5;
+    return P('M' + r(x) + ' ' + r(y) + 'L' + r(bx + px * 3.2) + ' ' + r(by + py * 3.2) + 'L' + r(bx - px * 3.2) + ' ' + r(by - py * 3.2) + 'z', 'rd');
+  };
+  const route = (d, sx, sy, ex, ey, dx, dy) => C(sx, sy, 2.2, 'rd') + P(d, 'route') + arrow(ex, ey, dx, dy);
+  const north = (x, y) => C(x, y, 8, 'g') + P('M' + x + ' ' + (y - 6) + 'l3 9-3-2.2-3 2.2z', 'solid') + T(x, y + 13.5, 'N', 'lblm');
+  const scalebar = (x, y) => R(x, y, 24, 2.5, 'solid') + R(x + 24, y, 24, 2.5, 'f') + R(x + 48, y, 12, 2.5, 'solid') + T(x, y + 9, '0', 'lblm') + T(x + 48, y + 9, '5', 'lblm') + T(x + 60, y + 9, '10 m', 'lblm', 'start');
+  const rows = (x0, y0, cols, nrows, dx, dy, w, h) => {
+    let s = '';
+    for (let j = 0; j < nrows; j++) for (let i = 0; i < cols; i++) s += R(r(x0 + i * dx), r(y0 + j * dy), w, h, 'f');
+    return s;
+  };
+  const slab = (x, y, w, h) => R(x, y, w, h, 'solid');
+  const wallV = (x, y1, y2, t) => R(x - t / 2, y1, t, y2 - y1, 'solid');
+  const ground = (x1, x2, y = 128) => L(x1, y, x2, y, 'w') + R(x1, y + 3, x2 - x1, 6, 'hatch') + T(x1 + 12, y + 13, 'GL', 'lblm');
+  const treeS = (x, base, top, rr) => L(x, base, x, top, 'f') + C(x, top, rr, 'f') + C(x, top, rr * 0.62, 'f');
+  const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+
+  function planSVG(w, mode) {
+    const p = w.plan, [x1, y1, x2, y2] = p.box;
+    let s = p.ground || '';
+    for (const [x, l] of p.ax) s += axV(x, l, y1 - 6, y2 + 8);
+    for (const [y, l] of p.ay) s += axH(y, l, x1, x2 + 8, p.bx === undefined ? x1 - 11 : p.bx);
+    s += p.body + (p.dims || '') + p.route() + T(40, 269, p.title, 'lblm', 'start') + scalebar(240, 262) + north(360, 262);
+    return '<svg class="dr dr--' + mode + '" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + esc(w.title + '：' + p.cap) + '">' + s + '</svg>';
+  }
+  function secSVG(w, mode) {
+    return '<svg class="dr dr--' + mode + '" viewBox="0 22 400 126" preserveAspectRatio="xMidYMid meet" role="img" aria-label="' + esc(w.title + '：断面概念図') + '">' + w.sec + '</svg>';
+  }
+
+  /* ---------- works ---------- */
+  const WORKS = [
+    {
+      id: 'shiori', no: '01', title: '神保町しおりホール', en: 'Shiori Hall, Jimbocho', cat: '公共', year: '2024', place: '千代田区神保町',
+      lead: '旧書店街の路地に面した、町の本棚のようなホール。',
+      body: '敷地は靖国通りから一本入った路地で、午後は西日にさらされる。ホールの西面に杉の縦ルーバーを立て、光を一度篩にかけてから打放しコンクリートの壁へ届けた。壁は光と残響の両方を受け止める。ロビーと中庭、路地までをひと続きの床にして、上演のない日も本を読む場所として開いている。',
+      circuit: '入口から入った人は、ロビーでいったん光の方へ導かれ、ホールを一巡りしてからルーバーの下を通って外へ出る。行きと帰りで床の明るさが変わり、同じ道が別の部屋のように見える。',
+      specs: [['用途', '多目的ホール・地区集会所'], ['構造', '鉄筋コンクリート造 一部木造／地上2階'], ['敷地面積', '412.0 m²'], ['延床面積', '486.5 m²'], ['設計', '回路建築設計事務所'], ['施工', '鈴木建設'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [100, 44, 356, 222], bx: 58, title: '1F PLAN — SCALE 1/200', tag: 'Plan 1/200', cap: '1階平面図。西の中庭、ルーバー、ロビー、ホール、背面の楽屋・控室・書庫と、入って一巡りして出る動線。',
+        ax: [[100, '1'], [176, '2'], [266, '3'], [356, '4']], ay: [[44, 'A'], [104, 'B'], [178, 'C']],
+        ground: R(70, 44, 30, 106, 'grass') + R(70, 150, 30, 90, 'pave') + R(100, 222, 256, 18, 'pave') + R(110, 46, 64, 174, 'tile') + tree(85, 96, 11),
+        body:
+          P('M100 44H356M356 44V222M100 222H108M148 222H330M346 222H356', 'w') +
+          P('M100 44V222', 'g') + P('M100 74h3M100 104h3M100 134h3M100 164h3M100 194h3', 'g') +
+          R(106, 44, 3, 178, 'wood') + P('M176 44V104M176 180V222', 'w') + R(167, 56, 9, 40, 'f') +
+          R(202, 48, 128, 24, 'hatch') + rows(196, 94, 11, 7, 12, 9.2, 8, 5) +
+          P('M176 178H198M210 178H262M274 178H320M332 178H356M236 178V222M296 178V222', 'w2') +
+          door(198, 178, 12, 0, 90) + door(262, 178, 12, 0, 90) + door(320, 178, 12, 0, 90) +
+          P('M108 220.6H128M128 223.4H148', 'g') + door(346, 222, 12, 180, 90) +
+          T(85, 140, '中庭', 'lbl') + T(138, 136, 'ロビー', 'lbl') + T(266, 88, 'ホール', 'lbl') + T(266, 63.5, '舞台', 'lbl') +
+          T(206, 204, '楽屋', 'lbl') + T(266, 204, '控室', 'lbl') + T(326, 204, '書庫', 'lbl') + T(228, 235.5, '路地', 'lbl') +
+          T(112, 39, '杉ルーバー', 'lblm', 'start') + P('M110 41L108 52', 'f'),
+        dims: dimH(100, 176, 250, '5,040') + dimH(176, 266, 250, '5,950') + dimH(266, 356, 250, '5,950') + dimV(44, 178, 370, '8,880'),
+        route: () => route('M140 250V164H192V80H334V164H116V250', 140, 250, 116, 250, 0, 1)
+      },
+      sec:
+        ground(24, 376) + treeS(50, 128, 92, 22) + L(84, 65, 84, 128, 'g') + R(92, 68, 16, 60, 'wood') + slab(84, 60, 292, 5) +
+        wallV(176, 65, 128, 6) + R(152, 106, 20, 3, 'f') + L(154, 109, 154, 128, 'f') + L(170, 109, 170, 128, 'f') +
+        R(179, 112, 197, 16, 'hatch') + L(179, 112, 376, 112, 'w') + R(296, 94, 64, 18, 'f') + slab(179, 86, 197, 3) +
+        [196, 224, 252, 280].map((x) => R(x, 105, 14, 3, 'f') + R(x, 96, 3, 9, 'f')).join('') +
+        P('M96 70L170 124M102 70L156 127M108 70L142 127M114 70L128 127', 'ray') + dimV(65, 128, 120, '3,650') +
+        T(50, 143, '中庭', 'lbl') + T(152, 97, 'ロビー', 'lbl') + T(262, 124, 'ホール', 'lbl') + T(328, 105, '舞台', 'lbl') +
+        T(100, 54, '杉ルーバー', 'lbl') + T(214, 54, '打放しコンクリート', 'lbl') + T(164, 102, 'ベンチ', 'lblm')
+    },
+    {
+      id: 'loop', no: '02', title: '千駄木 回路の家', en: 'House with a Loop, Sendagi', cat: '住宅', year: '2023', place: '文京区千駄木',
+      lead: '部屋が中庭の周りを一巡りする、回字取りの住宅。',
+      body: '敷地は三方を建物に囲まれた旗竿地で、周囲に開けない。そこで光と風は中央から取り入れることにした。延床面積の約三割を屋根のない中庭に充て、居間、ダイニング、書斎、水回りをその周囲に配置している。各部屋は縁側を挟んで中庭に面し、引き戸を開けると家の内側をぐるりと歩ける。',
+      circuit: '中庭の周りの縁側が、家の主な動線。行き止まりがなく、どこにいても光の方へ抜けられる。季節ごとに一番気持ちのよい縁側の位置が移り、暮らしの場所もついて回る。',
+      specs: [['用途', '専用住宅'], ['構造', '木造／地上2階'], ['敷地面積', '96.8 m²'], ['延床面積', '118.2 m²'], ['設計', '回路建築設計事務所'], ['施工', '小暮工務店'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [96, 36, 304, 228], title: '1F PLAN — SCALE 1/200', tag: 'Plan 1/200', cap: '1階平面図。中央の中庭、その周囲の縁側、外側に居間・ダイニング・書斎・玄関・水回りが並ぶ。',
+        ax: [[96, '1'], [200, '2'], [304, '3']], ay: [[36, 'A'], [132, 'B'], [228, 'C']],
+        ground: R(84, 26, 232, 8, 'grass') + R(84, 230, 232, 8, 'grass') + R(84, 34, 10, 196, 'grass') + R(308, 34, 8, 196, 'grass') +
+          R(82, 24, 236, 216, 'axis') + R(164, 92, 72, 80, 'tile') + R(176, 104, 48, 56, 'soil') + tree(200, 132, 9),
+        body:
+          P('M96 228V36H304V228H152M130 228H96', 'w') +
+          P('M176 104H224M176 160H192M208 160H224M176 104V160M224 104V160', 'g') +
+          P('M164 36V118M164 140V176M236 36V118M236 140V176M96 92H112M150 92H164M236 92H250M288 92H304', 'w2') +
+          P('M112 92H150M250 92H288', 'g') +
+          P('M96 172H128M148 172H164M236 176H262M276 176H304M270 176V228', 'w2') +
+          R(212, 176, 20, 50, 'f') + [183, 190, 197, 204, 211, 218].map((y) => L(212, y, 232, y, 'f')).join('') +
+          P('M222 222V182M219 186l3-4 3 4', 'f') +
+          door(128, 172, 20, -90, 0) + door(262, 176, 14, 0, 90) + door(164, 140, 22, -90, 0) + door(236, 118, 22, 90, 180) + door(152, 228, 22, -90, 0) +
+          R(104, 44, 44, 20, 'f') + R(246, 44, 44, 16, 'f') + R(102, 104, 40, 12, 'f') + R(244, 104, 36, 12, 'f') + R(238, 192, 26, 30, 'f') + R(274, 196, 10, 6, 'f') + C(296, 208, 6, 'f') +
+          T(130, 80, 'ダイニング', 'lbl') + T(270, 78, 'キッチン', 'lbl') + T(130, 138, '居間', 'lbl') + T(262, 136, '書斎', 'lbl') +
+          T(112, 206, '玄関', 'lbl') + T(200, 218, '廊下', 'lbl') + T(253, 186, '浴室', 'lbl') + T(287, 188, '洗面', 'lblm') + T(287, 224, 'WC', 'lblm') +
+          T(200, 154.5, '中庭', 'lbl') + T(171, 148, '縁側', 'lbl', 'middle', { transform: 'rotate(-90 171 148)' }),
+        dims: dimH(96, 200, 250, '7,280') + dimH(200, 304, 250, '7,280') + dimV(36, 132, 66, '6,720') + dimV(132, 228, 66, '6,720'),
+        route: () => route('M141 252V200Q141 196 145 196H196Q200 196 200 192V170Q200 166 196 166H174Q170 166 170 162V102Q170 98 174 98H226Q230 98 230 102V162Q230 166 226 166H206', 141, 252, 206, 166, 1, 0)
+      },
+      sec:
+        ground(24, 376) + slab(86, 90, 90, 4) + slab(86, 52, 90, 5) + wallV(88, 57, 128, 4) + L(174, 57, 174, 88, 'g') + wallV(174, 92, 128, 2.5) +
+        slab(226, 74, 92, 5) + wallV(316, 79, 128, 4) + L(226, 79, 226, 128, 'g') + R(98, 118, 40, 10, 'f') + R(252, 116, 40, 12, 'f') + R(100, 116, 3, 12, 'f') + R(135, 116, 3, 12, 'f') +
+        treeS(200, 128, 68, 24) + P('M258 28L208 126M272 40L216 126M212 126L160 96', 'ray') +
+        dimV(57, 128, 120, '5,800') + dimV(79, 128, 262, '2,700') +
+        T(200, 143, '中庭', 'lbl') + T(131, 108, '居室', 'lbl') + T(131, 82, '2F', 'lblm') + T(270, 110, '書斎', 'lbl') + T(150, 47, '屋根', 'lblm')
+    },
+    {
+      id: 'books', no: '03', title: '書庫の家', en: 'House of Books', cat: '住宅', year: '2021', place: '世田谷区',
+      lead: '本棚が壁の代わりをし、本棚の間を光が回る平屋。',
+      body: '蔵書一万冊を暮らしの中心に置きたい、という依頼から始まった。間仕切り壁を一切作らず、天井まで届く本棚で部屋を分けている。本棚には一定の間隔で隙間を設け、屋根のトップライトから落ちた光が本棚の間を東西に抜けていく。廊下はなく、どの部屋も本棚の隙間をくぐって行き来する。',
+      circuit: '光の通り道と人の動線が重なっている。朝は東端のダイニングが明るく、午後は光が西の寝室へ移る。本の背表紙が一番明るく見える場所も、時間とともに移っていく。',
+      specs: [['用途', '専用住宅'], ['構造', '木造／平屋'], ['敷地面積', '178.4 m²'], ['延床面積', '104.6 m²'], ['設計', '回路建築設計事務所'], ['施工', '堀内建設'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [72, 52, 336, 220], title: '1F PLAN — SCALE 1/200', tag: 'Plan 1/200', cap: '1階平面図。東西に長い平屋で、二列の本棚の隙間をくぐって西の玄関から東の食卓へ抜ける。中央にトップライト。',
+        ax: [[72, '1'], [204, '2'], [336, '3']], ay: [[52, 'A'], [136, 'B'], [220, 'C']],
+        ground: R(56, 38, 296, 14, 'grass') + R(56, 222, 296, 14, 'grass') + R(56, 52, 14, 170, 'grass') + R(52, 34, 304, 206, 'axis') + R(74, 54, 260, 164, 'tile'),
+        body:
+          P('M72 52H336V220H72V196M72 176V52', 'w') +
+          R(150, 52, 5, 66, 'hatch') + R(150, 142, 5, 78, 'hatch') + R(234, 80, 5, 140, 'hatch') +
+          P('M72 118H96M118 118H150M239 132H318M239 168H252M272 168H336', 'w2') + door(96, 118, 22, 0, 90) + door(252, 168, 20, 0, 90) +
+          R(176, 118, 40, 44, 'dash') +
+          R(80, 60, 24, 42, 'f') + L(80, 70, 104, 70, 'f') + R(164, 180, 44, 11, 'f') + R(196, 100, 22, 14, 'f') + R(268, 86, 44, 16, 'f') +
+          R(306, 54, 28, 66, 'f') + R(300, 196, 28, 18, 'f') + C(262, 198, 6, 'f') + R(276, 196, 10, 6, 'f') +
+          T(110, 90, '寝室', 'lbl') + T(106, 206, '玄関', 'lbl') + T(194, 212, '居間・書庫', 'lbl') + T(196, 172, 'トップライト', 'lblm') +
+          T(288, 122, 'ダイニング', 'lbl') + T(262, 152, 'キッチン', 'lbl') + T(262, 188, '浴室', 'lblm') + T(286, 188, 'WC', 'lblm') + T(152, 47, '本棚', 'lblm'),
+        dims: dimH(72, 204, 250, '9,240') + dimH(204, 336, 250, '9,240') + dimV(52, 136, 42, '5,880') + dimV(136, 220, 42, '5,880'),
+        route: () => route('M46 186H104V131H214V66H286V118', 46, 186, 286, 118, 0, 1)
+      },
+      sec:
+        ground(40, 360) + slab(56, 56, 120, 5) + slab(216, 56, 148, 5) + wallV(176, 42, 56, 2) + wallV(216, 42, 56, 2) + L(176, 43, 216, 43, 'g') +
+        wallV(56, 61, 128, 5) + wallV(360, 61, 128, 5) + R(148, 61, 6, 67, 'hatch') + R(230, 61, 6, 67, 'hatch') +
+        [68, 75, 82, 89, 96, 103, 110, 117].map((y) => L(148, y, 154, y, 'f') + L(230, y, 236, y, 'f')).join('') +
+        P('M184 46L150 127M194 46L172 127M204 46L198 127M212 46L224 127', 'ray') + R(262, 108, 50, 4, 'f') + dimV(61, 128, 120, '3,500') +
+        T(196, 36, 'トップライト', 'lbl') + T(104, 120, '寝室', 'lbl') + T(194, 120, '居間・書庫', 'lbl') + T(296, 120, 'ダイニング', 'lbl')
+    },
+    {
+      id: 'fuji', no: '04', title: '富士見坂こども園', en: 'Fujimisaka Children’s Garden', cat: '公共', year: '2022', place: '千代田区富士見',
+      lead: '回廊と園庭がつながった、走り回るためのこども園。',
+      body: '園舎の南側に回廊を巡らせ、園庭との間に境目を作らなかった。保育室は引き戸を開けると回廊につながり、回廊はそのまま園庭へ抜ける。雨の日も子どもは回廊を走って園庭まで行ける。屋根は南に向かって持ち上げ、軒下で反射した光を保育室の奥まで届かせた。',
+      circuit: '玄関から回廊を東へ進み、園庭を西に回って玄関に戻る。一周約八十メートルの回路で、未満児から年長まで、速さの違う子どもが同じ道を重なりながら走れる。',
+      specs: [['用途', '認可こども園（保育室・回廊・園庭）'], ['構造', '木造／地上1階'], ['敷地面積', '1,240.0 m²'], ['延床面積', '596.3 m²'], ['設計', '回路建築設計事務所'], ['施工', '真野建設'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [64, 44, 348, 226], title: '1F PLAN — SCALE 1/300', tag: 'Plan 1/300', cap: '1階平面図。北側に三つの保育室、南側の回廊、そのまま続く園庭。砂場とプールの間を回って玄関に戻る動線。',
+        ax: [[64, '1'], [158, '2'], [253, '3'], [348, '4']], ay: [[44, 'A'], [116, 'B'], [150, 'C'], [226, 'D']],
+        ground: R(64, 150, 284, 76, 'grass') + R(66, 46, 280, 102, 'tile') + R(74, 150, 24, 40, 'pave') +
+          el('ellipse', { cx: 176, cy: 192, rx: 38, ry: 15, class: 'soil' }) + tree(112, 204, 10),
+        body:
+          P('M64 150V44H348V150', 'w') + P('M64 150H76M94 150H348', 'w2') + R(155.5, 147.5, 5, 5, 'solid') + R(250.5, 147.5, 5, 5, 'solid') + R(94, 147.5, 4, 5, 'solid') +
+          P('M158 44V116M253 44V116M318 44V96M318 112V116', 'w2') + door(318, 112, 16, -90, 0) +
+          P('M64 116H100M140 116H196M236 116H292M332 116H348', 'w2') + P('M100 116H140M196 116H236M292 116H332', 'g') + door(76, 150, 18, 0, 90) +
+          R(100, 78, 26, 16, 'f') + R(196, 78, 26, 16, 'f') + R(290, 78, 26, 16, 'f') + R(326, 60, 14, 26, 'f') +
+          R(280, 166, 54, 20, 'f') + P('M294 166V186M308 166V186M320 166V186', 'f') +
+          T(111, 66, 'ほしぞら組', 'lbl') + T(206, 66, 'もも組', 'lbl') + T(286, 66, 'たんぽぽ組', 'lbl') + T(333, 104, '職員室', 'lbl') +
+          T(206, 145.5, '回廊', 'lbl') + T(176, 195, '砂場', 'lbl') + T(307, 180, 'プール', 'lbl') + T(250, 212, '園庭', 'lbl') + T(88, 110, '玄関', 'lblm'),
+        dims: dimH(64, 158, 256, '6,580') + dimH(158, 253, 256, '6,650') + dimH(253, 348, 256, '6,650') + dimV(44, 116, 36, '5,040'),
+        route: () => route('M85 250V135H338V218H82Q74 218 74 210V170', 85, 250, 74, 170, 0, -1)
+      },
+      sec:
+        ground(24, 376) + P('M36 72L344 50V55L36 77z', 'solid') + wallV(38, 72, 128, 5) + wallV(232, 58, 128, 3) + wallV(316, 52, 128, 2.5) + R(314, 108, 5, 20, 'solid') +
+        R(70, 108, 40, 4, 'f') + L(72, 112, 72, 128, 'f') + L(108, 112, 108, 128, 'f') + R(150, 108, 40, 4, 'f') + L(152, 112, 152, 128, 'f') + L(188, 112, 188, 128, 'f') +
+        treeS(352, 128, 98, 16) + P('M376 28L322 126M376 42L332 126M324 126L238 96', 'ray') + dimV(55, 128, 300, '4,200') + dimV(72, 128, 120, '3,400') +
+        T(134, 120, '保育室', 'lbl') + T(272, 120, '回廊', 'lbl') + T(350, 143, '園庭', 'lbl') + T(338, 44, '軒先', 'lbl')
+    },
+    {
+      id: 'reki', no: '05', title: '「礫 — かたちの時間」展', en: 'Ishi: Time of Form, exhibition', cat: '展示', year: '2023', place: '神田錦町',
+      lead: '石彫11点を、一本の回路で見せる会場構成。',
+      body: '既存倉庫の柱や壁を隠さず、展示台だけを新しく作った。台の高さを石の大きさに合わせて三段に変え、視線の高さが一定にならないようにしている。見る人の動線は枝分かれさせず、行き止まりのない一本の通路にまとめた。',
+      circuit: '入口から出口まで、通路は一度も交差しない。見る人は一本の通路を進むうちに、同じ石を必ず二度、違う距離と高さから見ることになる。',
+      specs: [['会場', 'ギャラリー灯（神田錦町）'], ['内容', '会場構成・展示台設計'], ['規模', '展示台11基・壁面パネル8点'], ['既存建築', '鉄骨造倉庫（改装）'], ['期間', '2023年10月 — 12月'], ['設計', '回路建築設計事務所'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [60, 44, 348, 226], title: 'LAYOUT PLAN — SCALE 1/200', tag: 'Layout 1/200', cap: '会場配置図。三段の高さの展示台を三列にずらして並べ、入口から出口まで交差しない一本の通路で見せる。',
+        ax: [], ay: [],
+        ground: R(62, 46, 284, 178, 'tile'),
+        body:
+          P('M60 44H348V226H336M312 226H96M72 226H60V44', 'w') +
+          R(152, 40, 8, 8, 'solid') + R(248, 40, 8, 8, 'solid') + R(152, 222, 8, 8, 'solid') + R(248, 222, 8, 8, 'solid') +
+          door(96, 226, 24, -90, -180) + door(312, 226, 24, -90, 0) +
+          [92, 168, 244, 308].map((x, i) => R(x, 64, 28, 16, 'f') + C(x + 14, 72, 4, 'f') + T(x + 14, 89.5, String(8 + i), 'lblm')).join('') +
+          [128, 204, 276].map((x, i) => R(x, 118, 28, 16, 'f') + C(x + 14, 126, 4, 'f') + T(x + 14, 143.5, String(7 - i), 'lblm')).join('') +
+          [92, 168, 244, 308].map((x, i) => R(x, 176, 28, 16, 'f') + C(x + 14, 184, 4, 'f') + T(x + 14, 201.5, String(1 + i), 'lblm')).join('') +
+          R(104, 47, 40, 3, 'hatch') + R(170, 47, 30, 3, 'hatch') + R(240, 47, 40, 3, 'hatch') + R(304, 47, 24, 3, 'hatch') +
+          R(63, 64, 3, 28, 'hatch') + R(63, 118, 3, 28, 'hatch') + R(342, 64, 3, 28, 'hatch') + R(342, 118, 3, 28, 'hatch') + R(342, 176, 3, 28, 'hatch') +
+          R(236, 144, 30, 6, 'f') +
+          T(84, 237.5, '入口', 'lbl') + T(324, 237.5, '出口', 'lbl') + T(280, 57.5, '壁面展示', 'lblm') + T(266, 141, 'ベンチ', 'lblm'),
+        dims: dimH(60, 348, 258, '17,280') + dimV(44, 226, 40, '10,900'),
+        route: () => route('M84 248V222Q84 212 94 212H304Q314 212 314 202V166Q314 156 304 156H86Q76 156 76 146V110Q76 100 86 100H310', 84, 248, 310, 100, 1, 0)
+      },
+      sec:
+        ground(24, 376) + slab(24, 40, 352, 3) +
+        R(64, 98, 28, 30, 'f') + R(116, 108, 28, 20, 'f') + R(168, 86, 28, 42, 'f') + R(220, 102, 28, 26, 'f') + R(272, 112, 28, 16, 'f') + R(322, 94, 28, 34, 'f') +
+        C(78, 92, 6, 'f') + C(130, 102, 5, 'f') + C(182, 78, 8, 'f') + C(234, 96, 6, 'f') + C(286, 106, 5, 'f') + C(336, 86, 8, 'f') +
+        R(150, 58, 3, 44, 'f') + L(151.5, 43, 151.5, 58, 'g') + R(258, 64, 3, 36, 'f') + L(259.5, 43, 259.5, 64, 'g') + R(348, 56, 3, 40, 'f') + L(349.5, 43, 349.5, 56, 'g') +
+        L(40, 48, 360, 48, 'f') + [78, 182, 286, 336].map((x) => P('M' + (x - 3) + ' 48h6l-3 6z', 'solid')).join('') +
+        P('M78 54L60 92M78 54L96 92M182 54L170 72M182 54L194 72M286 54L274 102M286 54L298 102M336 54L326 78M336 54L346 78', 'ray') +
+        T(346, 36, '既存天井', 'lbl') + T(122, 58, 'スポットライト', 'lblm') + T(156, 112, '吊りパネル', 'lbl') + T(64, 138, '展示台', 'lbl') +
+        P('M28 132H372', 'route') + arrow(372, 132, 1, 0)
+    },
+    {
+      id: 'spiral', no: '06', title: '「回路 — 紙の建築」展', en: 'Circuit: Architecture on Paper, exhibition', cat: '展示', year: '2025', place: '千代田区神保町',
+      lead: '巻いて進むうちに天井が下がり、光の井戸に至る会場。',
+      body: '事務所10周年の展覧会。印刷の街・神保町にちなみ、模型はすべて紙で作り、会場構成も紙の間仕切りで組んだ。間仕切りを渦を巻くように並べ、進むほど天井を低くし、最後に天井の光の井戸へ導いている。',
+      circuit: '入口から光の井戸まで約六十メートル。天井の高さが三段階に下がり、歩く速度が自然に緩む。井戸の下に着くと、今度は来た道を高い天井の下で眺めながら戻る。',
+      specs: [['会場', '旧印刷所（神保町）'], ['内容', '会場構成・間仕切り設計'], ['規模', '建築模型42点・図面30葉'], ['既存建築', '鉄骨造2階建て（1階）'], ['期間', '2025年9月 — 11月'], ['設計', '回路建築設計事務所'], ['撮影', '田島写真事務所']],
+      plan: {
+        box: [80, 36, 320, 226], title: 'LAYOUT PLAN — SCALE 1/200', tag: 'Layout 1/200', cap: '会場配置図。間仕切りを渦状に並べ、右上の入口から巻いて進み、中心の光の井戸に至る。',
+        ax: [[80, '1'], [200, '2'], [320, '3']], ay: [[36, 'A'], [132, 'B'], [226, 'C']],
+        ground: R(82, 38, 236, 186, 'tile'),
+        body:
+          P('M80 36H292M312 36H320V226H80V36', 'w') +
+          P('M256 52H96V204H304V80H124V172H272V110H148', 'w2') + P('M256 68H112V188H288V96H140V156H256V126H164', 'w2') +
+          R(120, 47.5, 18, 3, 'f') + R(160, 54.5, 18, 3, 'f') + R(200, 179.5, 18, 3, 'f') + R(130, 150.5, 3, 18, 'f') + R(244, 120.5, 18, 3, 'f') +
+          C(214, 141, 7, 'hatch') + P('M214 130V124M214 152V158M203 141H197M225 141H231', 'g') +
+          T(182, 143.5, '光の井戸', 'lbl', 'end') + T(326, 47.5, '入口', 'lbl', 'start') + T(222, 37.5, '紙の間仕切り', 'lblm', 'end') + T(152, 106, '展示台', 'lblm'),
+        dims: dimH(80, 320, 250, '14,400') + dimV(36, 226, 54, '11,400'),
+        route: () => route('M302 32V44H104V196H296V72H132V164H264V118H172V141H198', 302, 32, 198, 141, 1, 0)
+      },
+      sec:
+        ground(24, 376) + slab(24, 30, 352, 3) + P('M36 46H110V58H180V70H244V82H300V86H240V74H176V62H106V50H36z', 'solid') +
+        L(70, 33, 70, 46, 'g') + L(144, 33, 144, 58, 'g') + L(212, 33, 212, 70, 'g') + L(272, 33, 272, 82, 'g') +
+        slab(314, 30, 8, 14) + L(316, 44, 316, 128, 'g') + L(320, 44, 320, 128, 'g') + wallV(372, 30, 128, 4) +
+        P('M318 60L220 127M318 84L180 127M318 108L140 127', 'ray') + dimV(86, 128, 272, '2,100') + dimV(44, 128, 350, '5,000') +
+        T(196, 44, '天井 三段', 'lbl') + T(336, 56, '光の井戸', 'lbl') + T(44, 143, '入口', 'lbl', 'start') +
+        P('M28 136H372', 'route') + arrow(372, 136, 1, 0)
+    }
+  ];
+
+  /* ---------- Selected Works: cards, filter, detail sheet ---------- */
+  const list = document.getElementById('works-list');
+  const dlg = document.getElementById('dlg');
+  const SPAN = ['7', '5', '4', '4', '4', '12'];
+  const byId = (id) => WORKS.find((w) => w.id === id);
+  let visible = WORKS.map((w) => w.id);
+
+  const WORK_PHOTOS = {
+    shiori: '../assets/kairo-architecture.jpg',
+    loop: '../assets/kairo-work-house.jpg',
+    books: '../assets/kairo-work-library-house.jpg',
+    fuji: '../assets/kairo-work-kindergarten.jpg',
+    reki: '../assets/kairo-work-exhibition.jpg',
+    spiral: '../assets/kairo-work-exhibition.jpg'
+  };
+
+  list.innerHTML = WORKS.map((w) => {
+    const photo = WORK_PHOTOS[w.id] || '../assets/kairo-architecture.jpg';
+    return '<li class="work" data-id="' + w.id + '" data-cat="' + w.cat + '">' +
+      '<a class="work-link" href="#work-' + w.id + '" data-open="' + w.id + '" aria-haspopup="dialog">' +
+        '<div class="work-media">' +
+          '<figure class="work-photo"><span class="sheet-tag">Plate ' + w.no + '</span><img src="' + photo + '" alt="' + esc(w.title + ' 竣工写真') + '" loading="lazy" decoding="async"></figure>' +
+          '<div class="sheet"><span class="sheet-tag">' + w.plan.tag + '</span>' + planSVG(w, 'thumb') + '</div>' +
+        '</div>' +
+        '<div class="work-bar"><span class="work-no">' + w.no + '</span><h3 class="work-title">' + esc(w.title) + '</h3>' +
+        '<div class="work-sub"><span class="work-meta">' + w.cat + ' ／ ' + esc(w.place) + ' ／ ' + w.year + '</span><span class="work-en">' + esc(w.en) + '</span></div>' +
+        '<p class="work-desc">' + esc(w.lead) + '</p></div>' +
+      '</a></li>';
+  }).join('');
+  for (const svg of list.querySelectorAll('svg')) svg.style.setProperty('--len', Math.ceil(svg.querySelector('.route').getTotalLength() + 2) + 'px');
+
+  const fBtns = Array.from(document.querySelectorAll('.f-btn'));
+  const countEl = document.getElementById('works-count');
+  function applyFilter(cat) {
+    let i = 0;
+    visible = [];
+    for (const li of list.children) {
+      const on = cat === 'all' || li.dataset.cat === cat;
+      li.classList.toggle('is-hidden', !on);
+      if (on) { li.dataset.span = SPAN[i % SPAN.length]; visible.push(li.dataset.id); i++; }
+    }
+    for (const b of fBtns) b.setAttribute('aria-pressed', b.dataset.cat === cat ? 'true' : 'false');
+    countEl.textContent = visible.length + ' 件';
+  }
+  for (const b of fBtns) {
+    const n = b.dataset.cat === 'all' ? WORKS.length : WORKS.filter((w) => w.cat === b.dataset.cat).length;
+    b.querySelector('sup').textContent = String(n).padStart(2, '0');
+    b.addEventListener('click', () => applyFilter(b.dataset.cat));
+  }
+  applyFilter('all');
+
+  const els = {};
+  for (const k of ['no', 'title', 'en', 'photo', 'plan', 'sec', 'text', 'prev', 'next']) els[k] = document.getElementById('dlg-' + k);
+  function setNav(a, w, dir) {
+    a.innerHTML = (dir < 0 ? '← ' : '') + '<span>' + w.no + '</span>' + esc(w.title) + (dir > 0 ? ' →' : '');
+    a.dataset.open = w.id;
+    a.setAttribute('aria-label', (dir < 0 ? '前の作品：' : '次の作品：') + w.title);
+  }
+  function openWork(id) {
+    const w = byId(id);
+    if (!w) return;
+    const at = Math.max(0, visible.indexOf(id));
+    const seq = visible.indexOf(id) >= 0 ? visible : WORKS.map((x) => x.id);
+    setNav(els.prev, byId(seq[(at - 1 + seq.length) % seq.length]), -1);
+    setNav(els.next, byId(seq[(at + 1) % seq.length]), 1);
+    els.no.textContent = 'No. ' + w.no;
+    els.title.textContent = w.title;
+    els.en.textContent = w.en + ' — ' + w.year + ', ' + w.place;
+    const photo = WORK_PHOTOS[w.id] || '../assets/kairo-architecture.jpg';
+    els.photo.innerHTML = '<img src="' + photo + '" alt="' + esc(w.title + ' 建築写真') + '">';
+    els.plan.innerHTML = planSVG(w, 'full');
+    els.sec.innerHTML = secSVG(w, 'full');
+    els.text.innerHTML =
+      '<p class="dlg-lead">' + esc(w.lead) + '</p>' +
+      '<h4>概要</h4><p>' + esc(w.body) + '</p>' +
+      '<div class="dlg-circuit"><h4>回路</h4><p>' + esc(w.circuit) + '</p></div>' +
+      '<table class="spec"><caption class="sr">案件概要</caption><tbody>' +
+      w.specs.map((s) => '<tr><th scope="row">' + esc(s[0]) + '</th><td>' + esc(s[1]) + '</td></tr>').join('') + '</tbody></table>';
+    if (!dlg.open) dlg.showModal();
+    dlg.scrollTop = 0;
+  }
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-open]');
+    if (!a) return;
+    e.preventDefault();
+    openWork(a.dataset.open);
+  });
+  document.getElementById('dlg-x').addEventListener('click', () => { if (dlg.open) dlg.close(); });
+  dlg.addEventListener('click', (e) => { if (e.target === dlg && dlg.open) dlg.close(); });
+
+  /* ---------- reveal on scroll, current section in the header ---------- */
+  const rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const en of entries) if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+    }, { rootMargin: '0px 0px -6% 0px' });
+    rvs.forEach((n) => io.observe(n));
+    const links = Array.from(document.querySelectorAll('.hdr .nav a'));
+    const spy = new IntersectionObserver((entries) => {
+      for (const en of entries) {
+        if (!en.isIntersecting) continue;
+        links.forEach((a) => (en.target.id && a.getAttribute('href') === '#' + en.target.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+      }
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    links.forEach((a) => { const s = document.querySelector(a.getAttribute('href')); if (s) spy.observe(s); });
+    spy.observe(document.querySelector('.hero'));
+  } else {
+    rvs.forEach((n) => n.classList.add('is-in'));
+  }
+
+  /* ---------- contact form: validate here, state readable without color ---------- */
+  const form = document.getElementById('ct-form');
+  const done = document.getElementById('ct-done');
+  const sum = document.getElementById('ct-sum');
+  const sumList = document.getElementById('ct-sum-list');
+  const LABEL = { name: 'お名前', email: 'メールアドレス', kind: 'お問い合わせの種類', msg: 'ご相談の内容', agree: '個人情報の取り扱いへの同意' };
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const val = (k) => (k === 'kind' ? (form.querySelector('input[name="kind"]:checked') || {}).value || '' : k === 'agree' ? form.elements.agree.checked : form.elements[k].value);
+  const OK = { name: (v) => v.trim().length > 0, email: (v) => EMAIL.test(v.trim()), kind: (v) => v !== '', msg: (v) => v.trim().length > 0, agree: (v) => v === true };
+  const boxOf = (k) => form.querySelector('[data-field="' + k + '"]');
+  function setState(k, ok) {
+    boxOf(k).dataset.invalid = ok ? 'false' : 'true';
+    const targets = k === 'kind' ? form.querySelectorAll('input[name="kind"]') : [form.elements[k]];
+    targets.forEach((t) => t.setAttribute('aria-invalid', ok ? 'false' : 'true'));
+  }
+  form.querySelectorAll('input[name="kind"]').forEach((r) => r.setAttribute('aria-describedby', 'e-kind'));
+  form.addEventListener('input', (e) => {
+    const k = e.target.name;
+    if (OK[k] && boxOf(k).dataset.invalid === 'true') setState(k, OK[k](val(k)));
+  });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bad = Object.keys(OK).filter((k) => !OK[k](val(k)));
+    Object.keys(OK).forEach((k) => setState(k, !bad.includes(k)));
+    if (bad.length) {
+      sumList.innerHTML = bad.map((k) => '<li><a href="#f-' + k + '" data-goto="' + k + '">' + LABEL[k] + 'をご確認ください。</a></li>').join('');
+      form.dataset.invalid = 'true';
+      sum.focus();
+      return;
+    }
+    form.dataset.invalid = 'false';
+    document.getElementById('ct-done-sum').textContent = 'お名前：' + val('name').trim() + ' ／ メールアドレス：' + val('email').trim() + ' ／ 種類：' + val('kind');
+    form.querySelectorAll(':scope > .fld, :scope > .btn, :scope > .btn-note').forEach((n) => { n.hidden = true; });
+    done.hidden = false;
+    done.focus();
+  });
+  form.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-goto]');
+    if (!a) return;
+    e.preventDefault();
+    const k = a.dataset.goto;
+    (k === 'kind' ? form.querySelector('input[name="kind"]') : form.elements[k]).focus();
+  });
+  document.getElementById('ct-again').addEventListener('click', () => {
+    form.reset();
+    Object.keys(OK).forEach((k) => setState(k, true));
+    done.hidden = true;
+    form.querySelectorAll(':scope > .fld, :scope > .btn, :scope > .btn-note').forEach((n) => { n.hidden = false; });
+    form.elements.name.focus();
+  });
+  const kairoFilm = document.getElementById('kairo-film');
+  const kairoFilmBtn = document.getElementById('kairo-film-btn');
+  if (kairoFilm && kairoFilmBtn) {
+    kairoFilmBtn.addEventListener('click', () => {
+      const paused = !kairoFilm.paused;
+      if (paused) kairoFilm.pause(); else kairoFilm.play();
+      kairoFilmBtn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      kairoFilmBtn.textContent = paused ? 'PLAY FILM' : 'PAUSE FILM';
+    });
+  }
+})();
+</script>
+</body>
+</html>

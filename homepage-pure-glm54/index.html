@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回路建築設計事務所｜KAIRO STUDIO — 東京・神保町の建築設計事務所</title>
+<meta name="description" content="光と風と人の回路をつくる建築設計事務所。東京・神保町から、住宅・公共建築・展示空間を設計します。">
+<meta name="theme-color" content="#f3f0e9">
+<style>
+/* 地は石膏の白、文字は鉛筆の墨、アクセントは杉ルーバーの琥珀（写真から採色） */
+:root{
+  --paper:#f3f0e9;--paper-2:#ebe7dd;--paper-3:#e0dbcf;
+  --ink:#1d1c1a;--ink-2:#4b4944;--ink-3:#67645d;
+  --rule:#d3cec2;--rule-2:#b9b3a5;
+  --cedar:#b4662a;--cedar-ink:#98501a;--sun:#e9b866;
+  --dusk:#2c3f5a;--err:#a3311f;--ok:#2f6b4f;
+  --poch:#d8d5cc;--woodfill:#ecd2ad;--glassfill:#dfe6e8;
+  --mincho:"Noto Serif JP","Noto Serif CJK JP","Source Han Serif JP","Yu Mincho","YuMincho","Hiragino Mincho ProN",serif;
+  --gothic:"Noto Sans JP","Noto Sans CJK JP","Source Han Sans JP","Yu Gothic","YuGothic","Hiragino Sans",sans-serif;
+  --mono:"Cascadia Mono",Menlo,Consolas,"SF Mono",monospace;
+  --hdr:64px;--gutter:clamp(20px,4.4vw,64px);
+  --dots:radial-gradient(circle at 1px 1px,var(--rule) 1.1px,transparent 1.4px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scrollbar-gutter:stable;scroll-padding-top:calc(var(--hdr) + 16px);background:var(--paper)}
+html.is-locked{overflow:hidden}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--gothic);font-size:15px;line-height:1.9;-webkit-font-smoothing:antialiased}
+img,video,svg{display:block;max-width:100%}
+img{height:auto}
+h1,h2,h3,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--cedar-ink);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:16px;top:-60px;z-index:100;padding:10px 16px;background:var(--ink);color:var(--paper);text-decoration:none;transition:top .2s}
+.skip:focus{top:8px}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1360px;margin-inline:auto;padding-inline:var(--gutter)}
+.defs{position:absolute;width:0;height:0;overflow:hidden}
+.louver{display:inline-block;flex:none;width:34px;height:10px;background:repeating-linear-gradient(90deg,var(--cedar) 0 2px,transparent 2px 5px)}
+
+/* ヘッダー */
+.hdr{position:sticky;top:0;z-index:40;min-height:var(--hdr);display:flex;flex-wrap:wrap;align-items:center;gap:0 24px;padding-inline:var(--gutter);background:var(--paper);border-bottom:1px solid var(--rule)}
+.brand{display:flex;align-items:center;gap:12px;min-height:var(--hdr);text-decoration:none}
+.mark{width:24px;height:24px;flex:none}
+.brand-j{font-family:var(--mincho);font-weight:600;font-size:16px;letter-spacing:.1em;white-space:nowrap}
+.brand-e{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ink-3)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:clamp(14px,2.2vw,36px)}
+.nav a{position:relative;padding:8px 0;text-decoration:none;font-size:13.5px;letter-spacing:.1em;white-space:nowrap}
+.nav .no{margin-right:6px;font-family:var(--mono);font-size:10px;letter-spacing:0;color:var(--ink-3);vertical-align:.2em}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:repeating-linear-gradient(90deg,var(--cedar) 0 2px,transparent 2px 5px);opacity:0;transform:scaleY(.3);transform-origin:bottom;transition:opacity .2s,transform .2s}
+.nav a[aria-current="true"]{color:var(--cedar-ink)}
+.nav a[aria-current="true"]::after{opacity:1;transform:none}
+.nav-cta{padding:8px 16px!important;border:1px solid var(--ink);transition:background-color .2s,color .2s}
+.nav-cta:hover{background:var(--ink);color:var(--paper)}
+.menu-btn{display:none;min-height:44px;margin-left:auto;padding:0 12px;border:1px solid var(--ink);background:transparent;cursor:pointer;font-size:13px;letter-spacing:.1em}
+
+/* ヒーロー：左は図面の表題欄、右は開口部 */
+.hero{display:grid;grid-template-columns:minmax(0,38fr) minmax(0,62fr);min-height:calc(100svh - var(--hdr));border-bottom:1px solid var(--rule)}
+.hero-copy{display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,3vh,30px);padding:clamp(32px,6vh,72px) clamp(28px,3.6vw,56px) clamp(32px,6vh,72px) var(--gutter)}
+.eyebrow{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--ink-2)}
+.hero h1{font-family:var(--mincho);font-weight:500;font-size:clamp(28px,3.55vw,52px);line-height:1.34;letter-spacing:.05em;word-break:auto-phrase}
+.hero h1 .l{display:block;white-space:nowrap}
+.hero .lead{max-width:40em;font-size:14.5px;line-height:2.05;color:var(--ink-2)}
+.hero-acts{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 22px;border:1px solid var(--ink);font-size:14px;letter-spacing:.12em;text-decoration:none;cursor:pointer;transition:background-color .2s,color .2s,border-color .2s}
+.btn-ink{background:var(--ink);color:var(--paper)}
+.btn:hover{background:var(--cedar-ink);border-color:var(--cedar-ink);color:#fff}
+.facts{display:flex;flex-wrap:wrap;gap:6px 26px;padding-top:18px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-2)}
+.facts div{display:flex;gap:8px}
+.facts dt{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--ink-3);padding-top:3px}
+.hero-media{display:flex;flex-direction:column;min-width:0;background:var(--paper-2)}
+.hero-screen{position:relative;flex:1;min-height:300px;overflow:hidden}
+.hero-screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:8px 20px;border-top:1px solid var(--rule);background:var(--paper)}
+.hero-bar p{flex:1 1 260px;min-width:0;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+.hero-bar p .mono{display:block;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3)}
+.hero-bar .to-work{flex:none;padding:8px 0;font-size:12.5px;letter-spacing:.08em;color:var(--cedar-ink);background:none;border:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.vtoggle{display:inline-flex;flex:none;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font-size:13px;letter-spacing:.12em;transition:background-color .2s,color .2s}
+.vtoggle:hover{background:var(--ink);color:var(--paper)}
+.vtoggle svg{width:12px;height:12px;fill:currentColor}
+.vtoggle .t-play,.vtoggle .i-play{display:none}
+.vtoggle.is-paused .t-play{display:inline}
+.vtoggle.is-paused .i-play{display:block}
+.vtoggle.is-paused .t-stop,.vtoggle.is-paused .i-stop{display:none}
+
+/* セクション見出し */
+.sec{padding-block:clamp(64px,10vw,128px)}
+.sec-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:0 24px;align-items:end;margin-bottom:clamp(32px,5vw,60px)}
+.sec-index{grid-column:1/-1;display:flex;align-items:center;gap:14px;margin-bottom:18px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--cedar-ink)}
+.sec-index .en{color:var(--ink-3)}
+.sec-head h2{grid-column:1/span 7;font-family:var(--mincho);font-weight:500;font-size:clamp(26px,3.2vw,44px);line-height:1.4;letter-spacing:.06em;word-break:auto-phrase}
+.sec-head .lead{grid-column:9/span 4;font-size:14px;line-height:2;color:var(--ink-2)}
+
+/* 作品：段違いの構成（雑誌の見開きのように） */
+.filter{display:flex;flex-wrap:wrap;gap:0 22px;margin-bottom:clamp(26px,4vw,44px)}
+.filter button{position:relative;padding:10px 2px 12px;border:0;background:none;cursor:pointer;font-size:14px;letter-spacing:.12em;color:var(--ink-2);transition:color .2s}
+.filter button .c{margin-left:4px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+.filter button::after{content:"";position:absolute;left:0;right:0;bottom:0;height:9px;background:repeating-linear-gradient(90deg,var(--cedar) 0 2px,transparent 2px 5px);opacity:0;transform:scaleY(.3);transform-origin:bottom;transition:opacity .2s,transform .2s}
+.filter button[aria-pressed="true"]{color:var(--ink)}
+.filter button[aria-pressed="true"]::after{opacity:1;transform:none}
+.works{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(30px,4.5vw,60px) 24px}
+.work{display:block;width:100%;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.works>li{grid-column:1/-1;min-width:0}
+.works>li[hidden]{display:none}
+.work .ph{display:block;position:relative;overflow:hidden;aspect-ratio:16/11;background:var(--paper-3)}
+.work .ph img{width:100%;height:100%;object-fit:cover;object-position:var(--ox,50%) 50%;transition:transform .9s cubic-bezier(.2,.7,.2,1)}
+.work:hover .ph img,.work:focus-visible .ph img{transform:scale(1.025)}
+.work .cap{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:baseline;margin-top:14px;padding-top:12px;border-top:1px solid var(--ink)}
+.work .cap .no{font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.work .cap .t{font-family:var(--mincho);font-weight:600;font-size:clamp(18px,1.6vw,22px);line-height:1.45;letter-spacing:.04em}
+.work .cap .more{font-size:12px;letter-spacing:.08em;color:var(--cedar-ink);white-space:nowrap}
+.work .cap .meta{grid-column:2/-1;font-size:12.5px;color:var(--ink-2)}
+@media (min-width:640px) and (max-width:979px){
+  .works>li{grid-column:span 6}
+  .works>li[data-pos="4"]{grid-column:2/span 8}
+}
+@media (min-width:980px){
+  .works>li[data-pos="0"]{grid-column:1/span 7}
+  .works>li[data-pos="1"]{grid-column:9/span 4;margin-top:clamp(48px,8vw,120px)}
+  .works>li[data-pos="1"] .ph{aspect-ratio:3/4}
+  .works>li[data-pos="2"]{grid-column:2/span 5}
+  .works>li[data-pos="2"] .ph{aspect-ratio:4/3}
+  .works>li[data-pos="3"]{grid-column:8/span 5;margin-top:clamp(40px,7vw,104px)}
+  .works>li[data-pos="4"]{grid-column:4/span 6}
+  .works[data-count="1"]>.work{grid-column:3/span 8}
+  .works[data-count="1"]>.work .ph{aspect-ratio:16/9}
+}
+
+/* 作品詳細：図面を並べたスプレッド */
+.wd{width:min(1120px,calc(100vw - 32px));max-height:min(92svh,100%);margin:auto;padding:0;overflow:auto;overscroll-behavior:contain;border:1px solid var(--ink);background:var(--paper);color:var(--ink)}
+.wd::backdrop{background:rgba(26,31,42,.68)}
+.wd[open]{animation:wd-in .3s ease-out}
+@keyframes wd-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.wd-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 20px;background:var(--paper);border-bottom:1px solid var(--rule)}
+.wd-bar .mono{font-size:11.5px;letter-spacing:.16em;color:var(--ink-2)}
+.wd-close{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border:1px solid var(--ink);background:var(--paper);cursor:pointer;font-size:13px;letter-spacing:.12em;transition:background-color .2s,color .2s}
+.wd-close:hover{background:var(--ink);color:var(--paper)}
+.wd-body{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:28px 32px;padding:20px}
+.wd-photo,.wd-info,.wd-drawings{grid-column:1/-1;min-width:0}
+.wd-photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.wd-photo figcaption,.dwg figcaption{margin-top:8px;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+.wd-photo figcaption .mono{margin-right:8px;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3)}
+.wd-info h3{font-family:var(--mincho);font-weight:600;font-size:clamp(24px,2.4vw,32px);line-height:1.4;letter-spacing:.06em}
+.wd-meta{margin-top:6px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--cedar-ink)}
+.wd-text{margin-top:18px;font-size:14px;line-height:2.05;color:var(--ink-2)}
+.loops{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.loops li{padding:3px 10px;border:1px solid var(--rule-2);font-size:12px;letter-spacing:.08em}
+.spec{margin-top:24px;border-top:1px solid var(--ink)}
+.spec>div{display:grid;grid-template-columns:6.2em 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13px;line-height:1.7}
+.spec dt{color:var(--ink-3)}
+.wd-drawings{display:grid;gap:24px}
+@media (min-width:880px){
+  .wd-body{padding:24px 32px 40px}
+  .wd-photo{grid-column:1/span 7;grid-row:1}
+  .wd-info{grid-column:8/span 5;grid-row:1/span 3;align-self:start;position:sticky;top:60px}
+  .wd-drawings{grid-column:1/span 7;grid-row:2/span 2}
+}
+
+/* 図面：打込み孔の点グリッド、断面はコンクリートの濃度、光は琥珀 */
+.dwg{margin:0;padding:14px 14px 12px;border:1px solid var(--rule-2);background-color:var(--paper);background-image:var(--dots);background-size:24px 24px;background-position:14px 14px}
+.dwg svg{width:100%;height:auto;font-family:var(--gothic);font-size:10px}
+.dwg text{fill:var(--ink-2);text-anchor:middle;dominant-baseline:central}
+.dwg .cut{fill:var(--poch);stroke:var(--ink);stroke-width:1.3}
+.dwg .wall{fill:var(--ink)}
+.dwg .wood{fill:var(--woodfill);stroke:var(--ink);stroke-width:.6}
+.dwg .paper{fill:#f8f4ea;stroke:var(--ink);stroke-width:.8}
+.dwg .thin{fill:none;stroke:var(--ink);stroke-width:.6}
+.dwg .glass{fill:var(--glassfill);stroke:var(--ink);stroke-width:.7}
+.dwg .water{fill:#cfdde3;stroke:var(--ink);stroke-width:.6}
+.dwg .light{fill:var(--sun);opacity:.45}
+.dwg .ray{fill:none;stroke:var(--cedar);stroke-width:.8}
+.dwg .sun{fill:none;stroke:var(--cedar);stroke-width:1}
+.dwg .loop{fill:none;stroke:var(--cedar);stroke-width:1.7;stroke-dasharray:6 4;stroke-linecap:round}
+.dwg .ah{fill:none;stroke:var(--cedar);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.dwg .dim{fill:none;stroke:var(--ink-3);stroke-width:.6}
+.dwg .tree{fill:none;stroke:#68855a;stroke-width:.8;stroke-dasharray:3 2.5}
+.dwg .moss{fill:#9fb582;opacity:.55}
+.dwg .above{fill:none;stroke:var(--ink-3);stroke-width:.7;stroke-dasharray:4 3}
+.dwg .ctx{fill:none;stroke:var(--rule-2);stroke-width:.7;stroke-dasharray:2 4}
+.dwg .cutline{fill:none;stroke:var(--ink-3);stroke-width:.6;stroke-dasharray:12 4 2 4}
+.dwg .cutpt{fill:var(--paper);stroke:var(--ink);stroke-width:.8}
+.dwg .s{font-size:8.5px}
+.dwg .f3{fill:var(--ink-3)}
+.dwg .num{font-family:var(--mono);font-size:8.5px}
+.dwg .start{text-anchor:start}
+.dwg .end{text-anchor:end}
+.dwg .back{fill:var(--paper);opacity:.88;stroke:none}
+.dwg .seat{fill:var(--paper-3);stroke:var(--ink);stroke-width:.4}
+.dwg .ground{fill:none;stroke:var(--ink);stroke-width:1.4}
+.dwg figcaption .mono{margin-right:8px;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3)}
+@media (max-width:640px){.dwg{overflow-x:auto}.dwg svg{min-width:480px}}
+
+/* 考え方：三つの回路 */
+#philosophy{background:var(--paper-2)}
+.prin{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:40px 32px}
+.p-card{grid-column:1/-1;display:flex;flex-direction:column;gap:16px;padding-top:18px;border-top:1px solid var(--ink)}
+.p-card h3{font-family:var(--mincho);font-weight:600;font-size:22px;letter-spacing:.08em}
+.p-card h3 .no{margin-right:10px;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.1em;color:var(--cedar-ink)}
+.p-card p{font-size:14px;line-height:2.05;color:var(--ink-2)}
+.diag{margin-top:auto;padding:16px;border:1px solid var(--rule-2);background-color:var(--paper);background-image:var(--dots);background-size:20px 20px;background-position:16px 16px}
+.diag svg{width:100%;height:auto;font-family:var(--gothic);font-size:9px}
+.diag text{fill:var(--ink-2);text-anchor:middle;dominant-baseline:central}
+.diag .cut{fill:var(--poch);stroke:var(--ink);stroke-width:1.1}
+.diag .thin{fill:none;stroke:var(--ink);stroke-width:.7}
+.diag .court{fill:var(--sun);opacity:.45;stroke:var(--ink);stroke-width:.7}
+.diag .tree{fill:none;stroke:#68855a;stroke-width:.8;stroke-dasharray:3 2.5}
+.diag .flow{fill:none;stroke:var(--cedar);stroke-width:1.8;stroke-linecap:round;stroke-dasharray:7 5;animation:flow 2.6s linear infinite}
+.diag .sun{fill:none;stroke:var(--cedar);stroke-width:1}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.film{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));margin-top:clamp(48px,7vw,88px);background:var(--dusk);color:var(--paper)}
+.film-media{grid-column:1/-1;position:relative}
+.film-media video{width:100%;aspect-ratio:16/9;object-fit:cover}
+.film-side{grid-column:1/-1;display:flex;flex-direction:column;gap:16px;padding:clamp(24px,4vw,48px) clamp(20px,4vw,40px)}
+.film-side .mono{font-size:11.5px;letter-spacing:.18em;color:#c7d0db}
+.film-side h3{font-family:var(--mincho);font-weight:500;font-size:clamp(20px,1.95vw,26px);line-height:1.6;letter-spacing:.06em;word-break:auto-phrase}
+.film-side p{font-size:14px;line-height:2;color:#e0e5ec}
+.film-acts{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:4px}
+.film .vtoggle{border-color:var(--paper);background:transparent;color:var(--paper)}
+.film .vtoggle:hover{background:var(--paper);color:var(--dusk)}
+.film .to-work{padding:8px 0;border:0;background:none;color:var(--paper);cursor:pointer;font-size:13px;letter-spacing:.08em;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--sun)}
+@media (min-width:720px) and (max-width:979px){
+  .p-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 24px}
+  .p-card h3,.p-card p{grid-column:1}
+  .p-card .diag{grid-column:2;grid-row:1/span 2;margin-top:0;align-self:center}
+}
+@media (min-width:980px){
+  .p-card{grid-column:span 4}
+  .film-media{grid-column:1/span 8}
+  .film-side{grid-column:9/span 4}
+}
+
+/* 事務所 */
+.studio-top{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px;align-items:end}
+.studio-photo,.studio-text{grid-column:1/-1;min-width:0}
+.studio-photo img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.studio-photo figcaption,.map-cap{margin-top:8px;font-size:12.5px;line-height:1.6;color:var(--ink-2)}
+.studio-photo figcaption .mono,.map-cap .mono{margin-right:8px;font-size:10.5px;letter-spacing:.16em;color:var(--ink-3)}
+.studio-text{display:flex;flex-direction:column;gap:18px}
+.studio-text>p{font-size:14.5px;line-height:2.1;color:var(--ink-2)}
+.rows{border-top:1px solid var(--ink)}
+.rows>div{display:grid;grid-template-columns:5.2em 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.7}
+.rows dt{color:var(--ink-3)}
+.studio-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:44px 32px;margin-top:clamp(48px,7vw,88px)}
+.blk{grid-column:1/-1;min-width:0}
+.blk h3{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--ink);font-family:var(--mincho);font-weight:600;font-size:19px;letter-spacing:.08em}
+.blk h3 .mono{font-size:11px;font-weight:400;letter-spacing:.16em;color:var(--ink-3)}
+.hist li{display:grid;grid-template-columns:4.2em 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.7}
+.hist .y{padding-top:2px;font-family:var(--mono);font-size:12px;color:var(--cedar-ink)}
+.map{margin-bottom:14px;padding:12px;border:1px solid var(--rule-2)}
+.map svg{width:100%;height:auto;font-family:var(--gothic);font-size:11px}
+.map text{fill:var(--ink-2);text-anchor:middle;dominant-baseline:central}
+.map .st{fill:var(--paper);stroke:var(--ink);stroke-width:1.4}
+.map .rt{fill:none;stroke:var(--cedar);stroke-width:1.8;stroke-dasharray:6 4;stroke-linecap:round}
+.map .book{fill:var(--paper-3);stroke:var(--ink-3);stroke-width:.6}
+.map .thin{fill:none;stroke:var(--ink);stroke-width:.6}
+.map .s{font-size:9.5px;fill:var(--ink-3)}
+.access .addr{margin-bottom:10px;font-size:14px;line-height:1.8}
+.access p{font-size:13.5px;line-height:1.9;color:var(--ink-2)}
+.access p strong{font-weight:500;color:var(--ink)}
+.members li{display:block;padding:10px 0;border-bottom:1px solid var(--rule)}
+.members .r{display:block;margin:1px 0 4px;font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--ink-3)}
+.members .n{display:block;font-family:var(--mincho);font-weight:600;font-size:15px;line-height:1.5;letter-spacing:.08em}
+.members .d{display:block;font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+.map .road{fill:#dbd6ca}
+.map .roadline{fill:none;stroke:#dbd6ca;stroke-width:16}
+.map .rd{fill:var(--ink)}
+
+/* 相談 */
+#contact{background:var(--paper-2)}
+.contact-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:44px 32px}
+.c-info,.c-form{grid-column:1/-1;min-width:0}
+.c-info{display:flex;flex-direction:column;gap:26px}
+.c-info .addr{font-family:var(--mincho);font-weight:600;font-size:18px;line-height:1.8;letter-spacing:.05em}
+.c-info .addr small{display:block;margin-top:6px;font-family:var(--gothic);font-weight:400;font-size:12.5px;line-height:1.8;letter-spacing:.04em;color:var(--ink-2)}
+.lines{border-top:1px solid var(--ink)}
+.lines>div{display:grid;grid-template-columns:4.6em 1fr;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:14px}
+.lines dt{padding-top:2px;font-size:12.5px;color:var(--ink-3)}
+.lines a{text-decoration-thickness:1px;text-underline-offset:4px}
+.c-info h3{margin-bottom:12px;font-family:var(--mincho);font-weight:600;font-size:19px;letter-spacing:.08em}
+.steps{border-top:1px solid var(--ink)}
+.steps li{display:grid;grid-template-columns:2.4em 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.7}
+.steps li::before{content:attr(data-n);padding-top:2px;font-family:var(--mono);font-size:12px;color:var(--cedar-ink)}
+.steps strong{font-weight:500}
+.c-form{padding:clamp(22px,3.2vw,40px);border:1px solid var(--rule-2);background:var(--paper)}
+.c-form h3{margin-bottom:22px;font-family:var(--mincho);font-weight:600;font-size:20px;letter-spacing:.08em}
+.f-grid{display:grid;grid-template-columns:1fr;gap:20px 24px}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font-size:13px;font-weight:500;letter-spacing:.08em}
+.f label .req{margin-left:8px;font-size:11.5px;font-weight:400;color:var(--cedar-ink)}
+.f label .opt{margin-left:8px;font-size:11.5px;font-weight:400;color:var(--ink-3)}
+.f input,.f select,.f textarea{width:100%;min-height:46px;padding:9px 12px;border:1px solid var(--rule-2);border-radius:0;background:var(--paper);color:var(--ink);font:inherit;font-size:15px;line-height:1.6;transition:border-color .2s}
+.f textarea{min-height:150px;resize:vertical}
+.f select{appearance:none;padding-right:36px;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+.f input:hover,.f select:hover,.f textarea:hover{border-color:var(--ink-3)}
+.f input:focus-visible,.f select:focus-visible,.f textarea:focus-visible{outline:2px solid var(--cedar-ink);outline-offset:1px;border-color:var(--ink)}
+.f .hint{font-size:12px;line-height:1.6;color:var(--ink-3)}
+.f .err{display:none;font-size:12.5px;font-weight:500;color:var(--err)}
+.f.is-err .err{display:block}
+.f.is-err input,.f.is-err select,.f.is-err textarea{border-color:var(--err);background:#fbf2ee}
+.f-agree{flex-direction:row;align-items:flex-start;gap:12px}
+.f-agree label{font-weight:400;line-height:1.7}
+.f-agree input{flex:none;width:20px;height:20px;min-height:0;margin:3px 0 0;accent-color:var(--cedar-ink)}
+.f-agree .err{width:100%;padding-left:32px}
+.form-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:6px}
+.form-act .btn{border:0}
+.form-act .btn:focus-visible{outline-offset:4px}
+.form-note{font-size:12px;line-height:1.7;color:var(--ink-3)}
+.done{display:none;border-top:1px solid var(--ink);padding-top:22px}
+.done h3{margin-bottom:10px}
+.done>p{font-size:14px;color:var(--ink-2)}
+.is-sent form{display:none}
+.is-sent .done{display:block}
+.sum{margin-top:18px;border-top:1px solid var(--rule)}
+.sum>div{display:grid;grid-template-columns:6.4em 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:13.5px;line-height:1.7}
+.sum dt{color:var(--ink-3)}
+.sum dd{white-space:pre-wrap;overflow-wrap:anywhere}
+.done .btn{margin-top:22px;background:transparent;color:var(--ink);border:1px solid var(--ink)}
+
+/* フッターは図面の表題欄に倣う */
+.tblock{border-top:1px solid var(--ink);background:var(--paper)}
+.tblock .wrap{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.tb{grid-column:span 6;padding:18px 20px 18px 0;border-bottom:1px solid var(--rule)}
+.tb .k{display:block;margin-bottom:6px;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-3)}
+.tb .v{font-size:13px;line-height:1.75}
+.tb .v a{text-decoration:none}
+.tb .v a:hover{color:var(--cedar-ink);text-decoration:underline;text-underline-offset:4px}
+.tb-name .v{display:grid;grid-template-columns:22px 1fr;align-items:center;gap:0 12px;font-family:var(--mincho);font-weight:600;font-size:17px;letter-spacing:.1em;white-space:nowrap}
+.tb-name .v small{grid-column:2;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.2em;color:var(--ink-3)}
+.tb-up{padding-bottom:34px;border-bottom:0}
+.tb-up .v a{display:inline-flex;align-items:center;gap:8px;min-height:44px;text-decoration:none;font-size:13px;letter-spacing:.1em}
+
+@media (min-width:640px){
+  .f-grid{grid-template-columns:1fr 1fr}
+  .tb{grid-column:span 6}
+  .tb-name{grid-column:span 12}
+}
+@media (min-width:880px){
+  .studio-photo{grid-column:1/span 7}
+  .studio-text{grid-column:8/span 5}
+  .c-info{grid-column:1/span 5}
+  .c-form{grid-column:6/span 7}
+  .blk-history{grid-column:1/span 4}
+  .blk-access{grid-column:5/span 5}
+  .blk-members{grid-column:10/span 3}
+  .tb{grid-column:span 3}
+  .tb-name{grid-column:span 3}
+}
+@media (max-width:979px){
+  .sec-head h2,.sec-head .lead{grid-column:1/-1}
+  .sec-head .lead{margin-top:14px}
+}
+@media (max-width:899px){
+  :root{--hdr:56px}
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-copy{gap:20px;padding:36px var(--gutter) 44px}
+  .hero h1{font-size:clamp(30px,7.6vw,44px)}
+  .hero-screen{min-height:0;aspect-ratio:4/3}
+  .wd-info{position:static}
+}
+@media (max-width:879px){
+  .wd-body,.studio-top,.studio-grid,.contact-grid{column-gap:0}
+}
+@media (max-width:719px){
+  .prin{column-gap:0}
+}
+@media (max-width:639px){
+  .tb-name{grid-column:1/-1}
+  .tb-name .v{white-space:normal}
+  .map{overflow-x:auto}
+  .map svg{min-width:520px}
+}
+@media (max-width:600px){
+  .brand-e{display:none}
+  .brand-j{font-size:15px}
+  .menu-btn{display:inline-flex;align-items:center}
+  .nav{display:none;flex:0 0 100%;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:0 0 10px;border-top:1px solid var(--rule)}
+  .nav.is-open{display:flex}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--rule)}
+  .nav-cta{margin-top:14px;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .work:hover .ph img,.work:focus-visible .ph img{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">本文へスキップ</a>
+<svg class="defs" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="p-louver" width="5" height="10" patternUnits="userSpaceOnUse"><rect x="1" width="2" height="10" fill="#b4662a"/></pattern>
+    <pattern id="p-gravel" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="#aaa59a"/><circle cx="6" cy="6" r=".9" fill="#aaa59a"/></pattern>
+    <pattern id="p-books" width="14" height="10" patternUnits="userSpaceOnUse"><rect width="14" height="10" fill="#efe8da"/><rect width="2" height="10" fill="#c9a27a"/><rect x="3" width="1.5" height="10" fill="#a3947c"/><rect x="5.5" width="2.5" height="10" fill="#b7b2a6"/><rect x="9" width="1.5" height="10" fill="#8f9ba6"/><rect x="11.5" width="2" height="10" fill="#d2b48c"/></pattern>
+    <marker id="m-arr" viewBox="0 0 8 8" markerWidth="7" markerHeight="7" refX="6.5" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L8 4 0 8Z" fill="#b4662a"/></marker>
+  </defs>
+</svg>
+<header class="hdr">
+  <a class="brand" href="#top">
+    <svg class="mark" viewBox="0 0 28 28" aria-hidden="true"><path d="M11 25.5H4.5A2 2 0 0 1 2.5 23.5V4.5A2 2 0 0 1 4.5 2.5H23.5A2 2 0 0 1 25.5 4.5V23.5A2 2 0 0 1 23.5 25.5H17" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9.5" y="9.5" width="9" height="9" fill="none" stroke="#b4662a" stroke-width="2"/></svg>
+    <span class="brand-j">回路建築設計事務所</span>
+    <span class="brand-e">KAIRO STUDIO</span>
+  </a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">メニュー</button>
+  <nav class="nav" id="site-nav" aria-label="サイト内案内">
+    <a href="#works"><span class="no">01</span>作品</a>
+    <a href="#philosophy"><span class="no">02</span>考え方</a>
+    <a href="#studio"><span class="no">03</span>事務所</a>
+    <a class="nav-cta" href="#contact">設計のご相談</a>
+  </nav>
+</header>
+<main id="main">
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="eyebrow"><span class="louver" aria-hidden="true"></span>建築設計事務所 — 東京・神保町</p>
+    <h1 id="hero-title"><span class="l">光と風と人の、</span><span class="l">回路をつくる。</span></h1>
+    <p class="lead">住宅、公共の建築、展示空間を、光・風・人の動線がひとめぐりして戻ってくる「回路」として設計しています。行き止まりのない平面から、朝と夕で別の表情を持つ部屋まで。神保町の小さな事務所から、土地と使う人に寄り添う建築を描きます。</p>
+    <div class="hero-acts"><a class="btn btn-ink" href="#works">作品を見る</a><a class="btn" href="#contact">設計のご相談</a></div>
+    <dl class="facts">
+      <div><dt>設立</dt><dd>2012年</dd></div>
+      <div><dt>所在</dt><dd>東京・神保町</dd></div>
+      <div><dt>職員</dt><dd>8名</dd></div>
+      <div><dt>一級建築士</dt><dd>5名</dd></div>
+    </dl>
+  </div>
+  <div class="hero-media">
+    <div class="hero-screen">
+      <video id="heroFilm" src="../assets/kairo-light-motion.mp4" autoplay muted loop playsinline poster="../assets/kairo-architecture.jpg" preload="auto" tabindex="-1"></video>
+    </div>
+    <div class="hero-bar">
+      <p><span class="mono">FILM — 神保町しおりホール 2024</span>朝の斜光が、コンクリートと杉ルーバーを移ろう。</p>
+      <button class="to-work" type="button" data-open="wd-shiori">この作品の図面を見る</button>
+      <button class="vtoggle" type="button" data-video="heroFilm" aria-label="映像を停止する"><svg class="i-stop" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg><svg class="i-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg><span class="t-stop">停止</span><span class="t-play">再生</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="works" aria-labelledby="works-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-index"><span>01</span><span class="en">SELECTED WORKS</span></p>
+      <h2 id="works-title">まわる光、<br>めぐる空間。</h2>
+      <p class="lead">住宅・公共・展示の5作品。写真を選ぶと、平面図・断面図・仕様が見られます。</p>
+    </header>
+    <div class="filter" role="group" aria-label="作品の絞り込み">
+      <button type="button" data-filter="all" data-label="すべて" aria-pressed="true">すべて<span class="c">5</span></button>
+      <button type="button" data-filter="house" data-label="住宅" aria-pressed="false">住宅<span class="c">2</span></button>
+      <button type="button" data-filter="public" data-label="公共" aria-pressed="false">公共<span class="c">2</span></button>
+      <button type="button" data-filter="exhibit" data-label="展示" aria-pressed="false">展示<span class="c">1</span></button>
+    </div>
+    <p class="sr-only" id="works-live" aria-live="polite"></p>
+    <ul class="works" id="works-grid" data-count="5">
+      <li data-cat="public" data-pos="0">
+        <button type="button" class="work" data-open="wd-shiori" aria-haspopup="dialog" style="--ox:50%">
+          <span class="ph"><img src="../assets/kairo-architecture.jpg" width="2752" height="1536" loading="lazy" decoding="async" alt="杉の縦ルーバーと型わくコンクリートの壁に囲まれた明るいホール。朝の光が床に縞模様を落とし、壁沿いに長いベンチが続く。"></span>
+          <span class="cap"><span class="no">01</span><span class="t">神保町しおりホール</span><span class="more">図面を見る</span><span class="meta">公共 / 千代田区神保町 / 2024</span></span>
+        </button>
+      </li>
+      <li data-cat="house" data-pos="1">
+        <button type="button" class="work" data-open="wd-kairo" aria-haspopup="dialog" style="--ox:50%">
+          <span class="ph"><img src="../assets/kairo-work-house.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="薄暮の住宅中庭。打放しコンクリートの壁と深い軒、ガラス越しに暖かい灯りが漏れる居間。手前の水盤に紅葉したカエデが映る。"></span>
+          <span class="cap"><span class="no">02</span><span class="t">千駄木 回路の家</span><span class="more">図面を見る</span><span class="meta">住宅 / 文京区千駄木 / 2021</span></span>
+        </button>
+      </li>
+      <li data-cat="house" data-pos="2">
+        <button type="button" class="work" data-open="wd-library" aria-haspopup="dialog" style="--ox:42%">
+          <span class="ph"><img src="../assets/kairo-work-library-house.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="吹抜けの書庫。床から天井まで本棚が壁を覆い、左上の天窓から光が降る。中央の階段と細い手すり、二階の回廊。"></span>
+          <span class="cap"><span class="no">03</span><span class="t">谷中・書庫のある家</span><span class="more">図面を見る</span><span class="meta">住宅 / 台東区谷中 / 2022</span></span>
+        </button>
+      </li>
+      <li data-cat="exhibit" data-pos="3">
+        <button type="button" class="work" data-open="wd-paper" aria-haspopup="dialog" style="--ox:50%">
+          <span class="ph"><img src="../assets/kairo-work-exhibition.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="和紙の大画面が並ぶ明るい展示空間。細い木枠のスクリーンの間を光が透過し、床に淡い影を落とす。右手前に木のベンチ。"></span>
+          <span class="cap"><span class="no">04</span><span class="t">光と紙のパビリオン</span><span class="more">図面を見る</span><span class="meta">展示 / 千代田区丸の内 / 2023</span></span>
+        </button>
+      </li>
+      <li data-cat="public" data-pos="4">
+        <button type="button" class="work" data-open="wd-kindergarten" aria-haspopup="dialog" style="--ox:50%">
+          <span class="ph"><img src="../assets/kairo-work-kindergarten.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="木の縁側から見るこども園の中庭。砂利を敷いた中庭にカエデと苔、石が配置され、打放しコンクリートの壁が囲む。"></span>
+          <span class="cap"><span class="no">05</span><span class="t">富士見坂こども園</span><span class="more">図面を見る</span><span class="meta">公共 / 文京区富士見坂 / 2020</span></span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="philosophy" aria-labelledby="philosophy-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-index"><span>02</span><span class="en">PHILOSOPHY</span></p>
+      <h2 id="philosophy-title">三つの回路。</h2>
+      <p class="lead">光・風・人。三つの流れが途切れないことを、私たちは設計の出発点にしています。</p>
+    </header>
+    <div class="prin">
+      <article class="p-card">
+        <h3><span class="no">I</span>光の回路</h3>
+        <p>中庭と天窓を平面の中心に置き、光を建築の奥まで通します。壁に当たった光は反射して別の部屋へ回り、朝と夕で明るくなる部屋が入れ替わります。照明をつけない時間が、一日のうちで最も長くなるように。</p>
+        <figure class="diag">
+          <svg viewBox="0 0 280 200" role="img" aria-label="断面模式図。左上の太陽光が中庭の開口から入り、奥の壁に当たって反射し、右奥の部屋へ回る様子。屋根の天窓からも光が降る。">
+            <rect class="court" x="122" y="68" width="36" height="92"/>
+            <path class="thin" d="M122 68V160M158 68V160"/>
+            <rect class="cut" x="36" y="60" width="86" height="8"/>
+            <rect class="cut" x="158" y="60" width="42" height="8"/>
+            <rect class="cut" x="216" y="60" width="28" height="8"/>
+            <rect class="cut" x="36" y="68" width="6" height="92"/>
+            <rect class="cut" x="238" y="68" width="6" height="92"/>
+            <rect class="cut" x="36" y="160" width="208" height="4"/>
+            <circle class="sun" cx="110" cy="20" r="6"/>
+            <path class="flow" d="M116 28L153 149" marker-end="url(#m-arr)"/>
+            <path class="flow" d="M160 150L232 134" marker-end="url(#m-arr)"/>
+            <path class="flow" d="M185 20L236 128" marker-end="url(#m-arr)"/>
+            <text x="136" y="140">光庭</text>
+            <text x="208" y="52">天窓</text>
+            <text x="196" y="126">反射光</text>
+            <text x="80" y="175">居室</text>
+            <text x="200" y="175">奥の部屋</text>
+          </svg>
+        </figure>
+      </article>
+      <article class="p-card">
+        <h3><span class="no">II</span>風の回路</h3>
+        <p>開口を風上と風下、低い位置と高い位置に組み合わせ、中庭で空気が上昇する仕組みをつくります。機械に頼らず、季節の風が部屋の間をめぐります。</p>
+        <figure class="diag">
+          <svg viewBox="0 0 280 200" role="img" aria-label="断面模式図。左の低い開口から入った風が中庭で上昇し、一部は右の部屋を抜けて右壁の高窓から出る様子。">
+            <rect class="court" x="122" y="68" width="36" height="92"/>
+            <path class="thin" d="M122 68V160M158 68V160"/>
+            <rect class="cut" x="36" y="60" width="86" height="8"/>
+            <rect class="cut" x="158" y="60" width="86" height="8"/>
+            <rect class="cut" x="36" y="68" width="6" height="72"/>
+            <rect class="cut" x="36" y="156" width="6" height="8"/>
+            <rect class="cut" x="238" y="68" width="6" height="24"/>
+            <rect class="cut" x="238" y="110" width="6" height="54"/>
+            <rect class="cut" x="36" y="160" width="208" height="4"/>
+            <path class="flow" d="M8 148H114" marker-end="url(#m-arr)"/>
+            <path class="flow" d="M140 152V30" marker-end="url(#m-arr)"/>
+            <path class="flow" d="M166 148H206Q218 148 218 136V116Q218 102 230 102H252" marker-end="url(#m-arr)"/>
+            <text x="20" y="136">風上</text>
+            <text x="64" y="136">低い開口</text>
+            <text x="168" y="40">上昇気流</text>
+            <text x="258" y="86">高窓</text>
+            <text x="80" y="175">居室</text>
+            <text x="140" y="175">中庭</text>
+            <text x="200" y="175">居室</text>
+          </svg>
+        </figure>
+      </article>
+      <article class="p-card">
+        <h3><span class="no">III</span>人の回路</h3>
+        <p>行き止まりの部屋をつくらず、動線を環につなぎます。行きと帰りで別の景色を通り、部屋の使われ方も一日のうちに移り変わります。</p>
+        <figure class="diag">
+          <svg viewBox="0 0 280 200" role="img" aria-label="平面模式図。四つの居室が中庭を囲み、入口から入った動線が中庭の周りを一周して環になる様子。">
+            <rect class="court" x="104" y="64" width="76" height="72"/>
+            <circle class="tree" cx="142" cy="100" r="13"/>
+            <rect class="cut" x="36" y="32" width="212" height="4"/>
+            <rect class="cut" x="36" y="164" width="94" height="4"/>
+            <rect class="cut" x="150" y="164" width="98" height="4"/>
+            <rect class="cut" x="36" y="36" width="4" height="128"/>
+            <rect class="cut" x="244" y="36" width="4" height="128"/>
+            <path class="flow" d="M96 58H188Q204 58 204 74V126Q204 142 188 142H96Q80 142 80 126V74Q80 58 96 58Z"/>
+            <path class="thin" d="M146 54l7 4-7 4M200 96l4 7 4-7M124 138l-7 4 7 4M76 104l4-7 4 7" style="stroke:#b4662a;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"/>
+            <path class="flow" d="M140 190V154" marker-end="url(#m-arr)"/>
+            <text x="142" y="44">居間</text>
+            <text x="228" y="100">書斎</text>
+            <text x="108" y="155">水回り</text>
+            <text x="56" y="100">寝室</text>
+            <text x="142" y="124">中庭</text>
+            <text x="160" y="180">入口</text>
+          </svg>
+        </figure>
+      </article>
+    </div>
+    <div class="film">
+      <div class="film-media">
+        <video id="philoFilm" src="../assets/kairo-light-motion.mp4" autoplay muted loop playsinline poster="../assets/kairo-architecture.jpg" preload="metadata" tabindex="-1"></video>
+      </div>
+      <div class="film-side">
+        <p class="mono">KAIRO FILM 01 — 0:08</p>
+        <h3>朝の斜光が、<br>コンクリートと<br>杉ルーバーを移ろう。</h3>
+        <p>神保町しおりホールの朝。ルーバーが刻む光の縞が、床から壁へとゆっくり移ります。音のない8秒間を、壁面の時間軸として繰り返します。</p>
+        <div class="film-acts">
+          <button class="vtoggle" type="button" data-video="philoFilm" aria-label="映像を停止する"><svg class="i-stop" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg><svg class="i-play" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1l9 5-9 5z"/></svg><span class="t-stop">停止</span><span class="t-play">再生</span></button>
+          <button class="to-work" type="button" data-open="wd-shiori">この作品の図面を見る</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="studio" aria-labelledby="studio-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-index"><span>03</span><span class="en">STUDIO PROFILE</span></p>
+      <h2 id="studio-title">神保町のアトリエ。</h2>
+      <p class="lead">古書店と印刷所の並ぶ街の3階。白い模型とスケール定規に囲まれて、8名で設計をしています。</p>
+    </header>
+    <div class="studio-top">
+      <figure class="studio-photo">
+        <img src="../assets/kairo-studio.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="神保町のアトリエ。広い窓の外に街並みを望むヒノキの作業台に、白い検討模型と図面、スケール定規が広がる。奥の棚にも模型とバインダーが並ぶ。">
+        <figcaption><span class="mono">ATELIER</span>神保町アトリエ。ヒノキの作業台に並ぶ検討模型と図面。</figcaption>
+      </figure>
+      <div class="studio-text">
+        <p>回路建築設計事務所は2012年、神保町に設立しました。古書店と印刷所の並ぶ街の3階に構えたアトリエでは、8名の建築士がひとつのヒノキの作業台を囲んでいます。設計はまず手で触れる模型から始め、光の入り方を部分模型で確かめながら図面に移します。住宅の新築・改修から公共建築、展示空間の計画まで、規模を問わず同じ「回路」の考え方で設計しています。</p>
+        <dl class="rows">
+          <div><dt>設立</dt><dd>2012年4月</dd></div>
+          <div><dt>所在地</dt><dd>〒101-0051 東京都千代田区神保町1-2-3 神保町ビル3F</dd></div>
+          <div><dt>職員</dt><dd>8名（一級建築士 5名）</dd></div>
+          <div><dt>業務</dt><dd>建築設計・監理、インテリア、展示計画</dd></div>
+          <div><dt>登録</dt><dd>一級建築士事務所（東京都知事登録）</dd></div>
+        </dl>
+      </div>
+    </div>
+    <div class="studio-grid">
+      <section class="blk blk-history" aria-labelledby="hist-title">
+        <h3 id="hist-title">沿革<span class="mono">HISTORY</span></h3>
+        <ol class="hist">
+          <li><span class="y">2012</span><span>神保町に回路建築設計事務所を設立。書店と印刷所の改修から始める。</span></li>
+          <li><span class="y">2016</span><span>初の新築住宅「千駄木 回路の家」に着手。</span></li>
+          <li><span class="y">2020</span><span>公共建築初の「富士見坂こども園」が竣工。</span></li>
+          <li><span class="y">2022</span><span>「谷中・書庫のある家」が竣工。書庫の設計をライフワークにする。</span></li>
+          <li><span class="y">2023</span><span>仮設展示「光と紙のパビリオン」を丸の内に出品。</span></li>
+          <li><span class="y">2024</span><span>「神保町しおりホール」が竣工。事務所を現在地に移す。</span></li>
+        </ol>
+      </section>
+      <section class="blk blk-access" aria-labelledby="access-title">
+        <h3 id="access-title">アクセス<span class="mono">ACCESS</span></h3>
+        <div class="map">
+          <svg viewBox="0 0 560 300" role="img" aria-label="神保町周辺の概念図。靖国通りと白山通りの交差点が神保町駅。駅から北へ進み、古書店街のすずらん通りを東へ徒歩3分で事務所。">
+            <path class="road" d="M245 127L470 288" stroke="#dbd6ca" stroke-width="16"/>
+            <rect class="road" x="40" y="118" width="480" height="18"/>
+            <rect class="road" x="236" y="26" width="18" height="92"/>
+            <rect class="road" x="100" y="78" width="330" height="12"/>
+            <rect class="book" x="110" y="64" width="8" height="8"/><rect class="book" x="136" y="64" width="8" height="8"/><rect class="book" x="162" y="64" width="8" height="8"/><rect class="book" x="188" y="64" width="8" height="8"/>
+            <rect class="book" x="120" y="96" width="8" height="8"/><rect class="book" x="146" y="96" width="8" height="8"/><rect class="book" x="172" y="96" width="8" height="8"/><rect class="book" x="198" y="96" width="8" height="8"/>
+            <rect class="book" x="286" y="96" width="8" height="8"/><rect class="book" x="312" y="96" width="8" height="8"/><rect class="book" x="338" y="96" width="8" height="8"/><rect class="book" x="364" y="96" width="8" height="8"/><rect class="book" x="390" y="96" width="8" height="8"/>
+            <path class="rt" d="M254 116V98Q254 84 268 84H322Q338 84 342 72L344 62" marker-end="url(#m-arr)"/>
+            <circle class="st" cx="245" cy="36" r="5"/>
+            <circle class="st" cx="245" cy="127" r="7"/>
+            <circle class="st" cx="470" cy="288" r="6"/>
+            <rect class="thin" x="335" y="36" width="20" height="20" style="stroke:#b4662a;stroke-width:2;fill:#f3f0e9"/>
+            <rect x="341" y="42" width="8" height="8" fill="#b4662a"/>
+            <text x="110" y="127" class="rd">靖国通り</text>
+            <text x="166" y="84" class="rd">すずらん通り</text>
+            <text x="245" y="60" class="rd" transform="rotate(-90 245 60)">白山通り</text>
+            <text x="330" y="188" class="rd" transform="rotate(35.6 330 188)">明大通り</text>
+            <text x="152" y="54">古書店街</text>
+            <text x="196" y="158">神保町駅</text>
+            <text x="176" y="172" class="s">三田線・新宿線・半蔵門線</text>
+            <text x="215" y="36" class="s">九段下駅</text>
+            <text x="420" y="236">御茶ノ水・新御茶ノ水</text>
+            <text x="345" y="20">回路建築設計事務所</text>
+            <text x="345" y="68" class="s">神保町ビル3F</text>
+            <text x="300" y="111" class="s">徒歩3分</text>
+            <path class="thin" d="M40 282h120M40 278v8M100 280v4M160 278v8"/>
+            <text x="40" y="270" class="s">0</text><text x="160" y="270" class="s">約100m</text>
+            <circle class="thin" cx="520" cy="34" r="10"/>
+            <path class="thin" d="M520 42V26M516 31l4-5 4 5"/>
+            <text x="520" y="56" class="s">N</text>
+          </svg>
+        </div>
+        <div class="access">
+          <p class="addr"><strong>〒101-0051 東京都千代田区神保町1-2-3 神保町ビル3F</strong></p>
+          <p>神保町駅（都営三田線・新宿線、東京メトロ半蔵門線）徒歩3分<br>御茶ノ水駅・新御茶ノ水駅 徒歩8分／九段下駅 徒歩9分</p>
+          <p>ご来所の際は、事前にご連絡ください。</p>
+        </div>
+      </section>
+      <section class="blk blk-members" aria-labelledby="members-title">
+        <h3 id="members-title">メンバー<span class="mono">MEMBERS</span></h3>
+        <ul class="members">
+          <li><span class="n">石川 環</span><span class="r">代表 / 一級建築士</span><span class="d">大学院修了後、設計事務所を経て2012年に設立。公共建築と光の設計を担当。</span></li>
+          <li><span class="n">佐藤 灯</span><span class="r">パートナー / 一級建築士</span><span class="d">住宅と改修を担当。アトリエの模型の多くはこの手から生まれる。</span></li>
+          <li><span class="n">高橋 由季</span><span class="r">一級建築士</span><span class="d">木造と鉄筋コンクリート造の構造計画。</span></li>
+          <li><span class="n">中島 修</span><span class="r">一級建築士</span><span class="d">公共施設の計画から監理まで。</span></li>
+          <li><span class="n">小林 めぐみ</span><span class="r">一級建築士</span><span class="d">書庫壁のような「構造になる意匠」を研究。</span></li>
+          <li><span class="n">ほかスタッフ</span><span class="r">3名</span><span class="d">構造設計、図面作成、経理。</span></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-index"><span>04</span><span class="en">CONTACT</span></p>
+      <h2 id="contact-title">設計のご相談。</h2>
+      <p class="lead">新築、改修、小さな造作まで。まずは願いを聞かせてください。</p>
+    </header>
+    <div class="contact-grid">
+      <div class="c-info">
+        <p class="addr">回路建築設計事務所<small>〒101-0051 東京都千代田区神保町1-2-3 神保町ビル3F</small></p>
+        <dl class="lines">
+          <div><dt>電話</dt><dd><a href="tel:0312345678">03-1234-5678</a></dd></div>
+          <div><dt>メール</dt><dd><a href="mailto:info@kairo.example.jp">info@kairo.example.jp</a></dd></div>
+          <div><dt>受付</dt><dd>平日 10:00–18:00（土日祝を除く）</dd></div>
+        </dl>
+        <div>
+          <h3>相談の流れ</h3>
+          <ol class="steps">
+            <li data-n="01"><span><strong>ご連絡。</strong> フォームかお電話で、土地やご希望をお聞かせください。</span></li>
+            <li data-n="02"><span><strong>初回打合せ。</strong> 現地を見て、光と動線の考え方をご説明します。</span></li>
+            <li data-n="03"><span><strong>設計契約。</strong> 敷地調査と基本計画に入ります。</span></li>
+          </ol>
+        </div>
+      </div>
+      <div class="c-form" id="form-box">
+        <form id="contact-form" novalidate>
+          <h3>お問い合わせフォーム</h3>
+          <div class="f-grid">
+            <div class="f">
+              <label for="f-name">お名前<span class="req">必須</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" maxlength="60" required aria-required="true" aria-describedby="err-name">
+              <span class="err" id="err-name"></span>
+            </div>
+            <div class="f">
+              <label for="f-tel">電話番号<span class="opt">任意</span></label>
+              <input id="f-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" aria-describedby="err-tel">
+              <span class="err" id="err-tel"></span>
+            </div>
+            <div class="f full">
+              <label for="f-email">メールアドレス<span class="req">必須</span></label>
+              <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required aria-required="true" aria-describedby="err-email">
+              <span class="err" id="err-email"></span>
+            </div>
+            <div class="f full">
+              <label for="f-type">ご相談の種類<span class="req">必須</span></label>
+              <select id="f-type" name="type" required aria-required="true" aria-describedby="err-type">
+                <option value="">選択してください</option>
+                <option value="新築住宅">新築住宅の設計</option>
+                <option value="住宅の改修・インテリア">住宅の改修・インテリア</option>
+                <option value="公共建築・施設">公共建築・施設</option>
+                <option value="展示・その他">展示・その他</option>
+              </select>
+              <span class="err" id="err-type"></span>
+            </div>
+            <div class="f full">
+              <label for="f-msg">ご相談内容<span class="req">必須</span></label>
+              <textarea id="f-msg" name="msg" maxlength="2000" required aria-required="true" aria-describedby="hint-msg err-msg"></textarea>
+              <span class="hint" id="hint-msg">敷地やご希望など、わかる範囲でご記入ください（10文字以上）。</span>
+              <span class="err" id="err-msg"></span>
+            </div>
+            <div class="f full f-agree">
+              <input id="f-agree" name="agree" type="checkbox" required aria-required="true" aria-describedby="err-agree">
+              <label for="f-agree">ご入力の内容は、ご相談への回答以外には使用しません。同意して送信します。<span class="req">必須</span></label>
+              <span class="err" id="err-agree"></span>
+            </div>
+          </div>
+          <div class="form-act">
+            <button class="btn btn-ink" type="submit">送信する</button>
+            <p class="form-note">送信後、2営業日以内にご連絡します。</p>
+          </div>
+        </form>
+        <div class="done" role="status" tabindex="-1">
+          <h3>送信ありがとうございます。</h3>
+          <p>2営業日以内に、ご入力のメールアドレスへご連絡します。以下は送信内容の控えです。</p>
+          <dl class="sum" id="contact-sum"></dl>
+          <button class="btn" type="button" id="form-again">続けてお問い合わせる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="tblock">
+  <div class="wrap">
+    <div class="tb tb-name"><span class="k">FIRM</span><div class="v"><svg viewBox="0 0 28 28" width="22" height="22" aria-hidden="true"><path d="M11 25.5H4.5A2 2 0 0 1 2.5 23.5V4.5A2 2 0 0 1 4.5 2.5H23.5A2 2 0 0 1 25.5 4.5V23.5A2 2 0 0 1 23.5 25.5H17" fill="none" stroke="currentColor" stroke-width="2"/><rect x="9.5" y="9.5" width="9" height="9" fill="none" stroke="#b4662a" stroke-width="2"/></svg><span>回路建築設計事務所</span><small>KAIRO STUDIO</small></div></div>
+    <div class="tb"><span class="k">LOCATION</span><div class="v">〒101-0051 東京都千代田区神保町1-2-3<br>神保町ビル3F</div></div>
+    <div class="tb"><span class="k">CONTACT</span><div class="v">TEL <a href="tel:0312345678">03-1234-5678</a><br><a href="mailto:info@kairo.example.jp">info@kairo.example.jp</a></div></div>
+    <div class="tb"><span class="k">SCOPE</span><div class="v">建築設計・監理／インテリア／展示計画</div></div>
+    <div class="tb"><span class="k">INDEX</span><div class="v"><a href="#works">01 作品</a>　<a href="#philosophy">02 考え方</a><br><a href="#studio">03 事務所</a>　<a href="#contact">04 相談</a></div></div>
+    <div class="tb"><span class="k">DRAWN BY</span><div class="v">設立 2012年4月<br>一級建築士事務所（東京都知事登録）</div></div>
+    <div class="tb"><span class="k">SHEET</span><div class="v">© 2012–2026 回路建築設計事務所<br>写真・図面の無断転載を禁じます。</div></div>
+    <div class="tb tb-up"><span class="k">BACK</span><div class="v"><a href="#top">ページの先頭へ ↑</a></div></div>
+  </div>
+</footer>
+<dialog class="wd" id="wd-shiori" aria-labelledby="wd-shiori-title">
+  <div class="wd-bar"><p class="mono">NO.01 — 公共 / 2024</p><button class="wd-close" type="button" data-close>閉じる<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+  <div class="wd-body">
+    <figure class="wd-photo">
+      <img src="../assets/kairo-architecture.jpg" width="2752" height="1536" loading="lazy" decoding="async" alt="杉の縦ルーバーと型わくコンクリートの壁に囲まれた明るいホール。朝の光が床に縞模様を落とし、壁沿いに長いベンチが続く。">
+      <figcaption><span class="mono">PHOTO</span>エントランスホール。杉ルーバー越しの朝の光が床に落ちる。</figcaption>
+    </figure>
+    <div class="wd-info">
+      <h3 id="wd-shiori-title">神保町しおりホール</h3>
+      <p class="wd-meta">千代田区神保町 / 公共 / 2024</p>
+      <p class="wd-text">本の街・神保町に計画した地区の集会ホール。名前の「しおり」は、読みかけの本に挟んで、また開く場所という願いです。西側の光庭から入る光を杉の縦ルーバーが細かく刻み、コンクリート壁の長い腰掛の上を一日のうちに光の縞が移ろいます。120席のホール、光庭、ロビーがひと回りできる動線にしました。</p>
+      <ul class="loops" aria-label="この作品の回路"><li>光の回路</li><li>人の回路</li></ul>
+      <dl class="spec">
+        <div><dt>所在地</dt><dd>東京都千代田区神保町</dd></div>
+        <div><dt>用途</dt><dd>公共建築（集会ホール）</dd></div>
+        <div><dt>構造</dt><dd>鉄筋コンクリート造・一部木造</dd></div>
+        <div><dt>敷地面積</dt><dd>486.20㎡</dd></div>
+        <div><dt>延床面積</dt><dd>618.40㎡</dd></div>
+        <div><dt>規模</dt><dd>地上2階</dd></div>
+        <div><dt>竣工</dt><dd>2024年</dd></div>
+      </dl>
+    </div>
+    <div class="wd-drawings">
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="1階平面図。西に光庭、中央に南北に細長い入口ホール、東に120席のホールと楽屋。人の動線が入口ホールと光庭の間を一周し、ホールへ分岐する。">
+          <rect x="76" y="40" width="110" height="200" fill="url(#p-gravel)"/>
+          <path class="light" d="M196 96 196 112 236 168 236 152ZM196 140 196 156 250 228 250 212Z"/>
+          <rect class="water" x="84" y="170" width="64" height="52"/>
+          <circle class="tree" cx="118" cy="104" r="28"/>
+          <circle cx="118" cy="104" r="2" fill="#1d1c1a"/>
+          <rect class="cut" x="70" y="34" width="6" height="212"/>
+          <rect class="cut" x="70" y="34" width="440" height="6"/>
+          <rect class="cut" x="70" y="240" width="116" height="6"/>
+          <rect class="cut" x="300" y="34" width="8" height="136"/>
+          <rect class="cut" x="300" y="210" width="8" height="40"/>
+          <rect class="cut" x="300" y="284" width="8" height="18"/>
+          <rect class="cut" x="510" y="34" width="6" height="268"/>
+          <rect class="cut" x="308" y="240" width="202" height="6"/>
+          <rect class="cut" x="300" y="296" width="216" height="6"/>
+          <rect class="cut" x="400" y="246" width="6" height="50"/>
+          <rect class="glass" x="186" y="40" width="3" height="20"/>
+          <rect class="glass" x="186" y="96" width="3" height="100"/>
+          <rect class="glass" x="186" y="232" width="3" height="8"/>
+          <path class="thin" d="M186 60h-8v36h8M186 196h-8v36h8"/>
+          <rect x="192" y="42" width="4" height="16" fill="url(#p-louver)"/>
+          <rect x="192" y="98" width="4" height="96" fill="url(#p-louver)"/>
+          <rect x="192" y="232" width="4" height="8" fill="url(#p-louver)"/>
+          <rect class="glass" x="189" y="296" width="111" height="3"/>
+          <path class="thin" d="M230 296v-28a28 28 0 0 0-28 28M258 296v-28a28 28 0 0 1 28 28"/>
+          <rect class="wood" x="322" y="52" width="168" height="40"/>
+          <path class="seat" d="M326 112h60v3h-60zM426 112h60v3h-60zM326 128h60v3h-60zM426 128h60v3h-60zM326 144h60v3h-60zM426 144h60v3h-60zM326 160h60v3h-60zM426 160h60v3h-60zM326 176h60v3h-60zM426 176h60v3h-60zM326 192h60v3h-60zM426 192h60v3h-60zM326 208h60v3h-60zM426 208h60v3h-60z"/>
+          <rect class="wood" x="292" y="48" width="6" height="118"/>
+          <path class="loop" d="M262 102Q262 78 238 78H188Q164 78 164 102V190Q164 214 188 214H238Q262 214 262 190Z"/>
+          <path class="ah" d="M258 154l4-7 4 7M206 210l7 4-7 4"/>
+          <path class="loop" d="M262 292V226" marker-end="url(#m-arr)"/>
+          <path class="loop" d="M262 190H294" marker-end="url(#m-arr)"/>
+          <path class="cutline" d="M52 136H528"/>
+          <circle class="cutpt" cx="44" cy="136" r="8"/><circle class="cutpt" cx="536" cy="136" r="8"/>
+          <g fill="#f3f0e9"><rect x="92" y="190" width="48" height="12"/><rect x="138" y="140" width="28" height="12"/><rect x="382" y="66" width="48" height="12"/><rect x="380" y="224" width="52" height="12"/><rect x="196" y="246" width="60" height="12"/><rect x="330" y="266" width="48" height="12"/><rect x="434" y="266" width="48" height="12"/></g>
+          <text x="116" y="196">水盤</text>
+          <text x="152" y="146">光庭</text>
+          <text x="406" y="72">舞台</text>
+          <text x="406" y="230">ホール 120席</text>
+          <text x="354" y="272">楽屋</text>
+          <text x="458" y="272">トイレ</text>
+          <text x="272" y="60" class="s">ベンチ</text>
+          <text x="226" y="252">入口ホール</text>
+          <text x="222" y="148" class="s">杉ルーバー</text>
+          <text x="44" y="136" class="s">A</text><text x="536" y="136" class="s">A</text>
+          <circle class="thin" cx="541" cy="62" r="11"/><path class="thin" d="M541 70V54M537 59l4-5 4 5"/><text x="541" y="82" class="s">N</text>
+          <path class="dim" d="M70 312v8M189 312v8M300 312v8M516 312v8M70 316h446M54 34v268M50 34h8M50 302h8"/>
+          <text x="129.5" y="309" class="num">5,950</text><text x="244.5" y="309" class="num">5,550</text><text x="408" y="309" class="num">10,800</text>
+          <text transform="translate(46 168) rotate(-90)" class="num">13,400</text>
+          <text x="24" y="16" class="start">1F 平面図</text>
+          <path class="loop" d="M24 340h28"/><text x="58" y="340" class="start s">回路（人の動線）</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.01</span>1F 平面図。破線は人の動線、琥珀は光の当たる場所。</figcaption>
+      </figure>
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="A-Aの断面図。左の光庭から光がガラスと杉のルーバーを通って吹抜けの入口ホールに斜めに入り、床と壁に縞を作る。右は2階客席と舞台のあるホール。">
+          <rect class="light" x="76" y="40" width="110" height="260"/>
+          <path class="light" d="M195 104 195 124 300 300 300 280ZM195 140 195 160 296 300 284 300ZM195 176 195 196 278 300 266 300ZM195 212 195 232 257 300 245 300ZM195 248 195 268 235 300 223 300Z"/>
+          <path class="ground" d="M40 300H530"/>
+          <path class="thin" d="M118 300V214"/>
+          <ellipse class="tree" cx="118" cy="190" rx="44" ry="40"/>
+          <rect class="water" x="68" y="286" width="44" height="14"/>
+          <rect class="glass" x="186" y="96" width="3" height="204"/>
+          <rect x="192" y="104" width="4" height="192" fill="url(#p-louver)"/>
+          <rect class="cut" x="186" y="84" width="330" height="12"/>
+          <rect class="cut" x="300" y="84" width="8" height="216"/>
+          <rect class="wood" x="278" y="268" width="22" height="7"/>
+          <rect class="cut" x="308" y="176" width="120" height="10"/>
+          <rect class="wood" x="330" y="252" width="150" height="48"/>
+          <rect class="cut" x="510" y="84" width="6" height="20"/>
+          <rect class="cut" x="510" y="140" width="6" height="160"/>
+          <rect class="glass" x="510" y="104" width="6" height="36"/>
+          <path class="ray" d="M74 130l50 83M92 100l55 92M112 70l50 83"/>
+          <circle class="sun" cx="64" cy="52" r="7"/>
+          <g fill="#f3f0e9"><rect x="386" y="270" width="38" height="12"/><rect x="338" y="162" width="60" height="12"/></g>
+          <text x="152" y="262">光庭</text>
+          <text x="90" y="276" class="s">水盤</text>
+          <text x="272" y="271" class="end s">ベンチ</text>
+          <text x="405" y="276">舞台</text>
+          <text x="368" y="168">2F 客席</text>
+          <text x="470" y="220">ホール</text>
+          <text x="214" y="252" class="s">杉ルーバー</text>
+          <text x="44" y="292" class="start s">GL ±0</text>
+          <text x="44" y="34" class="start s">朝の斜光</text>
+          <path class="dim" d="M516 96h8M516 300h8M520 96v204"/>
+          <text transform="translate(538 198) rotate(-90)" class="num">10,200</text>
+          <text x="24" y="16" class="start">A-A′ 断面図</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="334" width="5" height="11" fill="url(#p-louver)"/><text x="258" y="340" class="start s">杉ルーバー</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.02</span>A-A′ 断面図。吹抜けの入口ホールと、光の縞が移る壁面。</figcaption>
+      </figure>
+    </div>
+  </div>
+</dialog>
+<dialog class="wd" id="wd-kairo" aria-labelledby="wd-kairo-title">
+  <div class="wd-bar"><p class="mono">NO.02 — 住宅 / 2021</p><button class="wd-close" type="button" data-close>閉じる<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+  <div class="wd-body">
+    <figure class="wd-photo">
+      <img src="../assets/kairo-work-house.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="薄暮の住宅中庭。打放しコンクリートの壁と深い軒、ガラス越しに暖かい灯りが漏れる居間。手前の水盤に紅葉したカエデが映る。">
+      <figcaption><span class="mono">PHOTO</span>薄暮の中庭。水盤に居間の灯りとカエデが映る。</figcaption>
+    </figure>
+    <div class="wd-info">
+      <h3 id="wd-kairo-title">千駄木 回路の家</h3>
+      <p class="wd-meta">文京区千駄木 / 住宅 / 2021</p>
+      <p class="wd-text">事務所の名前の由来になった住宅。三つの翼が中庭を囲み、居間・寝室・書斎が回廊のように続きます。夕暮れには居間の灯りが水盤に落ち、カエデとともに映り込みます。行きと帰りで別の景色を通る、二人のための小さな回遊の家です。</p>
+      <ul class="loops" aria-label="この作品の回路"><li>人の回路</li><li>光の回路</li></ul>
+      <dl class="spec">
+        <div><dt>所在地</dt><dd>東京都文京区千駄木</dd></div>
+        <div><dt>用途</dt><dd>専用住宅</dd></div>
+        <div><dt>構造</dt><dd>鉄筋コンクリート造</dd></div>
+        <div><dt>敷地面積</dt><dd>198.50㎡</dd></div>
+        <div><dt>延床面積</dt><dd>124.30㎡</dd></div>
+        <div><dt>規模</dt><dd>地上2階</dd></div>
+        <div><dt>竣工</dt><dd>2021年</dd></div>
+      </dl>
+    </div>
+    <div class="wd-drawings">
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="1階平面図。居間が南に、寝室と書斎の翼が左右にあり、中庭をコの字に囲む。動線が翼と中庭、居間の間を一周する。">
+          <rect x="170" y="60" width="206" height="122" fill="url(#p-gravel)"/>
+          <rect class="light" x="170" y="60" width="206" height="122"/>
+          <rect class="water" x="196" y="146" width="116" height="42"/>
+          <circle class="tree" cx="250" cy="128" r="34"/>
+          <circle cx="250" cy="128" r="2" fill="#1d1c1a"/>
+          <rect class="wood" x="170" y="182" width="206" height="12"/>
+          <rect class="cut" x="70" y="54" width="6" height="248"/>
+          <rect class="cut" x="470" y="54" width="6" height="248"/>
+          <rect class="cut" x="70" y="54" width="100" height="6"/>
+          <rect class="cut" x="380" y="54" width="96" height="6"/>
+          <rect class="cut" x="70" y="296" width="406" height="6"/>
+          <rect class="cut" x="70" y="194" width="34" height="6"/>
+          <rect class="cut" x="132" y="194" width="38" height="6"/>
+          <rect class="cut" x="374" y="194" width="36" height="6"/>
+          <rect class="cut" x="440" y="194" width="36" height="6"/>
+          <rect class="glass" x="167" y="60" width="3" height="134"/>
+          <rect class="glass" x="376" y="60" width="3" height="134"/>
+          <rect class="glass" x="170" y="196" width="204" height="3"/>
+          <rect class="wall" x="170" y="48" width="92" height="6"/>
+          <rect class="wall" x="308" y="48" width="72" height="6"/>
+          <path class="loop" d="M118 114Q118 90 142 90H400Q424 90 424 114V222Q424 246 400 246H142Q118 246 118 222Z"/>
+          <path class="ah" d="M114 156l4 7 4-7M266 242l7 4-7 4M428 164l-4-7-4 7M324 86l-7 4 7 4"/>
+          <path class="cutline" d="M270 38V302"/>
+          <circle class="cutpt" cx="270" cy="28" r="8"/>
+          <g fill="#f3f0e9"><rect x="250" y="161" width="28" height="12"/><rect x="320" y="68" width="28" height="12"/><rect x="292" y="216" width="116" height="12"/></g>
+          <text x="270" y="28" class="s">A</text><text x="276" y="308" class="start s">A</text>
+          <text x="254" y="167">水盤</text>
+          <text x="334" y="74">中庭</text>
+          <text x="142" y="130">寝室</text>
+          <text x="142" y="172">水回り</text>
+          <text x="400" y="130">書斎</text>
+          <text x="350" y="222">リビング・ダイニング</text>
+          <text x="334" y="172" class="s">縁側</text>
+          <text x="285" y="36" class="s">アプローチ</text>
+          <circle class="thin" cx="541" cy="62" r="11"/><path class="thin" d="M541 70V54M537 59l4-5 4 5"/><text x="541" y="82" class="s">N</text>
+          <path class="dim" d="M70 320v8M170 320v8M380 320v8M476 320v8M70 324h406M54 54v248M50 54h8M50 302h8"/>
+          <text x="120" y="317" class="num">5,000</text><text x="275" y="317" class="num">10,500</text><text x="428" y="317" class="num">4,800</text>
+          <text transform="translate(46 178) rotate(-90)" class="num">12,400</text>
+          <text x="24" y="16" class="start">1F 平面図</text>
+          <path class="loop" d="M24 340h28"/><text x="58" y="340" class="start s">回路（人の動線）</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.01</span>1F 平面図。中庭を一周する動線と、日当たりの良い居間。</figcaption>
+      </figure>
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="A-Aの断面図。左の居間の灯りが中庭の水盤に落ち、片持ちの屋根スラブが中庭に深くせり出す。右は生垣と通路。">
+          <rect class="light" x="76" y="186" width="118" height="110"/>
+          <path class="light" d="M200 236 200 300 264 300Z"/>
+          <path class="ground" d="M40 300H530"/>
+          <path class="thin" d="M100 268h44M104 268v30M140 268v30M164 250V296"/>
+          <circle cx="164" cy="246" r="4" fill="#e9b866"/>
+          <rect class="glass" x="197" y="186" width="3" height="114"/>
+          <rect class="cut" x="70" y="176" width="176" height="10"/>
+          <rect class="cut" x="70" y="170" width="6" height="130"/>
+          <path class="thin" d="M216 284h140M216 284v16M356 284v16"/>
+          <rect class="water" x="222" y="286" width="128" height="12"/>
+          <path class="thin" d="M372 300V222"/>
+          <ellipse class="tree" cx="364" cy="198" rx="46" ry="40"/>
+          <rect class="cut" x="440" y="252" width="6" height="48"/>
+          <text x="408" y="276">中庭</text>
+          <text x="286" y="274" class="s">水盤</text>
+          <text x="136" y="216">居間</text>
+          <text x="332" y="148" class="s">カエデ</text>
+          <text x="456" y="244" class="start s">通路</text>
+          <text x="236" y="166" class="s">片持ちの軒</text>
+          <text x="44" y="292" class="start s">GL ±0</text>
+          <path class="dim" d="M450 176h8M450 300h8M454 176v124"/>
+          <text transform="translate(472 238) rotate(-90)" class="num">6,200</text>
+          <text x="24" y="16" class="start">A-A′ 断面図</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">灯り</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.02</span>A-A′ 断面図。中庭を挟む居間と水盤、片持ちの軒。</figcaption>
+      </figure>
+    </div>
+  </div>
+</dialog>
+<dialog class="wd" id="wd-library" aria-labelledby="wd-library-title">
+  <div class="wd-bar"><p class="mono">NO.03 — 住宅 / 2022</p><button class="wd-close" type="button" data-close>閉じる<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+  <div class="wd-body">
+    <figure class="wd-photo">
+      <img src="../assets/kairo-work-library-house.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="吹抜けの書庫。床から天井まで本棚が壁を覆い、左上の天窓から光が降る。中央の階段と細い手すり、二階の回廊。">
+      <figcaption><span class="mono">PHOTO</span>吹抜けの書庫。天窓の光が降る三層分の本棚。</figcaption>
+    </figure>
+    <div class="wd-info">
+      <h3 id="wd-library-title">谷中・書庫のある家</h3>
+      <p class="wd-meta">台東区谷中 / 住宅 / 2022</p>
+      <p class="wd-text">約8m間口の細長い敷地に建つ、本を読むための家。吹抜けを囲む三層分の書庫壁が構造を支え、天窓からの光が本棚を上から下までなぞります。二階の回廊は本棚の間をめぐる環になり、階段も回廊も「本を取りに行く回路」です。</p>
+      <ul class="loops" aria-label="この作品の回路"><li>人の回路</li><li>光の回路</li></ul>
+      <dl class="spec">
+        <div><dt>所在地</dt><dd>東京都台東区谷中</dd></div>
+        <div><dt>用途</dt><dd>専用住宅</dd></div>
+        <div><dt>構造</dt><dd>鉄筋コンクリート造・木造書庫壁</dd></div>
+        <div><dt>敷地面積</dt><dd>103.70㎡</dd></div>
+        <div><dt>延床面積</dt><dd>196.40㎡</dd></div>
+        <div><dt>規模</dt><dd>地上2階（吹抜け付き）</dd></div>
+        <div><dt>竣工</dt><dd>2022年</dd></div>
+      </dl>
+    </div>
+    <div class="wd-drawings">
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="1階平面図。細長い敷地に、北の居間、中央の書庫、南の玄関が並ぶ。書庫の吹抜けを二階の回廊が囲み、動線が環になる。点線は二階の回廊と天窓。">
+          <rect class="ctx" x="100" y="44" width="66" height="256"/>
+          <rect class="ctx" x="374" y="44" width="90" height="256"/>
+          <rect x="196" y="100" width="14" height="80" fill="url(#p-books)" stroke="#1d1c1a" stroke-width=".6"/>
+          <rect x="210" y="100" width="122" height="14" fill="url(#p-books)" stroke="#1d1c1a" stroke-width=".6"/>
+          <rect x="330" y="100" width="10" height="146" fill="url(#p-books)" stroke="#1d1c1a" stroke-width=".6"/>
+          <rect class="light" x="248" y="134" width="58" height="64"/>
+          <rect class="above" x="232" y="118" width="90" height="96"/>
+          <rect class="above" x="248" y="134" width="58" height="64"/>
+          <rect class="above" x="250" y="136" width="54" height="10"/>
+          <rect class="thin" x="196" y="184" width="34" height="62"/>
+          <path class="thin" d="M196 192h34M196 200h34M196 208h34M196 216h34M196 224h34M196 232h34M196 240h34M213 242V190M209 194l4-6 4 6"/>
+          <rect class="wood" x="262" y="190" width="50" height="12"/>
+          <rect class="cut" x="190" y="44" width="6" height="262"/>
+          <rect class="cut" x="344" y="44" width="6" height="262"/>
+          <rect class="cut" x="190" y="44" width="160" height="6"/>
+          <rect class="cut" x="190" y="294" width="20" height="6"/>
+          <rect class="cut" x="240" y="294" width="110" height="6"/>
+          <path class="thin" d="M210 294v-26a26 26 0 0 1 26 26"/>
+          <rect class="cut" x="190" y="90" width="60" height="6"/>
+          <rect class="cut" x="330" y="90" width="20" height="6"/>
+          <rect class="cut" x="190" y="246" width="56" height="6"/>
+          <rect class="cut" x="290" y="246" width="60" height="6"/>
+          <path class="loop" d="M246 126H308Q314 126 314 132V200Q314 206 308 206H246Q240 206 240 200V132Q240 126 246 126Z"/>
+          <path class="ah" d="M286 122l7 4-7 4M318 172l-4-7-4 7M268 210l-7-4 7-4M236 156l4 7 4-7"/>
+          <path class="cutline" d="M100 158H460"/>
+          <circle class="cutpt" cx="92" cy="158" r="8"/><circle class="cutpt" cx="468" cy="158" r="8"/>
+          <g fill="#f3f0e9"><rect x="256" y="172" width="42" height="12"/><rect x="318" y="212" width="52" height="12"/><rect x="120" y="162" width="26" height="12"/><rect x="406" y="162" width="26" height="12"/></g>
+          <text x="92" y="158" class="s">A</text><text x="468" y="158" class="s">A</text>
+          <text x="277" y="152" class="s">天窓</text>
+          <text x="277" y="178">書庫</text>
+          <text x="320" y="218" class="start s">2F 回廊</text>
+          <text x="250" y="226" class="s">階段</text>
+          <text x="267" y="70">居間・アトリエ</text>
+          <text x="222" y="272">玄関</text>
+          <text x="133" y="168" class="s">隣地</text><text x="419" y="168" class="s">隣地</text>
+          <circle class="thin" cx="541" cy="62" r="11"/><path class="thin" d="M541 70V54M537 59l4-5 4 5"/><text x="541" y="82" class="s">N</text>
+          <path class="dim" d="M190 320v8M350 320v8M190 324h160M176 44v256M172 44h8M172 300h8"/>
+          <text x="270" y="317" class="num">8,000</text>
+          <text transform="translate(168 172) rotate(-90)" class="num">12,800</text>
+          <text x="24" y="16" class="start">1F 平面図</text>
+          <path class="loop" d="M24 340h28"/><text x="58" y="340" class="start s">回路（人の動線）</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="334" width="4" height="11" fill="url(#p-books)"/><text x="258" y="340" class="start s">本棚</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.01</span>1F 平面図。点線は2階の回廊と天窓。</figcaption>
+      </figure>
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="A-Aの断面図。屋根の天窓から光が吹抜けに降り、正面の三層分の書庫壁と二階の回廊の手すりを照らす。">
+          <rect class="ctx" x="100" y="214" width="84" height="86"/>
+          <rect class="ctx" x="356" y="196" width="94" height="104"/>
+          <rect x="210" y="134" width="122" height="166" fill="url(#p-books)" stroke="#1d1c1a" stroke-width=".6"/>
+          <path class="thin" d="M210 154h122M210 174h122M210 194h122M210 214h122M210 234h122M210 254h122M210 274h122"/>
+          <path class="light" d="M232 128 250 128 285 300 267 300Z"/>
+          <rect class="cut" x="196" y="118" width="36" height="10"/>
+          <rect class="cut" x="250" y="118" width="94" height="10"/>
+          <rect class="glass" x="232" y="122" width="18" height="3"/>
+          <rect class="cut" x="190" y="118" width="6" height="182"/>
+          <rect class="cut" x="344" y="118" width="6" height="182"/>
+          <rect class="cut" x="196" y="214" width="52" height="8"/>
+          <rect class="cut" x="306" y="214" width="38" height="8"/>
+          <rect class="wood" x="262" y="272" width="50" height="4"/>
+          <path class="thin" d="M264 276v24M310 276v24M232 214V178H322V214M232 196H322"/>
+          <path class="ground" d="M60 300H480"/>
+          <g fill="#f3f0e9"><rect x="240" y="136" width="62" height="12"/><rect x="250" y="196" width="54" height="12"/><rect x="268" y="258" width="38" height="12"/><rect x="218" y="216" width="48" height="12"/></g>
+          <text x="271" y="142">書庫壁</text>
+          <text x="277" y="202">2F 回廊</text>
+          <text x="287" y="264" class="s">ベンチ</text>
+          <text x="220" y="222" class="start s">FL +3,900</text>
+          <text x="241" y="108" class="s">天窓</text>
+          <text x="142" y="264" class="s">隣家</text>
+          <text x="403" y="250" class="s">隣家</text>
+          <text x="64" y="292" class="start s">GL ±0</text>
+          <path class="dim" d="M462 118h8M462 300h8M466 118v182"/>
+          <text transform="translate(484 209) rotate(-90)" class="num">9,100</text>
+          <text x="24" y="16" class="start">A-A′ 断面図</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.02</span>A-A′ 断面図。天窓と三層の書庫壁。</figcaption>
+      </figure>
+    </div>
+  </div>
+</dialog>
+<dialog class="wd" id="wd-paper" aria-labelledby="wd-paper-title">
+  <div class="wd-bar"><p class="mono">NO.04 — 展示 / 2023</p><button class="wd-close" type="button" data-close>閉じる<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+  <div class="wd-body">
+    <figure class="wd-photo">
+      <img src="../assets/kairo-work-exhibition.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="和紙の大画面が並ぶ明るい展示空間。細い木枠のスクリーンの間を光が透過し、床に淡い影を落とす。右手前に木のベンチ。">
+      <figcaption><span class="mono">PHOTO</span>和紙のスクリーン。光を透して柔らかく輝く。</figcaption>
+    </figure>
+    <div class="wd-info">
+      <h3 id="wd-paper-title">光と紙のパビリオン</h3>
+      <p class="wd-meta">千代田区丸の内 / 展示 / 2023</p>
+      <p class="wd-text">都市の広場に三週間だけ建つ仮設の展示室です。高さ4.5mの和紙スクリーンをずらして並べ、光を透かしながら人を導く迷路をつくりました。中央の天窓から降る光だけを道標に、来場者は外周をひと回りして、中央の静かな場所に至ります。</p>
+      <ul class="loops" aria-label="この作品の回路"><li>光の回路</li><li>人の回路</li></ul>
+      <dl class="spec">
+        <div><dt>会場</dt><dd>東京都千代田区丸の内</dd></div>
+        <div><dt>用途</dt><dd>仮設展示空間</dd></div>
+        <div><dt>構造</dt><dd>木造・和紙スクリーン</dd></div>
+        <div><dt>床面積</dt><dd>142.00㎡</dd></div>
+        <div><dt>高さ</dt><dd>4.50m</dd></div>
+        <div><dt>会期</dt><dd>2023年（3週間）</dd></div>
+      </dl>
+    </div>
+    <div class="wd-drawings">
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="平面図。六枚の和紙スクリーンが中央の天窓を囲み、四隅のすき間を通って人の動線が一周する。左下から入口の動線が分岐する。">
+          <rect class="ctx" x="90" y="40" width="380" height="256"/>
+          <rect class="light" x="190" y="126" width="180" height="84"/>
+          <rect class="above" x="210" y="110" width="140" height="104"/>
+          <rect class="wood" x="228" y="132" width="44" height="8"/>
+          <rect class="paper" x="232" y="62" width="96" height="4"/>
+          <rect class="paper" x="232" y="270" width="96" height="4"/>
+          <rect class="paper" x="212" y="118" width="88" height="4"/>
+          <rect class="paper" x="262" y="214" width="36" height="4"/>
+          <rect class="paper" x="182" y="120" width="4" height="96"/>
+          <rect class="paper" x="374" y="120" width="4" height="96"/>
+          <path class="thin" d="M184 120v96M376 120v96M212 120h88M262 216h36M232 64h96M232 272h96"/>
+          <path class="loop" d="M220 92H340Q356 92 356 108V228Q356 244 340 244H220Q204 244 204 228V108Q204 92 220 92Z"/>
+          <path class="ah" d="M296 88l7 4-7 4M352 164l4 7 4-7M264 240l-7 4 7 4M200 172l4-7 4 7"/>
+          <path class="loop" d="M96 264Q160 264 190 236Q204 222 204 214" marker-end="url(#m-arr)"/>
+          <path class="thin" d="M150 108L180 138"/>
+          <path class="cutline" d="M94 168H466"/>
+          <circle class="cutpt" cx="80" cy="168" r="8"/><circle class="cutpt" cx="480" cy="168" r="8"/>
+          <text x="80" y="168" class="s">A</text><text x="480" y="168" class="s">A</text>
+          <text x="280" y="170">天窓</text>
+          <text x="250" y="150" class="s">ベンチ</text>
+          <text x="112" y="104" class="s">和紙スクリーン</text>
+          <text x="112" y="250" class="s">入口</text>
+          <text x="104" y="52" class="start s">会場</text>
+          <circle class="thin" cx="541" cy="62" r="11"/><path class="thin" d="M541 70V54M537 59l4-5 4 5"/><text x="541" y="82" class="s">N</text>
+          <path class="dim" d="M90 320v8M470 320v8M90 324h380"/>
+          <text x="280" y="317" class="num">19,000</text>
+          <text x="24" y="16" class="start">平面図</text>
+          <path class="loop" d="M24 340h28"/><text x="58" y="340" class="start s">回路（人の動線）</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="336" width="18" height="7" class="paper"/><text x="272" y="340" class="start s">和紙スクリーン</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.01</span>平面図。スクリーンの間をめぐる回路。点線は天窓。</figcaption>
+      </figure>
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="A-Aの断面図。左右に切断された和紙スクリーン、奥に二枚のスクリーンが並び、屋根の天窓から光が床まで降る。">
+          <path class="light" d="M210 196 306 196 350 300 240 300ZM186 214 186 300 226 300ZM374 214 374 300 334 300Z"/>
+          <rect class="paper" x="232" y="210" width="96" height="90" style="opacity:.55"/>
+          <rect class="paper" x="212" y="210" width="88" height="90"/>
+          <path class="thin" d="M212 214h88M212 296h88M300 296h28M300 214h28"/>
+          <rect class="wood" x="228" y="278" width="44" height="4"/>
+          <path class="thin" d="M231 282v18M269 282v18"/>
+          <rect class="wood" x="182" y="210" width="4" height="90"/>
+          <rect class="wood" x="374" y="210" width="4" height="90"/>
+          <rect class="cut" x="150" y="192" width="58" height="4"/>
+          <rect class="cut" x="306" y="192" width="120" height="4"/>
+          <path class="ground" d="M60 300H480"/>
+          <path class="ray" d="M150 120l32 90M190 108l20 84"/>
+          <circle class="sun" cx="112" cy="96" r="7"/>
+          <text x="258" y="182" class="s">天窓</text>
+          <text x="134" y="224" class="s">和紙スクリーン</text>
+          <text x="312" y="226" class="s">和紙スクリーン</text>
+          <text x="64" y="292" class="start s">GL ±0</text>
+          <path class="dim" d="M430 210h8M430 300h8M434 210v90"/>
+          <text transform="translate(456 255) rotate(-90)" class="num">4,500</text>
+          <text x="24" y="16" class="start">A-A′ 断面図</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="336" width="18" height="7" class="paper"/><text x="272" y="340" class="start s">和紙スクリーン</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.02</span>A-A′ 断面図。天窓から降る光と透ける紙。</figcaption>
+      </figure>
+    </div>
+  </div>
+</dialog>
+<dialog class="wd" id="wd-kindergarten" aria-labelledby="wd-kindergarten-title">
+  <div class="wd-bar"><p class="mono">NO.05 — 公共 / 2020</p><button class="wd-close" type="button" data-close>閉じる<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button></div>
+  <div class="wd-body">
+    <figure class="wd-photo">
+      <img src="../assets/kairo-work-kindergarten.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="木の縁側から見るこども園の中庭。砂利を敷いた中庭にカエデと苔、石が配置され、打放しコンクリートの壁が囲む。">
+      <figcaption><span class="mono">PHOTO</span>縁側から見る中庭。砂利にカエデと苔、石。</figcaption>
+    </figure>
+    <div class="wd-info">
+      <h3 id="wd-kindergarten-title">富士見坂こども園</h3>
+      <p class="wd-meta">文京区富士見坂 / 公共 / 2020</p>
+      <p class="wd-text">木の縁側が中庭を囲む認定こども園です。教室はガラス引き戸で縁側に開かれ、子どもは雨の日も外遊びと部屋の間を自由に行き来できます。砂利と苔、カエデの中庭は四季の教材です。深い軒の日陰が、夏も外で過ごせる時間を長くします。</p>
+      <ul class="loops" aria-label="この作品の回路"><li>人の回路</li><li>風の回路</li></ul>
+      <dl class="spec">
+        <div><dt>所在地</dt><dd>東京都文京区富士見坂</dd></div>
+        <div><dt>用途</dt><dd>認定こども園</dd></div>
+        <div><dt>構造</dt><dd>木造・一部鉄筋コンクリート造</dd></div>
+        <div><dt>敷地面積</dt><dd>612.40㎡</dd></div>
+        <div><dt>延床面積</dt><dd>498.60㎡</dd></div>
+        <div><dt>規模</dt><dd>地上1階</dd></div>
+        <div><dt>竣工</dt><dd>2020年</dd></div>
+      </dl>
+    </div>
+    <div class="wd-drawings">
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="1階平面図。北に保育室が並び、左右の翼が中庭を囲む。中庭に面して木の縁側がコの字に巡り、人の動線が縁側と前庭を一周する。">
+          <rect x="186" y="146" width="188" height="150" fill="url(#p-gravel)"/>
+          <rect class="light" x="186" y="146" width="188" height="150"/>
+          <circle class="moss" cx="262" cy="240" r="9"/><circle class="moss" cx="322" cy="214" r="8"/>
+          <ellipse class="thin" cx="284" cy="238" rx="10" ry="6"/><ellipse class="thin" cx="312" cy="266" rx="8" ry="5"/>
+          <circle class="tree" cx="250" cy="200" r="30"/><circle class="tree" cx="330" cy="180" r="26"/><circle class="tree" cx="350" cy="250" r="22"/>
+          <path class="wood" d="M170 130h220v160h-16v-144h-188v144h-16z"/>
+          <rect class="glass" x="170" y="124" width="220" height="3"/>
+          <rect class="glass" x="164" y="127" width="3" height="169"/>
+          <rect class="glass" x="387" y="127" width="3" height="169"/>
+          <rect class="wall" x="80" y="44" width="406" height="6"/>
+          <rect class="wall" x="80" y="44" width="6" height="258"/>
+          <rect class="wall" x="480" y="44" width="6" height="258"/>
+          <rect class="wall" x="80" y="296" width="90" height="6"/>
+          <rect class="wall" x="384" y="296" width="20" height="6"/>
+          <rect class="wall" x="440" y="296" width="46" height="6"/>
+          <rect class="wall" x="222" y="50" width="5" height="74"/>
+          <rect class="wall" x="330" y="50" width="5" height="74"/>
+          <rect class="wall" x="86" y="210" width="78" height="5"/>
+          <rect class="wall" x="393" y="240" width="87" height="5"/>
+          <path class="thin" d="M404 296v-30a30 30 0 0 1 30 30M440 296v-30a30 30 0 0 0-30 30"/>
+          <path class="loop" d="M178 268V154Q178 138 194 138H366Q382 138 382 154V268Q382 284 366 284H194Q178 284 178 268Z"/>
+          <path class="ah" d="M174 224l4-7 4 7M286 134l7 4-7 4M378 216l4 7 4-7M250 288l-7-4 7-4"/>
+          <path class="thin" d="M196 166h-8"/>
+          <path class="cutline" d="M40 180H520"/>
+          <circle class="cutpt" cx="30" cy="180" r="7"/><circle class="cutpt" cx="530" cy="180" r="7"/>
+          <text x="30" y="180" class="s">A</text><text x="530" y="180" class="s">A</text>
+          <text x="208" y="166" class="s">縁側</text>
+          <text x="154" y="84">0・1歳児室</text>
+          <text x="279" y="84">2歳児室</text>
+          <text x="405" y="84">3歳児室</text>
+          <text x="125" y="168">4歳児室</text>
+          <text x="125" y="254">5歳児室</text>
+          <text x="436" y="196">プレイルーム</text>
+          <text x="436" y="258">職員室・玄関</text>
+          <text x="236" y="272">中庭</text>
+          <circle class="thin" cx="541" cy="62" r="11"/><path class="thin" d="M541 70V54M537 59l4-5 4 5"/><text x="541" y="82" class="s">N</text>
+          <path class="dim" d="M80 320v8M170 320v8M390 320v8M486 320v8M80 324h406M62 44v258M58 44h8M58 302h8"/>
+          <text x="125" y="317" class="num">4,500</text><text x="280" y="317" class="num">11,000</text><text x="438" y="317" class="num">4,800</text>
+          <text transform="translate(54 173) rotate(-90)" class="num">12,400</text>
+          <text x="24" y="16" class="start">1F 平面図</text>
+          <path class="loop" d="M24 340h28"/><text x="58" y="340" class="start s">回路（人の動線）</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="336" width="20" height="7" class="wood"/><text x="274" y="340" class="start s">縁側</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.01</span>1F 平面図。縁側を一周する回路。</figcaption>
+      </figure>
+      <figure class="dwg">
+        <svg viewBox="0 0 560 360" role="img" aria-label="A-Aの断面図。左右の保育室の屋根が中庭へ深くせり出し、柱で支えられた縁側が中庭に面する。向こうに北棟のガラス張りの教室、奥に中庭のカエデ。">
+          <path class="light" d="M208 205 352 205 390 257 390 300 275 300Z"/>
+          <rect x="86" y="176" width="394" height="36" fill="#e0dbcf" stroke="#1d1c1a" stroke-width=".7"/>
+          <rect class="glass" x="86" y="212" width="394" height="88"/>
+          <path class="thin" d="M130 176v124M174 176v124M218 176v124M262 176v124M306 176v124M350 176v124M394 176v124M438 176v124"/>
+          <path class="ground" d="M60 300H490"/>
+          <rect x="186" y="294" width="188" height="6" fill="url(#p-gravel)"/>
+          <ellipse class="thin" cx="298" cy="292" rx="10" ry="5"/>
+          <path class="thin" d="M336 294V252"/>
+          <ellipse class="tree" cx="336" cy="238" rx="24" ry="22"/>
+          <path class="thin" d="M250 294V236"/>
+          <ellipse class="tree" cx="250" cy="214" rx="34" ry="34"/>
+          <path class="cut" d="M74 182 208 203 208 211 74 191Z"/>
+          <path class="cut" d="M486 182 352 203 352 211 486 191Z"/>
+          <rect class="cut" x="80" y="192" width="6" height="108"/>
+          <rect class="cut" x="480" y="192" width="6" height="108"/>
+          <rect class="glass" x="167" y="206" width="3" height="94"/>
+          <rect class="glass" x="390" y="206" width="3" height="94"/>
+          <rect class="wood" x="182" y="206" width="4" height="80"/>
+          <rect class="wood" x="375" y="206" width="4" height="80"/>
+          <rect class="wood" x="170" y="286" width="16" height="6"/>
+          <rect class="wood" x="374" y="286" width="16" height="6"/>
+          <path class="ray" d="M140 118l48 68M170 104l48 68"/>
+          <circle class="sun" cx="120" cy="92" r="7"/>
+          <g fill="#f3f0e9"><rect x="106" y="160" width="44" height="12"/><rect x="406" y="190" width="60" height="12"/><rect x="92" y="250" width="62" height="12"/><rect x="404" y="250" width="64" height="12"/></g>
+          <text x="128" y="166" class="s">深い軒</text>
+          <text x="436" y="196" class="s">北棟（奥）</text>
+          <text x="123" y="256">保育室</text>
+          <text x="436" y="256">プレイルーム</text>
+          <text x="200" y="276" class="s">縁側</text>
+          <text x="318" y="282">中庭</text>
+          <text x="64" y="292" class="start s">GL ±0</text>
+          <path class="dim" d="M500 206h8M500 300h8M504 206v94"/>
+          <text transform="translate(526 253) rotate(-90)" class="num">4,700</text>
+          <text x="24" y="16" class="start">A-A′ 断面図</text>
+          <rect class="light" x="150" y="334" width="22" height="11"/><text x="178" y="340" class="start s">光</text>
+          <rect x="246" y="336" width="20" height="7" class="wood"/><text x="274" y="340" class="start s">縁側</text>
+          <path class="dim" d="M420 342h80M420 338v8M440 340v4M460 338v8M480 340v4M500 338v8"/>
+          <text x="420" y="333" class="num">0</text><text x="460" y="333" class="num">2</text><text x="500" y="333" class="num">4m</text>
+        </svg>
+        <figcaption><span class="mono">FIG.02</span>A-A′ 断面図。深い軒と縁側。</figcaption>
+      </figure>
+    </div>
+  </div>
+</dialog>
+<script>
+(function () {
+  'use strict';
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function play(v) { var p = v.play(); if (p && typeof p.catch === 'function') p.catch(function () {}); }
+
+  /* 映像：画面外では止める。「動きを減らす」設定では自動再生しない */
+  all('.vtoggle').forEach(function (btn) {
+    var video = document.getElementById(btn.getAttribute('data-video'));
+    if (!video) return;
+    var userPaused = false;
+    function sync() {
+      var on = !video.paused && !video.ended;
+      btn.classList.toggle('is-paused', !on);
+      btn.setAttribute('aria-label', on ? '映像を停止する' : '映像を再生する');
+    }
+    btn.addEventListener('click', function () {
+      if (video.paused || video.ended) { userPaused = false; play(video); }
+      else { userPaused = true; video.pause(); }
+    });
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    if (reduceMQ.matches) { userPaused = true; video.autoplay = false; video.pause(); }
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) { video.pause(); }
+          else if (!userPaused && !reduceMQ.matches) { play(video); }
+        });
+      }, { threshold: 0.05 }).observe(video);
+    }
+    sync();
+  });
+  if (typeof reduceMQ.addEventListener === 'function') {
+    reduceMQ.addEventListener('change', function (e) {
+      if (!e.matches) return;
+      all('video').forEach(function (v) { v.autoplay = false; v.pause(); });
+    });
+  }
+
+  /* 作品の絞り込み：見えている順に段違いの位置を振り直す */
+  var grid = document.getElementById('works-grid');
+  var live = document.getElementById('works-live');
+  var fbtns = all('.filter button');
+  function applyFilter(cat) {
+    var shown = 0, label = '';
+    fbtns.forEach(function (b) {
+      var on = b.getAttribute('data-filter') === cat;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      if (on) label = b.getAttribute('data-label') || '';
+    });
+    Array.prototype.forEach.call(grid.children, function (li) {
+      var show = cat === 'all' || li.getAttribute('data-cat') === cat;
+      li.hidden = !show;
+      if (show) { li.setAttribute('data-pos', String(shown)); shown++; }
+    });
+    grid.setAttribute('data-count', String(shown));
+    if (live) live.textContent = shown ? label + 'の作品 ' + shown + '件を表示しています' : label + 'の作品はありません';
+  }
+  fbtns.forEach(function (b) { b.addEventListener('click', function () { applyFilter(b.getAttribute('data-filter')); }); });
+
+  /* 作品詳細：<dialog> にフォーカス管理を任せ、閉じたら呼び出し元へ戻す */
+  var opener = null;
+  all('[data-open]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var dlg = document.getElementById(b.getAttribute('data-open'));
+      if (!dlg || typeof dlg.showModal !== 'function' || dlg.open) return;
+      opener = b;
+      dlg.showModal();
+      document.documentElement.classList.add('is-locked');
+      var c = dlg.querySelector('.wd-close');
+      if (c) c.focus();
+    });
+  });
+  all('dialog.wd').forEach(function (dlg) {
+    dlg.addEventListener('close', function () {
+      if (!document.querySelector('dialog[open]')) document.documentElement.classList.remove('is-locked');
+      if (opener) { opener.focus(); opener = null; }
+    });
+    dlg.addEventListener('click', function (e) {
+      if (e.target !== dlg) return;
+      var r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dlg.close();
+    });
+    all('[data-close]', dlg).forEach(function (b) { b.addEventListener('click', function () { dlg.close(); }); });
+  });
+
+  /* 狭い画面のメニュー */
+  var menuBtn = document.querySelector('.menu-btn');
+  var nav = document.getElementById('site-nav');
+  function setNav(open) {
+    if (!nav) return;
+    nav.classList.toggle('is-open', open);
+    if (menuBtn) { menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); menuBtn.textContent = open ? '閉じる' : 'メニュー'; }
+  }
+  if (menuBtn && nav) {
+    menuBtn.addEventListener('click', function () { setNav(!nav.classList.contains('is-open')); });
+    nav.addEventListener('click', function (e) { if (e.target.closest('a')) setNav(false); });
+  }
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && nav && nav.classList.contains('is-open')) { setNav(false); if (menuBtn) menuBtn.focus(); }
+  });
+
+  /* 表示中の節をナビに示す */
+  var navLinks = all('.nav a[href^="#"]');
+  if ('IntersectionObserver' in window && navLinks.length) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var id = '#' + en.target.id;
+        navLinks.forEach(function (a) { if (a.getAttribute('href') === id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    ['hero', 'works', 'philosophy', 'studio', 'contact'].forEach(function (id) { var s = document.getElementById(id); if (s) io.observe(s); });
+  }
+
+  /* 問い合わせ：HTML の制約検証の上に、行ごとの文言を作る */
+  var form = document.getElementById('contact-form');
+  if (form) {
+    var box = document.getElementById('form-box');
+    var rules = {
+      name: function (v) { return v.trim() ? '' : 'お名前をご記入ください。'; },
+      tel: function (v) {
+        var s = v.replace(/\s+/g, '');
+        if (!s) return '';
+        if (!/^[0-9+\-()（）]+$/.test(s)) return '電話番号は数字とハイフンでご記入ください。';
+        var d = s.replace(/\D/g, '');
+        return d.length >= 10 && d.length <= 15 ? '' : '電話番号の桁数をご確認ください。';
+      },
+      email: function (v) {
+        var s = v.trim();
+        if (!s) return 'メールアドレスをご記入ください。';
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) ? '' : 'メールアドレスの形式をご確認ください（例：name@example.com）。';
+      },
+      type: function (v) { return v ? '' : 'ご相談の種類をお選びください。'; },
+      msg: function (v) { return v.trim().length >= 10 ? '' : 'ご相談内容を10文字以上でご記入ください。'; },
+      agree: function (v, el) { return el.checked ? '' : 'ご同意のチェックをお願いします。'; }
+    };
+    function paint(el, msg) {
+      el.setCustomValidity(msg);
+      var f = el.closest('.f');
+      if (f) {
+        f.classList.toggle('is-err', !!msg);
+        var e = f.querySelector('.err');
+        if (e) e.textContent = msg;
+      }
+      if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+    }
+    function check(el) { var fn = rules[el.name]; var msg = fn(el.value, el) || ''; paint(el, msg); return !msg; }
+    var fields = all('input, select, textarea', form).filter(function (el) { return !!rules[el.name]; });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var first = null;
+      fields.forEach(function (el) { if (!check(el) && !first) first = el; });
+      if (first) { first.focus(); return; }
+      var sum = document.getElementById('contact-sum');
+      if (sum) {
+        sum.textContent = '';
+        [['お名前', 'name'], ['電話番号', 'tel'], ['メール', 'email'], ['種類', 'type'], ['内容', 'msg']].forEach(function (p) {
+          var el = form.elements.namedItem(p[1]);
+          var val = el && el.value ? String(el.value).trim() : '';
+          if (!val) return;
+          var row = document.createElement('div');
+          var dt = document.createElement('dt'); dt.textContent = p[0];
+          var dd = document.createElement('dd'); dd.textContent = val;
+          row.appendChild(dt); row.appendChild(dd); sum.appendChild(row);
+        });
+      }
+      box.classList.add('is-sent');
+      var done = box.querySelector('.done');
+      if (done) done.focus();
+    });
+    function recheck(e) { var el = e.target; var f = el && el.closest ? el.closest('.f') : null; if (f && f.classList.contains('is-err')) check(el); }
+    form.addEventListener('input', recheck);
+    form.addEventListener('change', recheck);
+    var again = document.getElementById('form-again');
+    if (again) again.addEventListener('click', function () {
+      form.reset();
+      fields.forEach(function (el) { paint(el, ''); });
+      box.classList.remove('is-sent');
+      var firstField = form.querySelector('input');
+      if (firstField) firstField.focus();
+    });
+  }
+})();
+</script>
+</body>
+</html>

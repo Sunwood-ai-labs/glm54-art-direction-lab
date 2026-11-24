@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黒曜焙煎所 KOKUYO ROASTERY — 夜だけ煎る、コーヒー豆の定期便</title>
+<meta name="description" content="深夜にものづくりをする人のための、夜間専門スペシャルティコーヒー豆の定期便。深煎り「零時」、中深煎り「残響」、デカフェ「白夜」の三つのブレンド。">
+<meta name="theme-color" content="#0b0a09">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ---------- tokens: colours are taken from the two local assets (obsidian ground, marble-vein cream, rim-light ember) ---------- */
+:root {
+  --obsidian: #0b0a09;
+  --coal: #14110e;
+  --cream: #ece1cc;
+  --cream-dim: #b9ab93;
+  --cream-faint: #8a7f6d;
+  --ember: #d9944e;
+  --ember-ink: #140d07;
+  --t-zankyo: #e2ad60;
+  --t-reiji: #e0703f;
+  --t-byakuya: #b6c4cd;
+  --tint: var(--ember);
+  --line: rgba(236, 225, 204, .16);
+  --line-strong: rgba(236, 225, 204, .34);
+  --gutter: clamp(20px, 5vw, 72px);
+  --max: 1440px;
+  --mincho: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --mono: "IBM Plex Mono", "Shippori Mincho", "Yu Mincho", Consolas, monospace;
+}
+* { box-sizing: border-box; margin: 0; }
+html { background: var(--obsidian); color: var(--cream); scroll-behavior: smooth; scroll-padding-top: 24px; }
+body { font-family: var(--mincho); font-size: 16px; line-height: 1.9; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; color: inherit; }
+img, video { display: block; max-width: 100%; }
+ul { list-style: none; padding: 0; }
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 4px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.mono { font-family: var(--mono); font-weight: 500; letter-spacing: .16em; }
+.wrap { max-width: var(--max); margin: 0 auto; padding-inline: var(--gutter); }
+.section { padding-top: clamp(88px, 12vw, 176px); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; margin-bottom: clamp(40px, 6vw, 80px); }
+.sec-head h2 { font-size: clamp(1.75rem, 3.1vw, 3rem); line-height: 1.5; font-weight: 600; letter-spacing: .08em; }
+.sec-head .lead { justify-self: end; }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .22em; color: var(--cream-dim); margin-bottom: 22px; }
+.label b { font-weight: 500; color: var(--cream); margin-right: 14px; }
+.kicker { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; font-weight: 500; letter-spacing: .3em; color: var(--cream-dim); }
+.kicker .en { font: 500 12px/1 var(--mono); letter-spacing: .2em; }
+.lead { font-size: 15px; font-weight: 500; line-height: 2.1; letter-spacing: .04em; color: var(--cream-dim); max-width: 28em; }
+.lead strong { font-weight: 600; color: var(--cream); }
+.btn { display: inline-block; background: var(--ember); color: var(--ember-ink); font-size: 15px; font-weight: 700; letter-spacing: .2em; line-height: 1; padding: 18px 30px 18px 34px; border: 0; cursor: pointer; transition: background .25s, transform .25s; }
+.btn:hover { background: #e6a763; }
+.btn:active { transform: translateY(1px); }
+.link { display: inline-block; font-size: 14px; font-weight: 600; letter-spacing: .16em; padding-bottom: 5px; border-bottom: 1px solid var(--line-strong); transition: border-color .25s; }
+.link:hover { border-color: var(--cream); }
+
+/* ---------- reveal (only when JS runs) ---------- */
+.js [data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+/* ---------- header + hero ---------- */
+.site-head { position: absolute; top: 0; left: 0; right: 0; z-index: 5; }
+.site-head .wrap { display: flex; justify-content: space-between; align-items: baseline; padding-top: 30px; }
+.brand { font-size: 21px; font-weight: 600; letter-spacing: .16em; }
+.brand small { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .24em; color: var(--cream-dim); margin-left: 14px; }
+.site-nav { display: flex; gap: 30px; font-size: 14px; font-weight: 600; letter-spacing: .18em; }
+.site-nav a { color: var(--cream-dim); transition: color .25s; }
+.site-nav a:hover { color: var(--cream); }
+.hero { position: relative; min-height: min(100svh, 960px); display: grid; grid-template-columns: 38% 62%; grid-template-rows: auto 1fr auto; padding: 96px 0 0; overflow: hidden; }
+.hero__media { grid-column: 2; grid-row: 2; align-self: center; aspect-ratio: 3 / 2; position: relative;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 18%), linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, #000 18%), linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect; }
+.hero__media video { width: 100%; height: 100%; object-fit: cover; object-position: 52% 50%; transition: opacity .5s linear; }
+.hero__copy { grid-column: 1; grid-row: 2; align-self: center; padding-left: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))); padding-right: 8px; }
+.hero__title { writing-mode: vertical-rl; font-size: clamp(3.25rem, 5.3vw, 5rem); line-height: 1.22; font-weight: 700; letter-spacing: .12em; margin: 32px 0 38px; }
+.hero__title span { display: block; }
+.hero__copy .lead { margin-bottom: 34px; }
+.ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; }
+.hero__toggle { position: absolute; right: var(--gutter); bottom: 64px; z-index: 3; background: none; border: 1px solid var(--line); color: var(--cream-dim); font-size: 12px; letter-spacing: .2em; padding: 8px 14px; cursor: pointer; display: none; }
+.js .hero__toggle { display: block; }
+.facts { grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-columns: repeat(3, 1fr); max-width: var(--max); width: 100%; margin: 0 auto; padding: 0 var(--gutter); font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .14em; color: var(--cream-dim); }
+.facts li { padding: 18px 0 22px; border-top: 1px solid var(--line); }
+.facts b { color: var(--cream); font-weight: 500; margin-right: 12px; }
+
+/* ---------- section 2: three blends ---------- */
+.axis { position: relative; margin: 0 0 clamp(48px, 7vw, 96px); padding-top: 30px; }
+.axis__track { position: relative; height: 58px; border-top: 1px solid var(--line-strong); }
+.axis__tick { position: absolute; top: 0; width: 1px; height: 10px; background: var(--line-strong); }
+.axis__hour { position: absolute; top: 16px; transform: translateX(-50%); font: 500 12px/1 var(--mono); letter-spacing: .1em; color: var(--cream-faint); white-space: nowrap; }
+.axis__band { position: absolute; top: -7px; height: 15px; border: 1px solid var(--line-strong); background: transparent; color: var(--cream-dim); padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: space-between; font: inherit; transition: background .4s, border-color .4s, color .4s; }
+.axis__band::before { content: ""; position: absolute; inset: -1px; background: var(--t); opacity: 0; transition: opacity .4s; }
+.axis__band > span { position: relative; padding: 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .14em; white-space: nowrap; }
+.axis__band > span.t { font-family: var(--mono); font-weight: 500; letter-spacing: .08em; font-size: 11px; }
+.axis__band:hover { border-color: var(--cream); color: var(--cream); }
+.axis__band[aria-pressed="true"] { border-color: var(--t); color: var(--obsidian); }
+.axis__band[aria-pressed="true"]::before { opacity: 1; }
+.axis__note { margin-top: 14px; font-size: 13px; color: var(--cream-faint); letter-spacing: .06em; }
+.blends { display: grid; grid-template-columns: minmax(0, 34%) minmax(0, 1fr); gap: 0 clamp(32px, 6vw, 96px); align-items: start; }
+.tabs { border-top: 1px solid var(--line); }
+.tab { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--line); padding: 22px 4px 22px 0; display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; align-items: baseline; cursor: pointer; color: var(--cream-dim); position: relative; transition: color .3s; }
+.tab::before { content: ""; position: absolute; left: -18px; top: 18px; bottom: 18px; width: 3px; background: var(--t); opacity: 0; transition: opacity .3s; }
+.tab .name { font-size: 28px; font-weight: 700; letter-spacing: .2em; line-height: 1.3; }
+.tab .time { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; }
+.tab .sub { grid-column: 1 / -1; font-size: 13px; letter-spacing: .1em; margin-top: 4px; }
+.tab:hover { color: var(--cream); }
+.tab[aria-selected="true"] { color: var(--cream); }
+.tab[aria-selected="true"]::before { opacity: 1; }
+.tab[aria-selected="true"] .name { color: var(--t); }
+.blend { position: relative; }
+.blend__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 20px; margin-bottom: 18px; }
+.blend__head .kanji { font-size: clamp(3.5rem, 6.5vw, 6.25rem); line-height: 1; font-weight: 700; letter-spacing: .1em; color: var(--t); }
+.blend__head .roast { font-size: 15px; font-weight: 600; letter-spacing: .2em; }
+.blend__head .roast small { display: block; font: 500 11px/1.6 var(--mono); letter-spacing: .2em; color: var(--cream-dim); }
+.tagline { font-size: clamp(1.2rem, 1.8vw, 1.5rem); font-weight: 600; line-height: 1.8; letter-spacing: .06em; margin-bottom: 12px; }
+.blend .desc { font-size: 15px; color: var(--cream-dim); max-width: 30em; margin-bottom: 34px; }
+.scales { border-top: 1px solid var(--line); }
+.scale-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 4.5em; align-items: center; gap: 18px; padding: 28px 0 14px; border-bottom: 1px solid var(--line); }
+.scale-row dt { font-size: 13px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); }
+.scale-row dd { margin: 0; }
+.scale { position: relative; height: 14px; background: repeating-linear-gradient(90deg, transparent 0 calc(20% - 1px), var(--line-strong) calc(20% - 1px) 20%) right / 100% 100% no-repeat, linear-gradient(var(--line-strong), var(--line-strong)) right / 1px 100% no-repeat, linear-gradient(var(--line-strong), var(--line-strong)) left / 1px 100% no-repeat; }
+.scale .fill { position: absolute; left: 1px; top: 3px; bottom: 3px; width: calc(var(--v) * 20% - 2px); background: var(--t); transition: width .6s cubic-bezier(.2,.7,.2,1); }
+.scale i { position: absolute; top: -20px; height: 14px; left: calc(var(--x) * 20% - 10%); width: 20%; font-style: normal; font-size: 12px; line-height: 14px; font-weight: 700; text-align: center; color: var(--cream-faint); }
+.blend.no-anim .fill { transition: none; width: 0; }
+.brew__copy { grid-column: 2; width: 46%; }
+.scale-row .val { font-family: var(--mono); font-size: 15px; font-weight: 500; text-align: right; letter-spacing: .06em; }
+.scale-row .val::after { content: " / 5"; font-size: 11px; color: var(--cream-faint); }
+.scale-row.roast .val { font-family: var(--mincho); font-size: 13px; font-weight: 600; letter-spacing: .14em; }
+.scale-row.roast .val::after { content: none; }
+.legend { margin-top: 12px; font-size: 12px; color: var(--cream-faint); letter-spacing: .08em; }
+.notes { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 18px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+.notes dt, .specs dt { font-size: 13px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); padding-top: 3px; }
+.notes dd { font-size: 16px; font-weight: 600; letter-spacing: .06em; }
+.specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 24px; margin-top: 26px; }
+.specs div { border-top: 1px solid var(--line); padding-top: 12px; }
+.specs dd { font-size: 14px; color: var(--cream); letter-spacing: .04em; }
+.js .blend[hidden] { display: none; }
+.blend__next { margin-top: 34px; display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+
+/* ---------- section 2.5: roasting room & packages + midnight desk ---------- */
+.roast-stage { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(28px, 4.5vw, 64px); align-items: start; }
+.roast-film { position: relative; aspect-ratio: 16 / 9; background: var(--coal); border: 1px solid var(--line); overflow: hidden; }
+.roast-film video { width: 100%; height: 100%; object-fit: cover; }
+.roast-film__toggle { position: absolute; right: 16px; bottom: 16px; background: rgba(11,10,9,.72); border: 1px solid var(--line-strong); color: var(--cream); font-size: 12px; letter-spacing: .18em; padding: 8px 14px; cursor: pointer; }
+.roast-film__toggle:hover { border-color: var(--ember); color: var(--ember); }
+.roast-plates { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 28px; }
+.roast-plate { margin: 0; }
+.roast-plate img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 1px solid var(--line); background: var(--coal); }
+.roast-plate figcaption { margin-top: 12px; font-size: 13px; color: var(--cream-dim); letter-spacing: .06em; line-height: 1.7; }
+.roast-plate figcaption b { display: block; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .2em; color: var(--ember); margin-bottom: 4px; }
+.roast-meta { border-top: 1px solid var(--line-strong); padding-top: 20px; }
+.roast-meta h3 { font-size: clamp(1.35rem, 2.2vw, 2rem); font-weight: 600; line-height: 1.6; letter-spacing: .08em; margin-bottom: 16px; }
+.roast-meta .lead { margin-bottom: 28px; }
+.desk-band { margin-top: clamp(72px, 9vw, 128px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: center; border-top: 1px solid var(--line); padding-top: clamp(48px, 6vw, 84px); }
+.desk-band figure { margin: 0; position: relative; }
+.desk-band img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border: 1px solid var(--line); }
+.desk-band figcaption { margin-top: 10px; font: 500 11px/1.6 var(--mono); letter-spacing: .2em; color: var(--cream-faint); }
+.desk-band h3 { font-size: clamp(1.5rem, 2.5vw, 2.3rem); font-weight: 600; line-height: 1.6; letter-spacing: .08em; margin: 14px 0 18px; }
+
+/* ---------- section 3: brew guide ---------- */
+.brew { position: relative; }
+.brew__photo { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--coal); }
+.brew__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 50%; }
+.brew__photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,10,9,.94) 0%, rgba(11,10,9,.72) 30%, rgba(11,10,9,.1) 58%, transparent 72%); pointer-events: none; }
+.brew__inner { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, var(--max)) minmax(var(--gutter), 1fr); align-items: center; padding-top: 72px; }
+.brew__copy { align-self: center; }
+.brew__copy h2 { margin: 18px 0 22px; }
+.brew__cap { position: absolute; right: var(--gutter); bottom: 26px; writing-mode: vertical-rl; font-size: 13px; font-weight: 500; letter-spacing: .34em; color: var(--cream); text-shadow: 0 0 12px rgba(0,0,0,.8); }
+.steps { margin-top: clamp(48px, 6vw, 80px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line-strong); }
+.steps li { padding: 22px 24px 8px 0; border-left: 1px solid var(--line); position: relative; }
+.steps li:first-child { border-left: 0; padding-left: 0; }
+.steps li + li { padding-left: 24px; }
+.steps .t { display: block; font: 500 22px/1 var(--mono); letter-spacing: .06em; color: var(--ember); margin-bottom: 14px; }
+.steps .t::before { content: ""; position: absolute; top: -7px; left: -4px; width: 7px; height: 7px; background: var(--obsidian); border: 1px solid var(--cream); border-radius: 50%; }
+.steps li:first-child .t::before { left: -3px; }
+.steps h3 { font-size: 18px; font-weight: 700; letter-spacing: .2em; margin-bottom: 8px; }
+.steps p { font-size: 14px; color: var(--cream-dim); }
+.params { margin-top: clamp(48px, 6vw, 72px); display: grid; grid-template-columns: minmax(0, 44%) minmax(0, 1fr); gap: 32px clamp(32px, 6vw, 96px); align-items: start; }
+.params dl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); grid-column: 1 / -1; border-top: 1px solid var(--line); }
+.params dl div { padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); }
+.params dt { font-size: 12px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); }
+.params dd { font: 500 20px/1.4 var(--mono); }
+.params dd small { font-family: var(--mincho); font-size: 12px; color: var(--cream-dim); margin-left: 4px; letter-spacing: .1em; }
+.quote { font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 600; line-height: 2; letter-spacing: .06em; border-left: 2px solid var(--ember); padding-left: 24px; }
+.quote small { display: block; margin-top: 14px; font-size: 13px; font-weight: 500; color: var(--cream-dim); letter-spacing: .2em; }
+.adj { border-collapse: collapse; width: 100%; font-size: 14px; }
+.adj caption { text-align: left; font-size: 13px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); padding-bottom: 14px; }
+.adj th, .adj td { text-align: left; padding: 13px 12px 13px 0; border-bottom: 1px solid var(--line); font-weight: 500; }
+.adj th { font-weight: 600; letter-spacing: .16em; }
+.adj td.num { font-family: var(--mono); font-size: 15px; }
+.adj tr { color: var(--cream-dim); transition: color .3s, background .3s; }
+.adj tr.is-on { color: var(--cream); background: linear-gradient(90deg, rgba(217,148,78,.14), transparent 70%); }
+.adj tr.is-on th::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 10px; background: var(--t); vertical-align: 1px; }
+
+/* ---------- section 4: plans ---------- */
+.plans { display: grid; grid-template-columns: minmax(0, 42%) minmax(0, 1fr); gap: 40px clamp(32px, 6vw, 96px); align-items: start; }
+.cycle { border-top: 1px solid var(--line-strong); }
+.cycle label { display: grid; grid-template-columns: 22px 1fr auto; align-items: baseline; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--line); cursor: pointer; color: var(--cream-dim); transition: color .3s; }
+.cycle label:hover { color: var(--cream); }
+.cycle input { appearance: none; width: 14px; height: 14px; border: 1px solid var(--line-strong); border-radius: 50%; align-self: center; margin: 0; display: grid; place-content: center; }
+.cycle input::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ember); transform: scale(0); transition: transform .25s; }
+.cycle input:checked::before { transform: scale(1); }
+.cycle .c-name { font-size: 24px; font-weight: 700; letter-spacing: .2em; }
+.cycle .c-sub { display: block; font-size: 13px; font-weight: 500; letter-spacing: .1em; margin-top: 2px; }
+.cycle .c-price { font-family: var(--mono); font-size: 14px; letter-spacing: .04em; white-space: nowrap; }
+.cycle label:has(input:checked) { color: var(--cream); }
+.ledger { border-top: 1px solid var(--line-strong); }
+.ledger dl { margin: 0; }
+.ledger .row { display: grid; grid-template-columns: 7em minmax(0, 1fr); gap: 18px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.ledger dt { font-size: 13px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); }
+.ledger dd { font-size: 15px; }
+.ledger dd.num { font-family: var(--mono); font-size: 20px; letter-spacing: .02em; }
+.ledger dd.num small { font-family: var(--mincho); font-size: 12px; color: var(--cream-dim); letter-spacing: .1em; margin-left: 6px; }
+.ledger dd .beans { font-weight: 700; letter-spacing: .16em; color: var(--t); }
+.plan__total { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 22px 0 26px; }
+.plan__total .p { font: 500 clamp(2.5rem, 4.5vw, 3.75rem)/1 var(--mono); letter-spacing: -.02em; }
+.plan__total .p small { font-family: var(--mincho); font-size: 13px; letter-spacing: .2em; color: var(--cream-dim); margin-left: 10px; }
+.plan__total .cup { font-size: 13px; color: var(--cream-dim); letter-spacing: .1em; }
+.plan__fine { margin-top: 18px; font-size: 13px; color: var(--cream-faint); letter-spacing: .04em; line-height: 1.9; }
+.js .plan-pane[hidden] { display: none; }
+.apply { margin-top: clamp(72px, 10vw, 128px); padding: clamp(32px, 5vw, 64px) 0; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line); }
+.apply__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px clamp(32px, 6vw, 96px); align-items: end; }
+.apply h2 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); font-weight: 600; line-height: 1.6; letter-spacing: .08em; }
+.apply form { display: none; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; margin-top: 28px; }
+.apply form.is-open { display: grid; }
+.apply label { grid-column: 1 / -1; font-size: 13px; font-weight: 600; letter-spacing: .26em; color: var(--cream-dim); }
+.apply input { background: transparent; border: 0; border-bottom: 1px solid var(--line-strong); padding: 10px 2px; font-family: var(--mono); font-size: 16px; color: var(--cream); border-radius: 0; width: 100%; }
+.apply input::placeholder { color: var(--cream-faint); font-family: var(--mincho); }
+.apply input:focus-visible { outline: none; border-bottom-color: var(--ember); }
+.apply .err { display: none; grid-column: 1 / -1; font-size: 13px; color: var(--t-reiji); }
+.apply .is-invalid .err { display: block; }
+.apply .done { display: none; margin-top: 28px; padding: 22px 0 22px 20px; border-left: 2px solid var(--ember); font-size: 15px; }
+.apply .done.is-on { display: block; }
+.demo-note { font-size: 12px; color: var(--cream-faint); letter-spacing: .04em; margin-top: 10px; }
+.site-foot { padding: 56px 0 40px; }
+.site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px 40px; font-family: var(--mono); font-size: 12px; letter-spacing: .14em; color: var(--cream-faint); }
+.site-foot b { font-family: var(--mincho); font-weight: 600; letter-spacing: .2em; color: var(--cream-dim); margin-right: 18px; }
+.site-foot a { color: var(--cream-dim); margin-right: 22px; }
+
+/* ---------- narrow widths: stack in reading order ---------- */
+@media (max-width: 1100px) {
+  .hero__copy { padding-right: 0; }
+  .blends, .plans, .params, .roast-stage, .desk-band { grid-template-columns: minmax(0, 1fr); }
+  .sec-head { grid-template-columns: minmax(0, 1fr); }
+  .sec-head .lead { justify-self: start; }
+  .tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+  .tab { border-bottom: 0; padding: 16px 12px 16px 0; grid-template-columns: 1fr; }
+  .tab::before { left: 0; right: 0; top: auto; bottom: -1px; width: auto; height: 3px; }
+  .tab .name { font-size: 22px; }
+  .tab .time { grid-column: 1; grid-row: 2; }
+  .tab .sub { display: none; }
+}
+@media (max-width: 959px) {
+  .site-nav { gap: 18px; font-size: 13px; }
+  .hero { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto; padding-top: 84px; min-height: 0; }
+  .hero__media { grid-column: 1; grid-row: 1; aspect-ratio: 5 / 4; margin: 0 calc(var(--gutter) * -1); width: calc(100% + var(--gutter) * 2);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 72%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0, #000 10%, #000 72%, transparent 100%); }
+  .hero__media video { object-position: 54% 50%; }
+  .hero__copy { grid-column: 1; grid-row: 2; padding: 0 0 40px; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 22px; align-items: start; }
+  .hero__copy .kicker { grid-column: 1 / -1; }
+  .hero__title { grid-column: 1; font-size: 2.75rem; margin: 22px 0 0; line-height: 1.16; }
+  .hero__copy .lead { grid-column: 2; margin: 22px 0 0; }
+  .hero__copy .ctas { grid-column: 1 / -1; margin-top: 26px; }
+  .hero__toggle { bottom: auto; top: 84px; }
+  .facts { grid-column: 1; grid-row: 3; grid-template-columns: minmax(0, 1fr); }
+  .facts li { padding: 12px 0; }
+  .specs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .scale-row { grid-template-columns: 5.5em minmax(0, 1fr) 4em; gap: 12px; }
+  .axis__band > span.t { display: none; }
+  .brew__inner { position: static; display: block; padding: 40px var(--gutter) 0; max-width: var(--max); margin: 0 auto; }
+  .brew__photo { aspect-ratio: auto; background: none; overflow: visible; }
+  .brew__photo img { aspect-ratio: 5 / 4; object-position: 62% 50%; }
+  .brew__photo::before { background: linear-gradient(180deg, transparent 62%, var(--obsidian) 100%); }
+  .brew__cap { right: var(--gutter); bottom: 22px; }
+  .section#brew { padding-top: clamp(72px, 10vw, 120px); }
+  .steps { grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  .steps li, .steps li + li, .steps li:first-child { border-left: 1px solid var(--line-strong); padding: 0 0 26px 22px; margin-left: 3px; }
+  .steps .t::before, .steps li:first-child .t::before { left: -26px; top: 6px; }
+  .steps .t { margin-bottom: 6px; }
+  .params dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .apply__grid { grid-template-columns: minmax(0, 1fr); }
+  .apply form { grid-template-columns: minmax(0, 1fr); }
+  .apply .btn { justify-self: start; }
+  .blend__head .kanji { font-size: 3.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .scale .fill, .axis__band, .axis__band::before, .tab::before { transition: none; }
+}
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top">黒曜焙煎所<small>KOKUYO ROASTERY</small></a>
+    <nav class="site-nav" aria-label="ページ内">
+      <a href="#blends">豆</a><a href="#roastery">焙煎</a><a href="#brew">抽出</a><a href="#plan">定期便</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- 1. hero: the footage floats as a lit window in the obsidian ground; type never sits on it -->
+  <section class="hero" aria-label="黒曜焙煎所">
+    <figure class="hero__media">
+      <video autoplay muted loop playsinline poster="../assets/kokuyo-coffee.jpg" aria-label="夜の焙煎所で、ドリッパーにお湯を注いでいる映像">
+        <source src="../assets/kokuyo-pour-over.mp4" type="video/mp4">
+        ドリッパーにお湯を注ぎ、コーヒーを抽出している映像。
+      </video>
+    </figure>
+    <div class="hero__copy">
+      <p class="kicker"><span class="en">ROASTED AFTER 23:00</span><span>夜間専門ロースター</span></p>
+      <h1 class="hero__title"><span>夜を、</span><span>煎る。</span></h1>
+      <p class="lead"><strong>火を入れるのは、夜だけ。</strong>深夜にものづくりをする人のための、コーヒー豆の定期便です。静まり返った23時に煎った豆を、あなたの夜がいちばん深まる日に届けます。</p>
+      <div class="ctas">
+        <a class="btn" href="#plan">定期便を選ぶ</a>
+        <a class="link" href="#blends">3つの豆を見る →</a>
+      </div>
+    </div>
+    <button class="hero__toggle" type="button" aria-pressed="false">映像を止める</button>
+    <ul class="facts">
+      <li><b>焙煎</b>23:00–4:00</li>
+      <li><b>お届け</b>焙煎後 5–10日目</li>
+      <li><b>送料</b>無料・いつでも休止可</li>
+    </ul>
+  </section>
+
+  <!-- 2. three blends: one night axis, the selector and the name stay put while the numbers change -->
+  <section class="section wrap" id="blends">
+    <div class="sec-head" data-reveal>
+      <div>
+        <p class="label"><b>01</b>THREE BLENDS</p>
+        <h2>夜を、三つの杯に<br>分けました。</h2>
+      </div>
+      <p class="lead">人の味覚は夜が深まるほど、苦みと香りに敏感になります。作業に入る一杯、深夜を越える一杯、仕上げの一杯。時間帯に合わせて三つ煎りました。</p>
+    </div>
+
+    <div class="axis" data-reveal>
+      <p class="label" id="axis-label" style="margin-bottom:0"><b>推奨時間帯</b>18:00 — 06:00</p>
+      <div class="axis__track" role="group" aria-labelledby="axis-label">
+        <span class="axis__tick" style="left:0"></span><span class="axis__tick" style="left:16.667%"></span><span class="axis__tick" style="left:33.333%"></span><span class="axis__tick" style="left:50%"></span><span class="axis__tick" style="left:66.667%"></span><span class="axis__tick" style="left:83.333%"></span><span class="axis__tick" style="left:calc(100% - 1px)"></span>
+        <span class="axis__hour" style="left:0;transform:none">18</span><span class="axis__hour" style="left:16.667%">20</span><span class="axis__hour" style="left:33.333%">22</span><span class="axis__hour" style="left:50%">0</span><span class="axis__hour" style="left:66.667%">2</span><span class="axis__hour" style="left:83.333%">4</span><span class="axis__hour" style="left:100%;transform:translateX(-100%)">6</span>
+        <button class="axis__band" type="button" data-blend="zankyo" aria-pressed="false" style="left:16.667%;width:33.333%;--t:var(--t-zankyo)"><span>残響</span><span class="t">20:00–24:00</span></button>
+        <button class="axis__band" type="button" data-blend="reiji" aria-pressed="true" style="left:50%;width:25%;--t:var(--t-reiji)"><span>零時</span><span class="t">0:00–3:00</span></button>
+        <button class="axis__band" type="button" data-blend="byakuya" aria-pressed="false" style="left:75%;width:25%;--t:var(--t-byakuya)"><span>白夜</span><span class="t">3:00–6:00</span></button>
+      </div>
+      <p class="axis__note">帯を押すと、豆が切り替わります。</p>
+    </div>
+
+    <div class="blends">
+      <div class="tabs" role="tablist" aria-label="豆を選ぶ" aria-orientation="vertical" data-reveal>
+        <button class="tab" role="tab" type="button" id="tab-reiji" aria-controls="panel-reiji" aria-selected="true" data-blend="reiji" style="--t:var(--t-reiji)"><span class="name">零時</span><span class="time">0:00–3:00</span><span class="sub">深煎り・ダークロースト</span></button>
+        <button class="tab" role="tab" type="button" id="tab-zankyo" aria-controls="panel-zankyo" aria-selected="false" tabindex="-1" data-blend="zankyo" style="--t:var(--t-zankyo)"><span class="name">残響</span><span class="time">20:00–24:00</span><span class="sub">中深煎り・ミディアムダーク</span></button>
+        <button class="tab" role="tab" type="button" id="tab-byakuya" aria-controls="panel-byakuya" aria-selected="false" tabindex="-1" data-blend="byakuya" style="--t:var(--t-byakuya)"><span class="name">白夜</span><span class="time">3:00–6:00</span><span class="sub">デカフェ・カフェインなし</span></button>
+      </div>
+
+      <div class="blend-panels">
+        <article class="blend" role="tabpanel" id="panel-reiji" aria-labelledby="tab-reiji" tabindex="0" style="--t:var(--t-reiji)">
+          <div class="blend__head"><span class="kanji">零時</span><span class="roast">深煎り<small>REIJI / DARK ROAST</small></span></div>
+          <p class="tagline">午前零時を過ぎても、手を止めないために。</p>
+          <p class="desc">苦みの奥に黒糖の甘みが残る、いちばん深い煎り止め。重いコクが、明け方まで意識を支えます。</p>
+          <dl class="scales">
+            <div class="scale-row roast"><dt>焙煎度</dt><dd><div class="scale" style="--v:5"><span class="fill"></span><i style="--x:4">残</i><i style="--x:3">白</i></div></dd><dd class="val">深煎り</dd></div>
+            <div class="scale-row"><dt>苦味</dt><dd><div class="scale" style="--v:5"><span class="fill"></span><i style="--x:3">残</i><i style="--x:2">白</i></div></dd><dd class="val">5</dd></div>
+            <div class="scale-row"><dt>酸味</dt><dd><div class="scale" style="--v:1"><span class="fill"></span><i style="--x:3">残</i><i style="--x:2">白</i></div></dd><dd class="val">1</dd></div>
+            <div class="scale-row"><dt>香り</dt><dd><div class="scale" style="--v:5"><span class="fill"></span><i style="--x:4">残</i><i style="--x:3">白</i></div></dd><dd class="val">5</dd></div>
+          </dl>
+          <p class="legend">細い字は、ほかの二つの豆の位置（残＝残響、白＝白夜）。</p>
+          <dl class="notes"><dt>香り</dt><dd>ダークチョコレート・黒糖・燻した木</dd></dl>
+          <dl class="specs">
+            <div><dt>豆</dt><dd>ブラジル セラード 60%<br>グアテマラ アンティグア 40%</dd></div>
+            <div><dt>焙煎</dt><dd>215℃まで・13分</dd></div>
+            <div><dt>カフェイン</dt><dd>あり</dd></div>
+          </dl>
+          <div class="blend__next"><a class="link" href="#plan" data-pick="reiji">零時で定期便を見る →</a></div>
+        </article>
+
+        <article class="blend" role="tabpanel" id="panel-zankyo" aria-labelledby="tab-zankyo" tabindex="0" hidden style="--t:var(--t-zankyo)">
+          <div class="blend__head"><span class="kanji">残響</span><span class="roast">中深煎り<small>ZANKYO / MEDIUM-DARK</small></span></div>
+          <p class="tagline">昼の残響が消える頃、作業に入る最初の一杯。</p>
+          <p class="desc">ドライフルーツのような甘い酸と、シナモンをひいたような香り。時計の針が夜に落ちる時間に、机に灯りをともします。</p>
+          <dl class="scales">
+            <div class="scale-row roast"><dt>焙煎度</dt><dd><div class="scale" style="--v:4"><span class="fill"></span><i style="--x:5">零</i><i style="--x:3">白</i></div></dd><dd class="val">中深煎り</dd></div>
+            <div class="scale-row"><dt>苦味</dt><dd><div class="scale" style="--v:3"><span class="fill"></span><i style="--x:5">零</i><i style="--x:2">白</i></div></dd><dd class="val">3</dd></div>
+            <div class="scale-row"><dt>酸味</dt><dd><div class="scale" style="--v:3"><span class="fill"></span><i style="--x:1">零</i><i style="--x:2">白</i></div></dd><dd class="val">3</dd></div>
+            <div class="scale-row"><dt>香り</dt><dd><div class="scale" style="--v:4"><span class="fill"></span><i style="--x:5">零</i><i style="--x:3">白</i></div></dd><dd class="val">4</dd></div>
+          </dl>
+          <p class="legend">細い字は、ほかの二つの豆の位置（零＝零時、白＝白夜）。</p>
+          <dl class="notes"><dt>香り</dt><dd>ドライフィグ・シナモン・焼き栗</dd></dl>
+          <dl class="specs">
+            <div><dt>豆</dt><dd>エチオピア シダモ 50%<br>コロンビア スプレマ 50%</dd></div>
+            <div><dt>焙煎</dt><dd>205℃まで・12分</dd></div>
+            <div><dt>カフェイン</dt><dd>あり</dd></div>
+          </dl>
+          <div class="blend__next"><a class="link" href="#plan" data-pick="zankyo">残響で定期便を見る →</a></div>
+        </article>
+
+        <article class="blend" role="tabpanel" id="panel-byakuya" aria-labelledby="tab-byakuya" tabindex="0" hidden style="--t:var(--t-byakuya)">
+          <div class="blend__head"><span class="kanji">白夜</span><span class="roast">中煎り・デカフェ<small>BYAKUYA / DECAF</small></span></div>
+          <p class="tagline">仕上げの一杯は、眠りを邪魔しない。</p>
+          <p class="desc">カフェインは検出限界以下。それでも豆の甘さと柑橘の香りは残るよう、水だけでカフェインを抜いてから煎りました。</p>
+          <dl class="scales">
+            <div class="scale-row roast"><dt>焙煎度</dt><dd><div class="scale" style="--v:3"><span class="fill"></span><i style="--x:5">零</i><i style="--x:4">残</i></div></dd><dd class="val">中煎り</dd></div>
+            <div class="scale-row"><dt>苦味</dt><dd><div class="scale" style="--v:2"><span class="fill"></span><i style="--x:5">零</i><i style="--x:3">残</i></div></dd><dd class="val">2</dd></div>
+            <div class="scale-row"><dt>酸味</dt><dd><div class="scale" style="--v:2"><span class="fill"></span><i style="--x:1">零</i><i style="--x:3">残</i></div></dd><dd class="val">2</dd></div>
+            <div class="scale-row"><dt>香り</dt><dd><div class="scale" style="--v:3"><span class="fill"></span><i style="--x:5">零</i><i style="--x:4">残</i></div></dd><dd class="val">3</dd></div>
+          </dl>
+          <p class="legend">細い字は、ほかの二つの豆の位置（零＝零時、残＝残響）。</p>
+          <dl class="notes"><dt>香り</dt><dd>はちみつ・アーモンド・柚子の皮</dd></dl>
+          <dl class="specs">
+            <div><dt>豆</dt><dd>メキシコ チアパス 100%<br>ウォータープロセス</dd></div>
+            <div><dt>焙煎</dt><dd>198℃まで・10分</dd></div>
+            <div><dt>カフェイン</dt><dd>なし（0.1%以下）</dd></div>
+          </dl>
+          <div class="blend__next"><a class="link" href="#plan" data-pick="byakuya">白夜で定期便を見る →</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.5. roastery & packages: full local video + roaster + matte black pouches -->
+  <section class="section wrap" id="roastery" aria-labelledby="roast-title">
+    <div class="sec-head" data-reveal>
+      <div>
+        <p class="label"><b>01.5</b>ROASTING ROOM</p>
+        <h2 id="roast-title">23時、鉄のドラムに<br>火を入れる。</h2>
+      </div>
+      <p class="lead">昼の雑音が消えた工房で、小釜の黒鉄焙煎機だけを回します。煎り上がった豆はそのまま冷却トレイで香りを閉じ込め、遮光性の高い黒紙袋へ封じます。</p>
+    </div>
+
+    <div class="roast-stage">
+      <div data-reveal>
+        <figure class="roast-film">
+          <video id="roast-video" autoplay muted loop playsinline poster="../assets/kokuyo-roaster.jpg" aria-label="深夜の焙煎所で、冷却トレイの上の深煎り豆がゆっくりと回る映像">
+            <source src="../assets/kokuyo-roasting-loop.mp4" type="video/mp4">
+          </video>
+          <button class="roast-film__toggle" type="button" id="roast-toggle" aria-pressed="false">焙煎映像を止める</button>
+        </figure>
+        <div class="roast-plates">
+          <figure class="roast-plate">
+            <img src="../assets/kokuyo-roaster.jpg" alt="深夜の工房に据えられたマットブラックの小型ドラム焙煎機と冷却トレイ" width="1376" height="768" loading="lazy" decoding="async">
+            <figcaption><b>SMALL-BATCH DRUM</b>一度に煎るのは 3kg まで。ハゼの音を聴き分け、苦みの手前で止める。</figcaption>
+          </figure>
+          <figure class="roast-plate">
+            <img src="../assets/kokuyo-packages.jpg" alt="黒曜石の台に並べられた3種のマットブラック紙パッケージ" width="1376" height="768" loading="lazy" decoding="async">
+            <figcaption><b>MATTE BLACK POUCHES</b>零時・残響・白夜。光を遮る厚手の黒紙に、煎り上がった時刻だけを刻む。</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="roast-meta" data-reveal>
+        <p class="label"><b>CRAFT</b>SMALL-LOT NIGHT ROASTING</p>
+        <h3>匂いが立ち上がる瞬間を、<br>夜の机へそのまま届ける。</h3>
+        <p class="lead">大量焙煎のように均一に焼き切るのではなく、その夜の湿度と気温に合わせて排気と火力を細かく調整します。袋を開けたとき、まず感じるのは焦げではなく黒糖や乾いた木のような静かな甘みです。</p>
+        <dl class="specs" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div><dt>釜容量</dt><dd>3kg 直火式ドラム</dd></div>
+          <div><dt>焙煎時間帯</dt><dd>23:00 — 04:00</dd></div>
+          <div><dt>ガス抜き</dt><dd>48時間静置のち封緘</dd></div>
+          <div><dt>包装</dt><dd>遮光マット黒紙 200g</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. brew guide: the still is the page; copy sits on its unlit left half -->
+  <section class="section" id="brew" aria-labelledby="brew-title">
+    <div class="brew__photo">
+      <img src="../assets/kokuyo-coffee.jpg" alt="黒い石の台に置いた黒いドリッパーとガラスのサーバー。湯気が立ち、傍らに煎った豆が散らばっている。" width="2752" height="1536" loading="lazy" decoding="async">
+      <div class="brew__inner">
+        <div class="brew__copy" data-reveal>
+          <p class="label"><b>02</b>BREW GUIDE</p>
+          <h2 id="brew-title">注ぎ始めてから、<br>2分30秒。</h2>
+          <p class="lead">深夜の一杯は、手間を減らすほど美味しくなります。豆11g、お湯180g。ドリッパーとスケールがあれば、眠くなった手でも同じ味に淹れられます。</p>
+        </div>
+      </div>
+      <p class="brew__cap">午前2時、一杯め。</p>
+    </div>
+
+    <div class="wrap">
+      <ol class="steps" data-reveal>
+        <li><span class="t">0:00</span><h3>蒸らし</h3><p>粉の中心に30g。粉が膨らむまで、30秒待つ。</p></li>
+        <li><span class="t">0:30</span><h3>一注ぎ</h3><p>90gまで、螺旋を描いて。お湯は粉の縁まで。</p></li>
+        <li><span class="t">1:30</span><h3>二注ぎ</h3><p>180gまで、一気に。これでお湯は終わり。</p></li>
+        <li><span class="t">2:30</span><h3>完了</h3><p>粉の面が平らになったら、ドリッパーを外す。</p></li>
+      </ol>
+
+      <div class="params">
+        <dl data-reveal>
+          <div><dt>豆</dt><dd>11<small>g</small></dd></div>
+          <div><dt>お湯</dt><dd>180<small>g</small></dd></div>
+          <div><dt>湯温</dt><dd>93<small>℃</small></dd></div>
+          <div><dt>挽き目</dt><dd style="font-family:var(--mincho);font-size:16px;letter-spacing:.14em">中細</dd></div>
+          <div><dt>時間</dt><dd>2:30</dd></div>
+        </dl>
+        <blockquote class="quote" data-reveal>
+          夜の舌は、昼より苦みに敏感です。だからどの豆も、苦みの手前で煎る止めにしています。
+          <small>— 焙煎責任者より</small>
+        </blockquote>
+        <table class="adj" data-reveal>
+          <caption>豆による違い</caption>
+          <thead><tr><th scope="col">豆</th><th scope="col">湯温</th><th scope="col">挽き目</th></tr></thead>
+          <tbody>
+            <tr data-blend="reiji"><th scope="row">零時</th><td class="num">90℃</td><td>中挽き</td></tr>
+            <tr data-blend="zankyo"><th scope="row">残響</th><td class="num">93℃</td><td>中細挽き</td></tr>
+            <tr data-blend="byakuya"><th scope="row">白夜</th><td class="num">96℃</td><td>中細挽き</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. plans: both cycles stay visible side by side as a ledger; the chosen bean follows the visitor -->
+  <section class="section wrap" id="plan" aria-labelledby="plan-title">
+    <div class="sec-head" data-reveal>
+      <div>
+        <p class="label"><b>03</b>SUBSCRIPTION</p>
+        <h2 id="plan-title">夜が来る前に、<br>豆が届く。</h2>
+      </div>
+      <p class="lead">豆の香りがいちばん深まるのは、焙煎してから5日めから10日め。周期を選ぶと、あなたの夜に合わせてお届け日を決めます。</p>
+    </div>
+
+    <div class="plans">
+      <div data-reveal>
+        <fieldset class="cycle" style="border-top:1px solid var(--line-strong);border-right:0;border-bottom:0;border-left:0;padding:0">
+          <legend class="sr">お届けの周期</legend>
+          <label><input type="radio" name="cycle" value="monthly" data-cycle="monthly"><span><span class="c-name">月1回</span><span class="c-sub">たっぷり一袋を、月に一度</span></span><span class="c-price">¥1,980 / 月</span></label>
+          <label><input type="radio" name="cycle" value="biweekly" data-cycle="biweekly" checked><span><span class="c-name">隔週</span><span class="c-sub">煎りたてを、半月ごとに</span></span><span class="c-price">¥3,560 / 月</span></label>
+        </fieldset>
+        <p class="plan__fine">どちらも税込・送料無料。豆のまか粉かが選べます。継続の縛りはなく、いつでも休止・解約できます。</p>
+      </div>
+
+      <div data-reveal>
+        <div class="ledger plan-pane" data-pane="monthly" hidden>
+          <dl>
+            <div class="row"><dt>届く内容</dt><dd><span class="beans" data-bean>零時</span> 200g × 1袋（約18杯）</dd></div>
+            <div class="row"><dt>お届け</dt><dd>月1回・指定した曜日</dd></div>
+            <div class="row"><dt>1回あたり</dt><dd class="num">¥1,980</dd></div>
+            <div class="row"><dt>1杯あたり</dt><dd class="num">約¥110</dd></div>
+          </dl>
+          <p class="plan__total"><span class="p">¥1,980<small>/ 月</small></span></p>
+        </div>
+        <div class="ledger plan-pane" data-pane="biweekly">
+          <dl>
+            <div class="row"><dt>届く内容</dt><dd><span class="beans" data-bean>零時</span> 200g × 1袋ずつ月2回（約36杯）</dd></div>
+            <div class="row"><dt>お届け</dt><dd>隔週・第2と第4の指定曜日</dd></div>
+            <div class="row"><dt>1回あたり</dt><dd class="num">¥1,780</dd></div>
+            <div class="row"><dt>1杯あたり</dt><dd class="num">約¥99</dd></div>
+          </dl>
+          <p class="plan__total"><span class="p">¥3,560<small>/ 月</small></span></p>
+        </div>
+        <button class="btn plan-cta" type="button"><span data-bean>零時</span> を <span data-cycle-name>隔週</span> で申し込む</button>
+      </div>
+    </div>
+
+    <div class="desk-band" data-reveal>
+      <figure>
+        <img src="../assets/kokuyo-night-desk.jpg" alt="深夜の木の作業机の上、開いたスケッチブックと製図ペンの傍らに置かれた黒い陶器カップから湯気が立つ" width="1376" height="768" loading="lazy" decoding="async">
+        <figcaption>MIDNIGHT DESK — 01:40 / ONE CUP BESIDE THE SKETCHBOOK</figcaption>
+      </figure>
+      <div>
+        <p class="label" style="margin-bottom:10px"><b>AT YOUR DESK</b>00:00 — 04:00</p>
+        <h3>画面の光と、手元の湯気。<br>それだけで十分な夜がある。</h3>
+        <p class="lead">コードを書き進める夜も、図面を引く夜も、言葉を整える夜も。冷めても渋みが出にくい焙煎設計だから、最後の一口まで作業のリズムを邪魔しません。</p>
+      </div>
+    </div>
+
+    <div class="apply" id="apply">
+      <div class="apply__grid">
+        <div>
+          <p class="label" style="margin-bottom:12px"><b>—</b>APPLY</p>
+          <h2>メールアドレスだけで、<br>始められます。</h2>
+          <p class="lead" style="margin-top:14px"><span data-bean>零時</span> 200g ・ <span data-cycle-name>隔週</span> ・ <span data-cycle-price>¥1,780 / 回</span>（税込・送料無料）</p>
+        </div>
+        <div>
+          <form class="is-open" novalidate>
+            <label for="email">メールアドレス</label>
+            <div style="display:contents" class="field">
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="you@night.example" required>
+              <button class="btn" type="submit">申し込む</button>
+            </div>
+            <p class="err">メールアドレスの形が正しくありません。</p>
+          </form>
+          <p class="done" role="status">受け付けました。<span data-bean>零時</span> を <span data-cycle-name>隔週</span> でお届けします。</p>
+          <p class="demo-note">このページは見本です。入力したアドレスは送信されません。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p><b>黒曜焙煎所</b>KOKUYO ROASTERY</p>
+    <p>ROASTING HOURS 23:00–4:00</p>
+    <p><a href="#blends">豆</a><a href="#brew">抽出</a><a href="#plan">定期便</a></p>
+    <p>© 2026 KOKUYO ROASTERY</p>
+  </div>
+</footer>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* ---- one state, four places: tabs, night axis, brew table, plan labels ---- */
+  var NAMES = { reiji: '零時', zankyo: '残響', byakuya: '白夜' };
+  var tabs = $$('.tab'), panels = $$('.blend'), bands = $$('.axis__band');
+  var blend = 'reiji';
+  function setBlend(next, focusTab) {
+    blend = NAMES[next] ? next : 'reiji';
+    tabs.forEach(function (t) {
+      var on = t.dataset.blend === blend;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if (on && focusTab) t.focus();
+    });
+    panels.forEach(function (p) {
+      var show = p.id === 'panel-' + blend;
+      if (show && p.hidden && !reduce.matches) { p.classList.add('no-anim'); }
+      p.hidden = !show;
+      if (show) { void p.offsetWidth; p.classList.remove('no-anim'); }
+    });
+    bands.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.blend === blend ? 'true' : 'false'); });
+    $$('.adj tbody tr').forEach(function (r) {
+      var on = r.dataset.blend === blend;
+      r.classList.toggle('is-on', on);
+      if (on) r.style.setProperty('--t', 'var(--t-' + blend + ')');
+    });
+    $$('[data-bean]').forEach(function (e) { e.textContent = NAMES[blend]; });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { setBlend(t.dataset.blend); });
+    t.addEventListener('keydown', function (e) {
+      var to = -1;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') to = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') to = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = tabs.length - 1;
+      if (to >= 0) { e.preventDefault(); setBlend(tabs[to].dataset.blend, true); }
+    });
+  });
+  bands.forEach(function (b) { b.addEventListener('click', function () { setBlend(b.dataset.blend); }); });
+  $$('[data-pick]').forEach(function (a) { a.addEventListener('click', function () { setBlend(a.dataset.pick); }); });
+  setBlend('reiji');
+
+  /* ---- cycle: both ledgers exist in the HTML; the chosen one is shown ---- */
+  var CYCLE = { monthly: ['月1回', '¥1,980 / 回'], biweekly: ['隔週', '¥1,780 / 回'] };
+  function setCycle(v) {
+    $$('.plan-pane').forEach(function (p) { p.hidden = p.dataset.pane !== v; });
+    $$('[data-cycle-name]').forEach(function (e) { e.textContent = CYCLE[v][0]; });
+    $$('[data-cycle-price]').forEach(function (e) { e.textContent = CYCLE[v][1]; });
+  }
+  $$('input[name="cycle"]').forEach(function (r) { r.addEventListener('change', function () { if (r.checked) setCycle(r.value); }); });
+  var checked = $('input[name="cycle"]:checked');
+  setCycle(checked ? checked.value : 'biweekly');
+
+  var email = $('#email');
+  $('.plan-cta').addEventListener('click', function () {
+    $('#apply').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'center' });
+    window.setTimeout(function () { email.focus({ preventScroll: true }); }, reduce.matches ? 0 : 550);
+  });
+  var form = email.form, done = $('.apply .done');
+  done.setAttribute('tabindex', '-1');
+  email.addEventListener('input', function () { form.classList.remove('is-invalid'); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var ok = email.validity.valid;
+    form.classList.toggle('is-invalid', !ok);
+    if (!ok) { email.focus(); return; }
+    form.hidden = true;
+    done.classList.add('is-on');
+    done.focus();
+  });
+
+  /* ---- footage: a dip to black at the loop point instead of a hard cut ---- */
+  var video = $('.hero__media video'), toggle = $('.hero__toggle'), FADE = 0.7;
+  var userPaused = false;
+  function tick() {
+    var d = video.duration, t = video.currentTime;
+    if (d && !video.paused) video.style.opacity = Math.max(0, Math.min(1, t / FADE, (d - t) / FADE)).toFixed(3);
+    window.requestAnimationFrame(tick);
+  }
+  toggle.addEventListener('click', function () {
+    userPaused = !userPaused;
+    if (userPaused) video.pause(); else video.play();
+    toggle.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+    toggle.textContent = userPaused ? '映像を再生する' : '映像を止める';
+  });
+  if (reduce.matches) { video.pause(); video.style.opacity = 0; } else { window.requestAnimationFrame(tick); }
+
+  var roastVideo = $('#roast-video'), roastToggle = $('#roast-toggle');
+  if (roastVideo && roastToggle) {
+    if (reduce.matches) { roastVideo.pause(); roastToggle.setAttribute('aria-pressed', 'true'); roastToggle.textContent = '焙煎映像を再生する'; }
+    roastToggle.addEventListener('click', function () {
+      var paused = !roastVideo.paused;
+      if (paused) roastVideo.pause(); else roastVideo.play();
+      roastToggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      roastToggle.textContent = paused ? '焙煎映像を再生する' : '焙煎映像を止める';
+    });
+  }
+
+  /* ---- reveal on scroll ---- */
+  var items = $$('[data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce.matches) {
+    items.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    items.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

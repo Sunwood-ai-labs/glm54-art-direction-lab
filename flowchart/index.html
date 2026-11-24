@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>自律エージェント開発パイプライン 流程図</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- トークン: 製図用紙・墨・検図の朱・青写真の藍 ---------- */
+:root {
+  --paper: #FBFAF6;
+  --paper-2: #EFEEE7;
+  --desk: #E5E2D9;
+  --ink: #1C1C19;
+  --ink-2: #4B4B45;
+  --ink-3: #737267;
+  --rule: #D5D2C7;
+  --rule-2: #B5B2A6;
+  --fail: #C0361B;
+  --par: #1F4E8C;
+  --par-wash: rgba(31, 78, 140, .075);
+  --jp: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", "YuGothic", "Meiryo", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --gutter: 16px;
+  --gap-s: 14px;
+  --band: 20px;
+  --pad: 12px;
+  --zref-top: 5px;
+  --zref-side: 4px;
+  --tick: #ADAB9F;
+  --tick-l: 4px;
+  --zx: 132px;
+  --zy: 132px;
+  color-scheme: light;
+}
+
+/* ---------- 基礎 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--desk); color: var(--ink); font: 400 14px/1.7 var(--jp); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; padding: var(--gutter); }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.vh { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.mono { font-family: var(--mono); }
+
+.wrap { max-width: 1560px; margin: 0 auto; }
+
+/* ---------- 表題 ---------- */
+.masthead { margin-bottom: var(--gap-s); }
+.eyebrow { margin: 0; font: 500 11px/1.5 var(--mono); letter-spacing: .14em; color: var(--ink-2); }
+h1 { margin: 2px 0 0; font: 500 22px/1.4 var(--jp); letter-spacing: .02em; }
+.lede { margin: 4px 0 0; max-width: 64ch; font-size: 13px; line-height: 1.65; color: var(--ink-2); }
+
+/* ---------- 操作帯: ハイライト切替と凡例 ---------- */
+.bar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px 24px; margin-bottom: var(--gap-s); }
+.rg-wrap { min-width: 0; }
+.rg-label { margin: 0 0 6px; font-size: 12px; line-height: 1.4; color: var(--ink-2); }
+.rg { display: flex; flex-wrap: wrap; }
+.opt { display: block; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.opt label { display: grid; place-items: center; min-height: 34px; margin-left: -1px; padding: 6px 14px; border: 1px solid var(--ink); background: var(--paper); font-size: 13px; line-height: 1.35; cursor: pointer; transition: background-color .15s ease, color .15s ease; }
+.opt:first-child label { margin-left: 0; }
+@media (hover: hover) { .opt label:hover { background: var(--paper-2); } }
+.opt input:checked + label { background: var(--ink); color: var(--paper); }
+.opt input:focus-visible + label { position: relative; z-index: 1; outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 12px; line-height: 1.5; color: var(--ink-2); }
+.legend li { display: flex; align-items: center; gap: 8px; }
+.legend svg { display: block; width: 34px; height: 14px; overflow: visible; flex: none; }
+.lg-wire { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.lg-wire.lg-fail { stroke: var(--fail); stroke-dasharray: 5 3.5; }
+.lg-fill { fill: var(--ink); }
+.lg-fill.lg-fail { fill: var(--fail); }
+.lg-zone { fill: var(--par-wash); stroke: var(--par); stroke-width: 1; }
+
+/* ---------- 図枠: 二重枠とゾーン参照 (1,2,3… / A,B,C…) ---------- */
+.sheet {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "field" "tblock";
+  border: 1.5px solid var(--ink);
+  padding: calc(var(--band) + var(--pad));
+  background:
+    repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px var(--zx)) left top / 100% var(--tick-l) no-repeat,
+    repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px var(--zx)) left bottom / 100% var(--tick-l) no-repeat,
+    repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px var(--zy)) left top / var(--tick-l) 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px var(--zy)) right top / var(--tick-l) 100% no-repeat,
+    var(--paper);
+  box-shadow: 0 1px 2px rgba(28, 28, 25, .05), 0 10px 28px rgba(28, 28, 25, .07);
+}
+.sheet::before { content: ""; position: absolute; inset: var(--band); border: 1px solid var(--ink); pointer-events: none; }
+.zrefs { position: absolute; inset: 0; pointer-events: none; font: 500 10px/1 var(--mono); color: var(--ink-3); }
+.zrefs i { position: absolute; font-style: normal; }
+.zrefs .zt { top: var(--zref-top); transform: translateX(-50%); }
+.zrefs .zb { bottom: var(--zref-top); transform: translateX(-50%); }
+.zrefs .zl { left: var(--zref-side); transform: translateY(-50%); }
+.zrefs .zr { right: var(--zref-side); transform: translateY(-50%); }
+
+/* ---------- 図面部 ---------- */
+.field { grid-area: field; min-width: 0; align-self: start; }
+#diagram { display: block; width: 100%; height: auto; margin: 0 auto; overflow: visible; }
+.field[data-mode="wide"] #diagram { max-width: 1120px; }
+.field[data-mode="tall"] #diagram { max-width: 440px; }
+
+/* ---------- タイトルブロック (欄) ---------- */
+.tblock { grid-area: tblock; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: var(--pad) 0 0; border-top: 1px solid var(--ink); }
+.tb { min-width: 0; margin: 0; padding: 6px 10px 7px; border-left: 1px solid var(--rule-2); }
+.tb:nth-child(odd) { border-left: 0; padding-left: 0; }
+.tb dt { font-size: 10px; line-height: 1.5; color: var(--ink-2); }
+.tb dt .en { margin-left: 4px; font: 500 10px/1.5 var(--mono); letter-spacing: .08em; color: var(--ink-3); }
+.tb dd { margin: 0; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.tb dd.mono { font-family: var(--mono); font-size: 11.5px; }
+
+/* ---------- 図中の要素 (SVG) ---------- */
+#diagram text { fill: var(--ink); }
+.el { transition: opacity .28s ease; }
+.el.is-off { opacity: .14; }
+.node[aria-pressed="true"], .node:focus { opacity: 1; }
+.wire { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.wire.fail { stroke: var(--fail); stroke-dasharray: 7 5; }
+.wire.thin { stroke-width: 1.25; }
+.rule { fill: none; stroke: var(--ink); stroke-width: 1; }
+.dot { fill: var(--ink); }
+.zone-box { fill: var(--par-wash); stroke: var(--par); stroke-width: 1; }
+.node { cursor: pointer; outline: none; }
+.node .box { fill: var(--paper); stroke: var(--ink); stroke-width: 1.25; transition: fill .15s ease, stroke-width .15s ease; }
+@media (hover: hover) { .node:hover .box { fill: var(--paper-2); stroke-width: 2; } }
+.node[aria-pressed="true"] .box { fill: var(--ink); }
+.node .ring { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 3 3; visibility: hidden; }
+.node:focus-visible .ring { visibility: visible; }
+.node .bal { fill: var(--paper); stroke: var(--ink); stroke-width: 1.25; }
+.node .bal-t { font: 500 10px var(--mono); fill: var(--ink); text-anchor: middle; }
+.node .nm { font: 700 16px var(--jp); text-anchor: middle; }
+.node .nm.mono { font-family: var(--mono); font-weight: 600; }
+.node .tm { font: 500 11px var(--mono); fill: var(--ink-2); text-anchor: middle; }
+.node[aria-pressed="true"] .nm, .node[aria-pressed="true"] .tm { fill: var(--paper); }
+.node[aria-pressed="true"] .bal { fill: var(--ink); }
+.node[aria-pressed="true"] .bal-t { fill: var(--paper); }
+.lbl { font: 500 12px var(--jp); }
+.lbl.fail { fill: var(--fail); font-weight: 700; }
+.lbl.ok { font-weight: 700; }
+.lbl.dim { fill: var(--ink-2); font-weight: 500; font-size: 11px; }
+.lbl.dim.fail { fill: var(--fail); }
+.lbl.term { font-size: 11px; fill: var(--ink-2); }
+.hd { font: 500 12px var(--jp); }
+.hd .num { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .04em; }
+.hd .ttl { font-weight: 700; font-size: 13px; }
+.hd .sub { font-weight: 500; font-size: 11px; fill: var(--ink-2); }
+.hd.fail { fill: var(--fail); font-weight: 700; font-size: 13px; }
+.hd.cap { fill: var(--ink-2); font-size: 11px; }
+.zt { font: 700 14px var(--jp); }
+
+/* ---------- 明細欄 (詳細パネル) ---------- */
+.detail { grid-area: detail; min-width: 0; }
+.panel { font-size: 13px; line-height: 1.65; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; padding-bottom: 8px; border-bottom: 1.5px solid var(--ink); }
+.panel-head h2 { display: inline; margin: 0; font: 700 14px/1.4 var(--jp); }
+.panel-head .en { margin-left: 8px; font: 500 10px/1.4 var(--mono); letter-spacing: .12em; color: var(--ink-2); }
+.panel-acts { display: flex; gap: 6px; flex: none; }
+.btn { display: inline-grid; place-items: center; min-height: 32px; padding: 3px 10px; border: 1px solid var(--ink); background: var(--paper); font-size: 12px; line-height: 1.3; cursor: pointer; transition: background-color .15s ease, color .15s ease; }
+@media (hover: hover) { .btn:hover { background: var(--ink); color: var(--paper); } }
+.btn-close, .btn-list { display: none; }
+
+/* 一覧 (明細表) */
+.list-sum { margin: 10px 0 6px; font-size: 12px; color: var(--ink-2); }
+.list-sum strong { color: var(--ink); }
+.items { list-style: none; margin: 0; padding: 0; }
+.items li { border-bottom: 1px solid var(--rule); }
+.item { display: grid; grid-template-columns: 24px minmax(0, 1fr) 26px auto; column-gap: 10px; align-items: baseline; width: 100%; padding: 7px 6px; border: 0; background: none; text-align: left; cursor: pointer; transition: background-color .15s ease; }
+@media (hover: hover) { .item:hover { background: var(--paper-2); } }
+.item[aria-current="true"] { background: var(--ink); color: var(--paper); }
+.item .no, .item .st, .item .tm { font: 500 11px/1.7 var(--mono); color: var(--ink-2); }
+.item .st { text-align: right; }
+.item[aria-current="true"] .no, .item[aria-current="true"] .st, .item[aria-current="true"] .tm { color: var(--paper); }
+
+/* 詳細 */
+.det-head { padding: 12px 0 12px; border-bottom: 1px solid var(--rule-2); }
+.det-title { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 12px; align-items: center; }
+.det-balloon { display: grid; place-items: center; width: 28px; height: 28px; border: 1.25px solid var(--ink); border-radius: 50%; font: 500 11px/1 var(--mono); }
+.det-title h3 { margin: 0; font: 700 20px/1.3 var(--jp); }
+.det-sub { margin: 4px 0 0 40px; font-size: 12px; color: var(--ink-2); }
+.det-owner { margin-left: 8px; font: 500 10px/1.6 var(--mono); letter-spacing: .06em; color: var(--ink-3); }
+.det-time { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 10px 0 0; padding: 6px 0 0; border-top: 1px solid var(--rule); }
+.det-time .k { font-size: 11px; color: var(--ink-2); }
+.det-time strong { font: 700 16px/1.4 var(--jp); }
+.spec { margin: 0; }
+.spec > div { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.spec > div:last-child { border-bottom: 1.5px solid var(--ink); }
+.spec dt { font-size: 12px; font-weight: 700; line-height: 1.6; }
+.spec dt .en { display: block; font: 500 10px/1.6 var(--mono); letter-spacing: .08em; color: var(--ink-3); }
+.spec dd { margin: 0; overflow-wrap: anywhere; }
+.io { list-style: none; margin: 0; padding: 0; }
+.io li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; padding: 1px 0; }
+.code { font: 500 12px/1.6 var(--mono); background: var(--paper-2); padding: 0 4px; }
+.note { font-size: 12px; color: var(--ink-2); }
+.det-meta { display: grid; grid-template-columns: 76px minmax(0, 1fr); column-gap: 12px; padding: 10px 0 0; }
+.det-meta .k { font-size: 12px; font-weight: 700; }
+.det-meta .k .en { display: block; font: 500 10px/1.6 var(--mono); letter-spacing: .08em; color: var(--ink-3); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { padding: 2px 8px; border: 1px solid var(--ink-2); background: none; font-size: 11px; line-height: 1.6; cursor: pointer; transition: background-color .15s ease, color .15s ease; }
+@media (hover: hover) { .chip:hover { background: var(--ink); color: var(--paper); } }
+.pager { display: flex; justify-content: space-between; gap: 8px; margin-top: 12px; }
+.pager .btn { font-family: var(--mono); font-size: 11px; }
+.spec dd p { margin: 0; }
+.det-meta p { margin: 0 0 6px; }
+.item .nm { min-width: 0; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.panel:focus { outline: none; }
+
+/* ---------- 画面幅ごとの組み直し ---------- */
+@media (max-width: 679px) {
+  :root { --gutter: 8px; --gap-s: 10px; --band: 15px; --pad: 8px; --zref-top: 2px; --tick-l: 3px; }
+  h1 { font-size: 19px; }
+  .rg { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .opt label { min-height: 42px; margin: 0 -1px -1px 0; padding: 6px 8px; }
+  .btn-list { display: inline-grid; }
+  .btn-close { display: inline-grid; }
+  .detail { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; max-height: 80vh; overflow: auto; padding: 10px 16px calc(16px + env(safe-area-inset-bottom)); background: var(--paper); border-top: 1.5px solid var(--ink); box-shadow: 0 -14px 34px rgba(28, 28, 25, .2); transform: translateY(calc(100% + 40px)); visibility: hidden; transition: transform .3s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .3s; }
+  .sheet.is-open .detail { transform: none; visibility: visible; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+}
+@media (min-width: 680px) {
+  .sheet { grid-template-columns: minmax(300px, 480px) minmax(0, 1fr); grid-template-areas: "field detail" "tblock tblock"; }
+  .detail { margin-left: var(--pad); padding-left: var(--pad); border-left: 1.5px solid var(--ink); }
+  .panel { position: sticky; top: var(--gutter); max-height: calc(100vh - 2 * var(--gutter)); overflow: auto; }
+  .tblock { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tb:nth-child(odd) { border-left: 1px solid var(--rule-2); padding-left: 10px; }
+  .tb:nth-child(4n + 1) { border-left: 0; padding-left: 0; }
+}
+@media (min-width: 1280px) {
+  .sheet { grid-template-columns: minmax(0, 1fr) clamp(296px, 23vw, 340px); }
+  .tblock { grid-template-columns: minmax(0, 2.6fr) repeat(7, minmax(0, 1fr)); }
+  .tb:nth-child(4n + 1) { border-left: 1px solid var(--rule-2); padding-left: 10px; }
+  .tb:first-child { border-left: 0; padding-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<header class="masthead wrap">
+  <p class="eyebrow">FLOW DIAGRAM · AD-PIPE-001 · REV.03</p>
+  <h1>自律エージェント開発パイプライン 流程図</h1>
+  <p class="lede">要件分解から段階リリースまでの全 12 工程。工程を選ぶと、明細欄に役割・入出力・判定条件・所要時間が表示されます。</p>
+</header>
+
+<div class="bar wrap">
+  <div class="rg-wrap">
+    <p class="rg-label" id="rg-label">ハイライト</p>
+    <div class="rg" role="radiogroup" aria-labelledby="rg-label">
+      <span class="opt"><input type="radio" name="view" id="v-all" value="all" checked><label for="v-all">全体表示</label></span>
+      <span class="opt"><input type="radio" name="view" id="v-happy" value="happy"><label for="v-happy">正常系フロー</label></span>
+      <span class="opt"><input type="radio" name="view" id="v-fail" value="fail"><label for="v-fail">失敗・自己修復ループ</label></span>
+      <span class="opt"><input type="radio" name="view" id="v-par" value="parallel"><label for="v-par">並列実行区間</label></span>
+    </div>
+  </div>
+  <button type="button" class="btn btn-list" data-act="open-list">工程一覧を開く</button>
+  <ul class="legend" aria-label="凡例">
+    <li><svg viewBox="0 0 34 14" aria-hidden="true"><path class="lg-wire" d="M1,7H26"/><path class="lg-fill" d="M34,7 25,3.4 25,10.6Z"/></svg>主フロー（合格経路）</li>
+    <li><svg viewBox="0 0 34 14" aria-hidden="true"><path class="lg-wire lg-fail" d="M1,7H26"/><path class="lg-fill lg-fail" d="M34,7 25,3.4 25,10.6Z"/></svg>修復ループ（不合格・再試行・巻き戻し）</li>
+    <li><svg viewBox="0 0 34 14" aria-hidden="true"><rect class="lg-zone" x="4" y="1.5" width="26" height="11"/></svg>並列実行区間</li>
+  </ul>
+</div>
+
+<main class="sheet wrap" id="sheet" data-view="all">
+  <div class="zrefs" id="zrefs" aria-hidden="true"></div>
+  <div class="field" id="field" data-mode="wide">
+    <svg id="diagram" xmlns="http://www.w3.org/2000/svg" role="group" aria-labelledby="dg-title dg-desc">
+      <title id="dg-title">自律エージェント開発パイプライン流程図</title>
+      <desc id="dg-desc">要件分解、アーキテクチャ設計を経て、Frontend、Backend、Test の3系統が並列にコードを生成する。生成物は Lint、Unit、Visual QA の3つの自動検証ゲートに並列にかかり、判定を通過したら段階リリースへ進む。不合格なら原因分析と自己修復を経てコード生成へ戻る。本番で異常があれば段階リリースから原因分析へ自動で巻き戻す。</desc>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0.5,1 8.5,5 0.5,9Z" fill="#1C1C19"/></marker>
+        <marker id="ah-f" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path d="M0.5,1 8.5,5 0.5,9Z" fill="#C0361B"/></marker>
+      </defs>
+      <g id="dg-stage"></g>
+    </svg>
+    <noscript><p>図を表示するには JavaScript を有効にしてください。流れ: 要件分解 → アーキテクチャ設計 → 並列コード生成（Frontend / Backend / Test）→ 自動検証ゲート（Lint / Unit / Visual QA）→ 判定 → 段階リリース。不合格時は原因分析 → 自己修復 → 再生成。</p></noscript>
+  </div>
+  <aside class="detail" id="detail" aria-label="工程明細">
+    <div class="panel" id="panel" tabindex="-1"></div>
+  </aside>
+  <dl class="tblock">
+    <div class="tb"><dt>図名 <span class="en">TITLE</span></dt><dd>自律エージェント開発パイプライン 流程図</dd></div>
+    <div class="tb"><dt>図番 <span class="en">DWG NO.</span></dt><dd class="mono">AD-PIPE-001</dd></div>
+    <div class="tb"><dt>尺度 <span class="en">SCALE</span></dt><dd class="mono">NTS</dd></div>
+    <div class="tb"><dt>改訂 <span class="en">REV.</span></dt><dd class="mono">03</dd></div>
+    <div class="tb"><dt>日付 <span class="en">DATE</span></dt><dd class="mono">2026-11-24</dd></div>
+    <div class="tb"><dt>作成 <span class="en">DRN</span></dt><dd>Planner</dd></div>
+    <div class="tb"><dt>検図 <span class="en">CHK</span></dt><dd>Verifier</dd></div>
+    <div class="tb"><dt>承認 <span class="en">APD</span></dt><dd>Human</dd></div>
+  </dl>
+</main>
+<p class="vh" aria-live="polite" id="live"></p>
+<script>
+(function () {
+  'use strict';
+
+  // 実データ。tags はハイライト切替の所属 (happy = 正常系フロー, fail = 失敗・自己修復ループ, parallel = 並列実行区間)。
+  // input / output の項目は「コード | 補足」の形で書き、コード部分だけ等幅で組む。
+  const ST = { I: 'I 計画', II: 'II 構築', III: 'III 検証', IV: 'IV リリース', R: '修復ループ' };
+  const NODES = [
+    { id: 'n01', num: '01', label: '要件分解', stage: 'I', owner: 'Planner', tags: ['happy'],
+      sub: '仕様を実装可能なタスクへ分割', t: '2–5 min', time: '2〜5 分',
+      role: '仕様書と Issue を実装可能な単位のタスクに割り、依存関係と受理基準を添える。以降の並列生成は、このタスク表だけを頼りに動く。',
+      input: ['docs/spec.md', 'issues/*.md', 'docs/constraints.md | 制約一覧'],
+      output: ['tasks.json | タスクID・依存グラフ・受理基準'],
+      crit: '全タスクに依存関係と検証可能な受理基準が付いていること。「速く・使いやすく」など検証できない表現が残っていたら確定しない。' },
+    { id: 'n02', num: '02', label: 'アーキテクチャ設計', stage: 'I', owner: 'Architect', tags: ['happy'],
+      sub: '境界と契約を先に確定', t: '3–8 min', time: '3〜8 分',
+      role: 'モジュール境界・API・データモデルを先に固定し、3 系統の生成が後で衝突しない土台を作る。並列化できるかはここで決まる。',
+      input: ['tasks.json', '依存グラフ | 既存コードの解析結果'],
+      output: ['design.md | 境界とインターフェース定義', 'openapi.yaml', 'schemas/*.json'],
+      crit: 'Frontend / Backend / Test が参照する契約（API・型・イベント）が一意に定まり、循環依存が残っていないこと。' },
+    { id: 'n03', num: '03', label: 'Frontend', stage: 'II', owner: 'Builder·FE', tags: ['happy', 'parallel'],
+      sub: 'UI と状態管理を実装', t: '4–12 min', time: '4〜12 分（Backend・Test と同時進行）',
+      role: '設計で確定した API 契約に沿って画面と状態管理を実装する。モックで止まらず、結合できる形で書く。',
+      input: ['design.md', 'openapi.yaml', 'tasks.json | UI 系タスク'],
+      output: ['web/src/**', 'web/src/**/*.test.tsx'],
+      crit: '型検査が通ること。未実装の API へ直接依存しないこと。' },
+    { id: 'n04', num: '04', label: 'Backend', stage: 'II', owner: 'Builder·BE', tags: ['happy', 'parallel'],
+      sub: 'API とデータ層を実装', t: '4–12 min', time: '4〜12 分（Frontend・Test と同時進行）',
+      role: 'API・データ層・ビジネスロジックを実装する。OpenAPI 定義とスキーマから設計がぶれないことを最優先する。',
+      input: ['design.md', 'openapi.yaml', 'tasks.json | API 系タスク'],
+      output: ['api/src/**', 'api/migrations/*.sql', 'api/src/**/*.spec.ts'],
+      crit: 'マイグレーションが冪等であること。実装が openapi.yaml と一致すること。' },
+    { id: 'n05', num: '05', label: 'Test', stage: 'II', owner: 'Builder·Test', tags: ['happy', 'parallel'],
+      sub: '受理基準を試験へ翻訳', t: '4–12 min', time: '4〜12 分（Frontend・Backend と同時進行）',
+      role: '受理基準から E2E シナリオ・プロパティテスト・比較元スナップショットを作る。検証ゲートの判定材料を先に用意する。',
+      input: ['tasks.json | 受理基準', 'design.md'],
+      output: ['e2e/*.spec.ts', 'tests/property/*.ts', 'vqa/base/*.png'],
+      crit: '全タスクの受理基準が、少なくとも 1 本のテストに対応していること。' },
+    { id: 'n06', num: '06', label: 'Lint', stage: 'III', owner: 'Verifier·Lint', tags: ['happy', 'parallel'],
+      sub: '静的解析と型検査', t: '20–40 sec', time: '20〜40 秒',
+      role: '静的解析と型検査で、スタイル違反・未使用コード・型エラーを機械的に弾く。最初の軽い関門。',
+      input: ['diff/*.patch | 生成差分', 'eslint.config.js', 'tsconfig.json'],
+      output: ['lint-report.json | 違反のファイル・行・規則'],
+      crit: 'error 0 件。warning は新規増加が 0 なら通過可。' },
+    { id: 'n07', num: '07', label: 'Unit', stage: 'III', owner: 'Verifier·Unit', tags: ['happy', 'parallel'],
+      sub: '単体テストとカバレッジ', t: '1–3 min', time: '1〜3 分',
+      role: '生成コードに同梱された単体テストを実行し、失敗とカバレッジを集計する。',
+      input: ['**/*.spec.ts', '**/*.test.tsx', 'vitest.config.ts'],
+      output: ['junit.xml', 'coverage/summary.json'],
+      crit: '失敗 0・スキップ 0。行カバレッジ 80 % 以上。' },
+    { id: 'n08', num: '08', label: 'Visual QA', stage: 'III', owner: 'Verifier·VQA', tags: ['happy', 'parallel'],
+      sub: 'スナップショットを画素比較', t: '2–5 min', time: '2〜5 分',
+      role: '主要画面を実際に描画し、基準スナップショットと画素比較する。コードは通っても見た目が壊れたケースを拾う。',
+      input: ['e2e/*.spec.ts', 'vqa/base/*.png | 基準スナップショット'],
+      output: ['vqa/report.html', 'vqa/diff/*.png'],
+      crit: '差分画素率 0.1 % 未満。コンソールエラー 0 件。' },
+    { id: 'n09', num: '09', label: '判定', stage: 'IV', owner: 'Orchestrator', tags: ['happy', 'fail'],
+      sub: '3 ゲートの結果を集約', t: '< 1 sec', time: '1 秒未満',
+      role: '3 つのゲート結果を集約し、リリースへ進めるか修復ループへ戻すかを決める。ここでは人による承認を挟まない。',
+      input: ['lint-report.json', 'junit.xml', 'coverage/summary.json', 'vqa/report.html'],
+      output: ['verdict.json | pass / fail と不合格ゲート一覧'],
+      crit: '3 ゲートすべて合格で pass。1 つでも不合格・タイムアウトがあれば fail。' },
+    { id: 'n10', num: '10', label: '段階リリース', stage: 'IV', owner: 'Deployer', tags: ['happy', 'fail'],
+      sub: 'カナリア → 準本番 → 全量', t: '15–30 min', time: '15〜30 分（各段階の監視時間を含む）',
+      role: '合格した成果物を 5 % → 25 % → 100 % の順に展開し、各段階で本番メトリクスを監視する。異常があれば自動で巻き戻し、原因分析へ渡す。',
+      input: ['verdict.json | pass', 'ビルド成果物', 'release.yaml'],
+      output: ['release.json | リリース記録', '本番メトリクス'],
+      crit: 'エラー率・レイテンシがしきい値内で所定時間安定したら次の段階へ進む。逸脱したら自動ロールバック。' },
+    { id: 'n11', num: '11', label: '原因分析', stage: 'R', owner: 'Analyst', tags: ['fail'],
+      sub: '不合格の原因を特定', t: '1–3 min', time: '1〜3 分',
+      role: '不合格ゲートのログ・差分・テスト結果を読み、責任のあるモジュールと修正方針を特定する。当てずっぽうで直さない。',
+      input: ['不合格ゲートのレポート', 'diff/*.patch | 生成差分', 'design.md'],
+      output: ['diagnosis.json | 原因仮説・該当タスク・修正方針'],
+      crit: '失敗を再現する最小ケースを挙げ、原因モジュールを 1 つに特定できたこと。' },
+    { id: 'n12', num: '12', label: '自己修復', stage: 'R', owner: 'Builder·Fix', tags: ['fail'],
+      sub: '診断に従って修正し再生成', t: '2–6 min', time: '2〜6 分',
+      role: '診断に従って該当タスクのコードとテストを修正し、検証ゲートへ送り返す。設計変更が必要なら設計へ差し戻す。',
+      input: ['diagnosis.json', '該当タスクのコード'],
+      output: ['diff/fix-*.patch | 修正差分'],
+      crit: '同一原因での再試行は 3 回まで。超過したら人へエスカレーションし、勝手に続行しない。' }
+  ];
+  const byId = {};
+  NODES.forEach(n => { byId[n.id] = n; });
+  const HAPPY = 'happy', HP = 'happy parallel', FAIL = 'fail';
+
+  // ---------- 図面の部品 ----------
+  const f = v => Math.round(v * 100) / 100;
+  const P = (x, y) => f(x) + ',' + f(y);
+  const isLatin = s => /^[A-Za-z ]+$/.test(s);
+
+  const wire = (d, o) => {
+    o = o || {};
+    return '<path class="wire' + (o.cls ? ' ' + o.cls : '') + '" d="' + d + '"' +
+      (o.end ? ' marker-end="url(#' + o.end + ')"' : '') + (o.mid ? ' marker-mid="url(#' + o.mid + ')"' : '') + '/>';
+  };
+  const dot = (x, y) => '<circle class="dot" cx="' + f(x) + '" cy="' + f(y) + '" r="3.5"/>';
+  const edge = (tg, inner) => '<g class="el edge" data-tags="' + tg + '">' + inner + '</g>';
+  // 線の注記。parts は [class, text, dx] の配列。
+  const lbl = (x, y, anchor, text, cls) =>
+    '<text class="lbl' + (cls ? ' ' + cls : '') + '" x="' + f(x) + '" y="' + f(y) + '" text-anchor="' + anchor + '">' + text + '</text>';
+  // 段階見出し。ローマ数字は等幅、名前は和文。
+  const hd = (x, y, num, name, title, cls) =>
+    '<text class="hd' + (cls ? ' ' + cls : '') + '" x="' + f(x) + '" y="' + f(y) + '">' +
+    (num ? '<tspan class="num">' + num + '</tspan><tspan dx="7">' + name + '</tspan>' : '<tspan>' + name + '</tspan>') +
+    (title ? '<tspan class="' + (cls === 'fail' ? 'sub' : 'ttl') + '" dx="10">' + title + '</tspan>' : '') + '</text>';
+
+  // 矩形ノード: 枠 + 隅のバルーン (明細番号) + 工程名 + 所要時間。
+  function node(id, x, y, w, o) {
+    o = o || {};
+    const n = byId[id], h = o.h || 60, r = o.r || 9, fs = o.fs || 16;
+    const bx = o.tr ? x + w : x;
+    return '<g class="el node" data-id="' + id + '" data-tags="' + n.tags.join(' ') + '" role="button" tabindex="0" aria-pressed="false" aria-controls="detail" aria-label="' + n.num + ' ' + n.label + '">' +
+      '<rect class="ring" x="' + f(x - 5) + '" y="' + f(y - 5) + '" width="' + f(w + 10) + '" height="' + (h + 10) + '"/>' +
+      '<rect class="box" x="' + f(x) + '" y="' + f(y) + '" width="' + f(w) + '" height="' + h + '"/>' +
+      '<circle class="bal" cx="' + f(bx) + '" cy="' + f(y) + '" r="' + r + '"/>' +
+      '<text class="bal-t" x="' + f(bx) + '" y="' + f(y + r * 0.36) + '" font-size="' + (r < 8.5 ? 9 : 10) + '">' + n.num + '</text>' +
+      '<text class="nm' + (isLatin(n.label) ? ' mono' : '') + '" x="' + f(x + w / 2) + '" y="' + f(y + 27) + '" font-size="' + fs + '">' + n.label + '</text>' +
+      '<text class="tm" x="' + f(x + w / 2) + '" y="' + f(y + 47) + '">' + n.t + '</text>' +
+      '</g>';
+  }
+
+  // 判定 (ひし形)。
+  function decision(id, cx, cy, hw, hh, fs) {
+    const n = byId[id];
+    const pts = (a, b) => P(cx - a, cy) + ' ' + P(cx, cy - b) + ' ' + P(cx + a, cy) + ' ' + P(cx, cy + b);
+    const y2 = cy - (fs >= 14 ? 4 : 3);
+    return '<g class="el node" data-id="' + id + '" data-tags="' + n.tags.join(' ') + '" role="button" tabindex="0" aria-pressed="false" aria-controls="detail" aria-label="' + n.num + ' ' + n.label + ' 全ゲート合格かどうか">' +
+      '<polygon class="ring" points="' + pts(hw + 9, hh + 6) + '"/>' +
+      '<polygon class="box" points="' + pts(hw, hh) + '"/>' +
+      '<text class="tm" x="' + f(cx) + '" y="' + f(cy - hh + 21) + '" text-anchor="middle">' + n.num + '</text>' +
+      '<text class="nm" x="' + f(cx) + '" y="' + f(y2) + '" font-size="' + fs + '">全ゲート</text>' +
+      '<text class="nm" x="' + f(cx) + '" y="' + f(y2 + fs + 1) + '" font-size="' + fs + '">合格 ?</text>' +
+      '</g>';
+  }
+
+  // ---------- 広幅: 主流を左から右へ。計画は縦に 2 段、構築・検証は 3 本の並列帯、修復ループは下段へ戻す。 ----------
+  function buildWide() {
+    const NH = 60, NW = 168, ZW = 128;
+    const r0 = 104, r1 = 184, r2 = 264, r3 = 384;   // 行の中心
+    const cI = 36, z2 = 226, z3 = 442;               // 計画列と並列帯の左端
+    const J = 216, dx = 710, hw = 50, hh = 42, rel = 798;
+    const zn = z => z + 28;                           // 帯内のノード左端
+    const o = [];
+
+    [z2, z3].forEach(z => o.push('<g class="el" data-tags="parallel"><rect class="zone-box" x="' + z + '" y="54" width="184" height="260"/></g>'));
+
+    o.push(edge(HAPPY, '<path class="rule" d="M36,36H204"/>' + hd(36, 26, 'I', '計画')));
+    o.push(edge(HP, '<path class="rule" d="M226,36H410"/>' + hd(226, 26, 'II', '構築', '並列コード生成')));
+    o.push(edge(HP, '<path class="rule" d="M442,36H626"/>' + hd(442, 26, 'III', '検証', '自動検証ゲート')));
+    o.push(edge(HAPPY, '<path class="rule" d="M660,36H966"/>' + hd(660, 26, 'IV', 'リリース')));
+    o.push(edge(FAIL, hd(226, 344, '', '修復ループ', '再試行は最大 3 回', 'fail')));
+
+    // 開始 → 01 → 02 → 分岐点
+    o.push(edge(HAPPY, dot(12, r0) + wire('M12,' + r0 + 'H36', { end: 'ah' }) + lbl(24, 94, 'middle', '開始', 'term')));
+    o.push(edge(HAPPY, wire('M120,134V154', { end: 'ah' })));
+    o.push(edge(HAPPY, wire('M204,' + r1 + 'H' + J)));
+    o.push('<g class="el" data-tags="happy fail">' + dot(J, r1) + '</g>');
+
+    // 構築帯: 分岐バス → 3 本 → 合流バス
+    o.push(edge(HP, wire('M236,' + r0 + 'V' + r2) + wire('M236,' + r0 + 'H254', { end: 'ah' }) + wire('M236,' + r2 + 'H254', { end: 'ah' }) + wire('M' + J + ',' + r1 + 'H254', { end: 'ah' })));
+    o.push(edge(HP, wire('M400,' + r0 + 'V' + r2) + wire('M382,' + r0 + 'H400') + wire('M382,' + r2 + 'H400') + wire('M382,' + r1 + 'H470', { end: 'ah' })));
+    // 検証帯
+    o.push(edge(HP, wire('M452,' + r0 + 'V' + r2) + wire('M452,' + r0 + 'H470', { end: 'ah' }) + wire('M452,' + r2 + 'H470', { end: 'ah' })));
+    o.push(edge(HP, wire('M616,' + r0 + 'V' + r2) + wire('M598,' + r0 + 'H616') + wire('M598,' + r2 + 'H616') + wire('M598,' + r1 + 'H660', { end: 'ah' })));
+
+    // 判定 → 合格 → 段階リリース → 完了
+    o.push(edge(HAPPY, wire('M760,' + r1 + 'H798', { end: 'ah' }) + lbl(779, 172, 'middle', '合格', 'ok')));
+    o.push(edge(HAPPY, wire('M966,' + r1 + 'H992') + dot(996, r1) + lbl(980, 172, 'middle', '完了', 'term')));
+
+    // 不合格 → 原因分析 → 自己修復 → 再生成 (分岐点へ戻る)
+    o.push(edge(FAIL, wire('M' + dx + ',' + (r1 + hh) + 'V' + r3 + 'H598', { end: 'ah-f' }) + lbl(dx + 8, 300, 'start', '不合格', 'fail')));
+    o.push(edge(FAIL, wire('M470,' + r3 + 'H382', { end: 'ah-f' })));
+    o.push(edge(FAIL, wire('M254,' + r3 + 'H' + J) + wire('M' + J + ',' + r3 + 'V300V' + r1, { mid: 'ah-f' }) + lbl(208, 304, 'end', '再生成', 'fail')));
+    // 本番異常時の巻き戻し (下を迂回して原因分析の下辺へ)
+    o.push(edge(FAIL, wire('M882,' + (r1 + NH / 2) + 'V444H534V414', { end: 'ah-f', cls: 'thin' }) + lbl(708, 462, 'middle', '本番異常時・自動ロールバック', 'dim fail')));
+
+    ['n01', 'n02'].forEach((id, i) => o.push(node(id, cI, [r0, r1][i] - NH / 2, NW)));
+    ['n03', 'n04', 'n05'].forEach((id, i) => o.push(node(id, zn(z2), [r0, r1, r2][i] - NH / 2, ZW)));
+    ['n06', 'n07', 'n08'].forEach((id, i) => o.push(node(id, zn(z3), [r0, r1, r2][i] - NH / 2, ZW)));
+    o.push(decision('n09', dx, r1, hw, hh, 13));
+    o.push(node('n10', rel, r1 - NH / 2, NW));
+    o.push(node('n12', zn(z2), r3 - NH / 2, ZW));
+    o.push(node('n11', zn(z3), r3 - NH / 2, ZW));
+    return { w: 1016, h: 478, s: o.join('') };
+  }
+
+  // ---------- 狭幅: 同じ流れを上から下へ積み直す。並列帯は横のバスで 3 本に分け、判定から左右へ分かれる。 ----------
+  function buildTall(W) {
+    const small = W < 300, NH = 60, cx = W / 2;
+    const NW = Math.min(W - 64, 300), nx = cx - NW / 2;
+    const zx = 16, zp = small ? 5 : 8, zg = small ? 10 : 12;
+    const tw = (W - 32 - zp * 2 - zg * 2) / 3, tfs = tw < 74 ? 11.5 : tw < 96 ? 13 : 14;
+    const m = small ? 14 : 22, g = small ? 28 : 36, lx = small ? 6 : 8;
+    const bw = (W - 2 * m - g) / 2, R0 = m + bw + g, lcx = m + bw / 2, rcx = R0 + bw / 2;
+    const col = i => zx + zp + tw / 2 + i * (tw + zg);
+    const bfs = bw < 110 ? 14 : 15;
+    const o = [];
+
+    function zone(ids, zt, num, name, title) {
+      const bt = zt + 10, by = zt + 24, bb = by + NH, jy = bb + 14, c0 = col(0), c2 = col(2);
+      o.push('<g class="el" data-tags="parallel"><rect class="zone-box" x="' + zx + '" y="' + zt + '" width="' + (W - 32) + '" height="' + (jy + 10 - zt) + '"/></g>');
+      o.push(edge(HP, hd(zx, zt - 30, num, name) + '<text class="zt" x="' + zx + '" y="' + (zt - 10) + '">' + title + '</text>'));
+      o.push(edge(HP, wire('M' + P(c0, bt) + 'H' + f(c2)) + [0, 1, 2].map(i => wire('M' + P(col(i), bt) + 'V' + by, { end: 'ah' })).join('')));
+      o.push(edge(HP, [0, 1, 2].map(i => wire('M' + P(col(i), bb) + 'V' + jy)).join('') + wire('M' + P(c0, jy) + 'H' + f(c2))));
+      ids.forEach((id, i) => o.push(node(id, col(i) - tw / 2, by, tw, { fs: tfs, r: 7.5 })));
+      return jy;
+    }
+
+    o.push(edge(HAPPY, hd(zx, 22, 'I', '計画')));
+    o.push(edge(HAPPY, dot(cx, 40) + wire('M' + P(cx, 40) + 'V60', { end: 'ah' }) + lbl(cx + 9, 44, 'start', '開始', 'term')));
+    o.push(edge(HAPPY, wire('M' + P(cx, 120) + 'V148', { end: 'ah' })));
+    o.push(edge(HAPPY, wire('M' + P(cx, 208) + 'V280')));
+    o.push('<g class="el" data-tags="happy fail">' + dot(cx, 221) + '</g>');
+    zone(['n03', 'n04', 'n05'], 270, 'II', '構築', '並列コード生成');
+    o.push(edge(HAPPY, wire('M' + P(cx, 368) + 'V438')));
+    zone(['n06', 'n07', 'n08'], 428, 'III', '検証', '自動検証ゲート');
+    o.push(edge(HAPPY, hd(zx, 556, 'IV', '判定') + wire('M' + P(cx, 526) + 'V568', { end: 'ah' })));
+
+    const cy = 614, hh = 46, hw = Math.min(70, cx - lcx - 6, rcx - cx - 6);
+    o.push(edge(FAIL, wire('M' + P(cx - hw, cy) + 'H' + f(lcx) + 'V696', { end: 'ah-f' }) + lbl(lcx + 8, 684, 'start', '不合格', 'fail')));
+    o.push(edge(HAPPY, wire('M' + P(cx + hw, cy) + 'H' + f(rcx) + 'V696', { end: 'ah' }) + lbl(rcx - 8, 684, 'end', '合格', 'ok')));
+    o.push(edge(FAIL, wire('M' + P(lcx, 756) + 'V784', { end: 'ah-f' })));
+    // 再生成: 左の余白を上がり、02 の直下の分岐点へ合流する
+    o.push(edge(FAIL, wire('M' + P(m, 814) + 'H' + lx) + wire('M' + lx + ',814V520V221', { mid: 'ah-f' }) + wire('M' + lx + ',221H' + f(cx - 3.5))));
+    o.push(edge(FAIL, wire('M' + P(R0, 712) + 'H' + f(m + bw), { end: 'ah-f', cls: 'thin' })));
+    o.push(edge(FAIL, hd(m, 866, '', '修復ループ', '', 'fail') + hd(m, 884, '', '再生成・再試行は最大 3 回', '', 'cap')));
+    o.push(edge(HAPPY, wire('M' + P(rcx, 756) + 'V776') + dot(rcx, 780) + lbl(rcx - 9, 784, 'end', '完了', 'term')));
+
+    o.push(node('n01', nx, 60, NW, { fs: 15 }));
+    o.push(node('n02', nx, 148, NW, { fs: 15 }));
+    o.push(decision('n09', cx, cy, hw, hh, 14));
+    o.push(node('n11', m, 696, bw, { fs: bfs, tr: true }));
+    o.push(node('n10', R0, 696, bw, { fs: bfs }));
+    o.push(node('n12', m, 784, bw, { fs: bfs, tr: true }));
+    return { w: W, h: 900, s: o.join('') };
+  }
+
+  // ---------- 状態と描画のまとめ ----------
+  const VIEWS = { happy: '正常系フロー', fail: '失敗・自己修復ループ', parallel: '並列実行区間' };
+  const sheet = document.getElementById('sheet'), field = document.getElementById('field');
+  const svg = document.getElementById('diagram'), stageG = document.getElementById('dg-stage');
+  const detail = document.getElementById('detail'), panel = document.getElementById('panel');
+  const zrefs = document.getElementById('zrefs'), live = document.getElementById('live');
+  const radios = Array.from(document.querySelectorAll('input[name="view"]'));
+  const state = { view: 'all', sel: null, list: false };
+  let lastKey = '';
+  const isNarrow = () => window.matchMedia('(max-width: 679px)').matches;
+
+  // 図面の組み直し: 図面幅が 640px 以上なら左→右、それ未満なら上→下。
+  function layout(force) {
+    const w = field.clientWidth;
+    if (!w) return;
+    const mode = w >= 640 ? 'wide' : 'tall';
+    const r = mode === 'wide' ? buildWide() : buildTall(Math.max(270, Math.min(440, Math.floor(w))));
+    const key = mode + ':' + r.w;
+    if (!force && key === lastKey) return;
+    lastKey = key;
+    field.dataset.mode = mode;
+    svg.setAttribute('viewBox', '0 0 ' + r.w + ' ' + r.h);
+    svg.style.aspectRatio = r.w + ' / ' + r.h;
+    stageG.innerHTML = r.s;
+    applyView(state.view);
+    applySel();
+  }
+
+  // ハイライト切替: 所属しない要素だけを薄くし、図形は崩さない。
+  function applyView(v) {
+    state.view = v;
+    sheet.setAttribute('data-view', v);
+    stageG.querySelectorAll('.el').forEach(el => {
+      el.classList.toggle('is-off', v !== 'all' && el.getAttribute('data-tags').split(' ').indexOf(v) === -1);
+    });
+    radios.forEach(r => { r.checked = r.value === v; });
+    panel.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c.getAttribute('data-view') === v)));
+  }
+  function applySel() {
+    stageG.querySelectorAll('.node').forEach(el => el.setAttribute('aria-pressed', String(el.getAttribute('data-id') === state.sel)));
+  }
+
+  // 図枠のゾーン参照 (上・下は数字、左・右は英字)。枠の実寸から区切りを引き直す。
+  function zones() {
+    const w = sheet.clientWidth, h = sheet.clientHeight;
+    const nx = Math.max(2, Math.round(w / 132)), ny = Math.max(2, Math.round(h / 132));
+    const zx = w / nx, zy = h / ny;
+    sheet.style.setProperty('--zx', zx + 'px');
+    sheet.style.setProperty('--zy', zy + 'px');
+    let s = '';
+    for (let i = 0; i < nx; i++) {
+      const x = 'left:' + f((i + 0.5) * zx) + 'px';
+      s += '<i class="zt" style="' + x + '">' + (i + 1) + '</i><i class="zb" style="' + x + '">' + (i + 1) + '</i>';
+    }
+    for (let j = 0; j < ny; j++) {
+      const a = String.fromCharCode(65 + j), t = 'top:' + f((j + 0.5) * zy) + 'px';
+      s += '<i class="zl" style="' + t + '">' + a + '</i><i class="zr" style="' + t + '">' + a + '</i>';
+    }
+    zrefs.innerHTML = s;
+  }
+
+  // ---------- 明細欄 ----------
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const isCode = s => /^[A-Za-z0-9_.\/\*\-]+$/.test(s);
+  function ioItem(s) {
+    const p = s.split(' | ');
+    return (isCode(p[0]) ? '<code class="code">' + esc(p[0]) + '</code>' : '<span>' + esc(p[0]) + '</span>') +
+      (p[1] ? '<span class="note">' + esc(p[1]) + '</span>' : '');
+  }
+  const ioList = arr => '<ul class="io">' + arr.map(s => '<li>' + ioItem(s) + '</li>').join('') + '</ul>';
+  const row = (jp, en, body) => '<div><dt>' + jp + '<span class="en">' + en + '</span></dt><dd>' + body + '</dd></div>';
+
+  function listHTML() {
+    return '<div class="panel-head"><div><h2>工程一覧</h2><span class="en">ITEM LIST · ' + NODES.length + '</span></div><div class="panel-acts">' +
+      '<button type="button" class="btn btn-close" data-act="close">閉じる</button></div></div>' +
+      '<p class="list-sum">合格経路の合計目安 <strong>26〜60 分</strong>。行を選ぶと詳細を表示します。</p>' +
+      '<ol class="items">' + NODES.map(n => '<li><button type="button" class="item" data-id="' + n.id + '" aria-current="' + (n.id === state.sel) + '">' +
+        '<span class="no">' + n.num + '</span><span class="nm">' + esc(n.label) + '</span><span class="st">' + n.stage + '</span><span class="tm">' + n.t + '</span></button></li>').join('') + '</ol>';
+  }
+
+  function detailHTML(n) {
+    const i = NODES.indexOf(n), prev = NODES[(i + NODES.length - 1) % NODES.length], next = NODES[(i + 1) % NODES.length];
+    const chips = [['happy', '正常系フロー'], ['parallel', '並列実行区間'], ['fail', '失敗・自己修復ループ']]
+      .filter(c => n.tags.indexOf(c[0]) >= 0)
+      .map(c => '<button type="button" class="chip" data-view="' + c[0] + '" aria-pressed="' + (state.view === c[0]) + '">' + c[1] + '</button>').join('');
+    return '<div class="panel-head"><div><h2>工程明細</h2><span class="en">ITEM DETAIL</span></div><div class="panel-acts">' +
+      '<button type="button" class="btn" data-act="back">一覧へ戻る</button>' +
+      '<button type="button" class="btn btn-close" data-act="close">閉じる</button></div></div>' +
+      '<article aria-labelledby="det-title">' +
+      '<header class="det-head"><div class="det-title"><span class="det-balloon" aria-hidden="true">' + n.num + '</span><h3 id="det-title">' + esc(n.label) + '</h3></div>' +
+      '<p class="det-sub">' + esc(n.sub) + '<span class="det-owner">' + esc(n.owner) + '</span></p>' +
+      '<p class="det-time"><span class="k">所要時間目安</span><strong>' + esc(n.time) + '</strong></p></header>' +
+      '<dl class="spec">' + row('役割', 'ROLE', '<p>' + esc(n.role) + '</p>') + row('入力', 'INPUT', ioList(n.input)) +
+      row('出力', 'OUTPUT', ioList(n.output)) + row('判定条件', 'CRITERIA', '<p>' + esc(n.crit) + '</p>') + '</dl>' +
+      '<div class="det-meta"><span class="k">段階<span class="en">STAGE</span></span><div><p class="stage">' + ST[n.stage] + '</p><div class="chips">' + chips + '</div></div></div>' +
+      '<nav class="pager" aria-label="前後の工程"><button type="button" class="btn" data-nav="-1">‹ ' + prev.num + ' ' + esc(prev.label) + '</button>' +
+      '<button type="button" class="btn" data-nav="1">' + next.num + ' ' + esc(next.label) + ' ›</button></nav>' +
+      '</article>';
+  }
+
+  function renderPanel() {
+    const n = state.sel && !state.list ? byId[state.sel] : null;
+    panel.innerHTML = n ? detailHTML(n) : listHTML();
+  }
+
+  // 工程の選択。狭幅では明細欄が下のシートになるので、開いて読み上げの焦点を移す。
+  function select(id, focus) {
+    state.sel = id;
+    state.list = false;
+    applySel();
+    renderPanel();
+    if (isNarrow()) {
+      sheet.classList.add('is-open');
+      panel.scrollTop = 0;
+    }
+    if (focus) panel.focus({ preventScroll: true });
+    live.textContent = byId[id].num + ' ' + byId[id].label + ' の詳細を表示しました';
+  }
+
+  function setView(v) {
+    applyView(v);
+    live.textContent = v === 'all' ? '全体表示に切り替えました' : VIEWS[v] + 'をハイライトしました';
+  }
+
+  // ---------- 操作 ----------
+  svg.addEventListener('click', e => {
+    const g = e.target.closest('.node');
+    if (g) select(g.getAttribute('data-id'), isNarrow());
+  });
+  svg.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const g = e.target.closest('.node');
+    if (!g) return;
+    e.preventDefault();
+    select(g.getAttribute('data-id'), isNarrow());
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && sheet.classList.contains('is-open')) {
+      sheet.classList.remove('is-open');
+      const cur = stageG.querySelector('.node[aria-pressed="true"]');
+      if (cur) cur.focus();
+    }
+  });
+  radios.forEach(r => r.addEventListener('change', () => setView(r.value)));
+
+  detail.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.getAttribute('data-id')) { select(b.getAttribute('data-id'), isNarrow()); return; }
+    if (b.getAttribute('data-nav')) {
+      const d = Number(b.getAttribute('data-nav')), i = NODES.indexOf(byId[state.sel]);
+      if (i < 0) return;
+      select(NODES[(i + d + NODES.length) % NODES.length].id, false);
+      panel.scrollTop = 0;
+      const nb = panel.querySelector('[data-nav="' + d + '"]');
+      if (nb) nb.focus({ preventScroll: true });
+      return;
+    }
+    if (b.getAttribute('data-view')) { setView(b.getAttribute('data-view')); return; }
+    const act = b.getAttribute('data-act');
+    if (act === 'back') {
+      state.list = true;
+      renderPanel();
+      panel.scrollTop = 0;
+      const it = panel.querySelector('[data-id="' + state.sel + '"]');
+      if (it) it.focus({ preventScroll: true });
+    } else if (act === 'close') {
+      sheet.classList.remove('is-open');
+      const cur = stageG.querySelector('.node[aria-pressed="true"]');
+      if (cur) cur.focus({ preventScroll: true });
+    } else if (act === 'open-list') {
+      state.list = true;
+      renderPanel();
+      sheet.classList.add('is-open');
+      panel.scrollTop = 0;
+      panel.focus({ preventScroll: true });
+    }
+  });
+
+  // ---------- 開始 ----------
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => layout(false)).observe(field);
+    new ResizeObserver(zones).observe(sheet);
+  } else {
+    window.addEventListener('resize', () => { layout(false); zones(); });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(zones);
+  layout(true);
+  renderPanel();
+  zones();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黒曜焙煎所｜夜のために、夜に焙煎する。深夜専門のコーヒー豆定期便</title>
+<meta name="description" content="23時、街が眠ったあとに火を入れる。夜更かしの頭のための、深夜専門コーヒー豆定期便。深煎り「零時」、中深煎り「残響」、デカフェ「白夜」を、あなたの夜の時間帯で比べられます。">
+<meta name="theme-color" content="#0b0a09">
+<script>document.documentElement.className += ' js';</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* ----------
+  黒曜焙煎所 — tokens
+  地: 黒曜石の黒 / 文字: 濾紙の生成り / 数値: 焙煎記録の等幅
+  三つのブレンドの色 = 夜の三つの時間帯（夕・真夜中・夜明け前）
+---------- */
+:root{
+  --ink:#0b0a09;
+  --ink-2:#131110;
+  --ink-3:#1c1916;
+  --paper:#efe8dc;
+  --paper-2:#cfc6b8;
+  --mist:#9c948a;
+  --line:rgba(239,232,220,.14);
+  --line-strong:rgba(239,232,220,.38);
+  --focus:#f0b870;
+  --reiji:#8ea8dc;
+  --zankyo:#d49a5c;
+  --byakuya:#dfe3e6;
+  --font-mincho:"Shippori Mincho B1","Shippori Mincho","Yu Mincho",YuMincho,"Hiragino Mincho ProN","Noto Serif JP","Noto Serif CJK JP","Source Han Serif JP",serif;
+  --font-gothic:"Zen Kaku Gothic New","Yu Gothic",YuGothic,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Noto Sans CJK JP",Meiryo,system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Consolas,"Roboto Mono",Menlo,monospace;
+  --gutter:clamp(20px,4.5vw,72px);
+  --maxw:1320px;
+  --sec:clamp(72px,9vw,136px);
+  --headh:72px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;color-scheme:dark;scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--font-gothic);font-size:16px;line-height:1.85;letter-spacing:.02em;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,video{display:block;max-width:100%}
+h1,h2,h3,h4,p,ul,ol,dl,dd,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+::selection{background:var(--paper);color:var(--ink)}
+[id]{scroll-margin-top:calc(var(--headh) + 16px)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:var(--gutter);top:-100px;z-index:100;padding:10px 16px;background:var(--paper);color:var(--ink);font-size:14px;font-weight:700;text-decoration:none}
+.skip:focus{top:8px}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+.sec{padding-block:var(--sec)}
+.grid12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--row,32px) var(--col,28px)}
+@media (max-width:899px){.grid12{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:599px){.grid12{grid-template-columns:minmax(0,1fr)}}
+/* type */
+.eyebrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin:0 0 22px;font-family:var(--font-mono);font-size:12px;font-weight:500;line-height:1.6;letter-spacing:.18em;text-transform:uppercase;color:var(--mist)}
+.eyebrow__time{color:var(--paper)}
+.h2{font-family:var(--font-mincho);font-weight:600;font-size:clamp(26px,1.1vw + 19px,44px);line-height:1.42;letter-spacing:.04em;text-wrap:balance}
+.h3{font-family:var(--font-mincho);font-weight:600;font-size:clamp(21px,0.5vw + 18px,28px);line-height:1.5;letter-spacing:.04em;text-wrap:balance}
+.lead{margin-top:20px;max-width:38em;color:var(--paper-2);font-size:clamp(15px,0.25vw + 14.2px,17px);line-height:2}
+.num{font-family:var(--font-mono);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:0}
+.note{font-size:13px;line-height:1.75;color:var(--mist)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:10px 24px;border:1px solid var(--line-strong);border-radius:2px;background:transparent;color:var(--paper);font-size:14px;font-weight:700;line-height:1.4;letter-spacing:.06em;text-decoration:none;cursor:pointer;transition:background-color .25s,color .25s,border-color .25s,transform .25s}
+.btn:hover{background:rgba(239,232,220,.08)}
+.btn:active{transform:translateY(1px)}
+.btn--primary{border-color:var(--paper);background:var(--paper);color:var(--ink)}
+.btn--primary:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.btn--sm{min-height:40px;padding:6px 16px;font-size:13px}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+/* header */
+.site-head{position:fixed;inset:0 0 auto 0;z-index:50;height:var(--headh);border-bottom:1px solid transparent;background:linear-gradient(180deg,rgba(11,10,9,.8),rgba(11,10,9,0));transition:background-color .3s,border-color .3s}
+.site-head.is-scrolled{background:rgba(11,10,9,.86);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.site-head .wrap{display:flex;align-items:center;gap:16px;width:100%}
+.brand{display:inline-flex;flex:none;align-items:baseline;gap:14px;min-height:44px;white-space:nowrap;text-decoration:none}
+.brand__ja{font-family:var(--font-mincho);font-weight:600;font-size:19px;letter-spacing:.14em}
+.brand__en{font-family:var(--font-mono);font-size:11px;letter-spacing:.26em;color:var(--paper-2)}
+.site-nav{display:none;margin-left:auto}
+.site-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;white-space:nowrap;font-size:13px;letter-spacing:.08em;color:var(--paper-2);text-decoration:none;transition:color .2s}
+.site-nav a:hover{color:var(--paper)}
+.site-head .btn{margin-left:auto}
+@media (min-width:900px){
+  .site-nav{display:flex;gap:0}
+  .site-head .btn{margin-left:12px;white-space:nowrap}
+}
+@media (min-width:900px) and (max-width:1099px){.brand__en{display:none}.site-nav a{padding-inline:9px}}
+/* hero: 広幅は映像に題を重ね、狭幅は映像の下に積み直す */
+.hero{position:relative;overflow:clip;background:#000}
+.media{position:relative;overflow:hidden;background:#000}
+.media video,.media img{width:100%;height:100%;object-fit:cover}
+.hero__media{aspect-ratio:1/1}
+.hero__media video{object-position:50% 56%}
+.hero__scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(11,10,9,.9) 0,rgba(11,10,9,.55) 22%,transparent 44%),linear-gradient(0deg,var(--ink) 0,transparent 24%)}
+.hero__foot{position:relative;z-index:3;display:flex;justify-content:flex-end;margin-top:-56px}
+.hero__inner{position:relative;padding-block:28px 8px}
+.hero__title{font-family:var(--font-mincho);font-weight:600;font-size:clamp(30px,2.4vw + 21px,68px);line-height:1.38;letter-spacing:.06em;text-wrap:balance}
+.hero__lead{margin-top:18px;max-width:42em;color:var(--paper-2);font-size:clamp(15px,0.25vw + 14.2px,17px);line-height:2;text-wrap:pretty}
+.hero__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero__meta{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:24px;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--mist)}
+.hero__meta li{display:flex;align-items:center;gap:10px}
+.hero__meta li+li::before{content:"";width:1px;height:12px;background:var(--line-strong)}
+@media (min-width:600px) and (max-width:899px){.hero__media{aspect-ratio:16/10}}
+@media (min-width:900px){
+  .hero{min-height:100vh;min-height:100svh}
+  .hero__media{position:absolute;inset:0;aspect-ratio:auto}
+  .hero__scrim{background:linear-gradient(0deg,rgba(11,10,9,.96) 0,rgba(11,10,9,.86) 15%,rgba(11,10,9,.52) 33%,rgba(11,10,9,.1) 52%,transparent 62%),linear-gradient(90deg,rgba(11,10,9,.5),transparent 55%),linear-gradient(180deg,rgba(11,10,9,.66),transparent 18%)}
+  .hero__foot{position:absolute;inset:auto 0 0 0;margin:0}
+  .hero__foot .wrap{display:flex;justify-content:flex-end;width:100%;padding-bottom:22px}
+  .hero__inner{position:absolute;inset:auto 0 0 0;padding-block:0 88px}
+  .hero__title{font-size:clamp(40px,1.8vw + 2.6vh,76px)}
+}
+/* video stop / play toggle */
+.vtoggle{display:none}
+.js .vtoggle{position:relative;z-index:4;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px 6px 12px;border:1px solid var(--line-strong);border-radius:999px;background:rgba(11,10,9,.66);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--paper);font-size:12px;letter-spacing:.08em;white-space:nowrap;cursor:pointer;transition:background-color .2s,border-color .2s}
+.js .vtoggle:hover{background:rgba(11,10,9,.9);border-color:var(--paper)}
+.vtoggle svg{width:14px;height:14px;flex:none;fill:currentColor}
+.vtoggle .i-play{display:none}
+.vtoggle.is-paused .i-play{display:block}
+.vtoggle.is-paused .i-pause{display:none}
+.media .vtoggle{position:absolute;right:16px;bottom:16px}
+/* roasting */
+.photo{position:relative;overflow:hidden;background:var(--ink-3)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.ratio-169{aspect-ratio:16/9}
+.ratio-43{aspect-ratio:4/3}
+.roast-a{align-items:end}
+.roast-a__text{grid-column:1/6}
+.roast-a__media{grid-column:6/13}
+.roast-b{margin-top:clamp(40px,6vw,80px);align-items:start}
+.roast-b__media{grid-column:1/8}
+.roast-b__log{grid-column:8/13}
+.media__cap{margin-top:12px;font-size:13px;line-height:1.75;color:var(--mist)}
+@media (max-width:899px){
+  .roast-a__text,.roast-a__media,.roast-b__media,.roast-b__log{grid-column:1/-1}
+}
+.log{margin-top:28px}
+.log li{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.log li:last-child{border-bottom:1px solid var(--line)}
+.log__time{padding-top:3px;font-family:var(--font-mono);font-size:14px;color:var(--paper)}
+.log__title{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:.06em;line-height:1.5}
+.log__chip{padding:1px 8px;border:1px solid var(--line-strong);border-radius:2px;font-family:var(--font-mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;color:var(--paper-2)}
+.log p{margin-top:4px;font-size:13.5px;line-height:1.8;color:var(--mist)}
+/* packages: 黒い袋の写真の余白（左に題、右に袋の札）だけに文字を置き、袋は隠さない */
+.pack{position:relative;overflow:hidden;margin-top:clamp(48px,7vw,104px);background:#000}
+.pack__img{position:relative;aspect-ratio:1/1}
+.pack__img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pack__scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,var(--ink) 0,transparent 34%)}
+.pack__body{position:relative;padding-block:32px 8px}
+.pack__text{max-width:40em}
+.labels{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:28px}
+.label__btn{--tone:var(--paper);display:flex;align-items:center;gap:16px;width:100%;min-height:84px;padding:10px 16px 10px 12px;border:1px solid var(--line-strong);border-left:3px solid var(--tone);background:var(--ink);color:var(--paper);text-decoration:none;text-align:left;transition:background-color .2s,border-color .2s}
+.label__btn:hover{background:var(--ink-3);border-color:var(--paper)}
+.label--reiji{--tone:var(--reiji)}
+.label--zankyo{--tone:var(--zankyo)}
+.label--byakuya{--tone:var(--byakuya)}
+.label__ja{flex:none;white-space:nowrap;writing-mode:vertical-rl;font-family:var(--font-mincho);font-weight:600;font-size:26px;line-height:1.15;letter-spacing:.16em}
+.label__meta{display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.5;color:var(--paper-2)}
+.label__meta b{font-weight:700}
+.label__hint{margin-top:12px;font-size:12px;line-height:1.7;color:var(--mist)}
+@media (min-width:600px){
+  .pack__img{aspect-ratio:16/10}
+  .labels{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+  .label__btn{flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:150px;padding:14px 12px 12px}
+}
+@media (min-width:1100px){
+  .pack__img{position:absolute;inset:0;aspect-ratio:auto}
+  .pack__scrim{background:linear-gradient(90deg,rgba(11,10,9,.92) 0,rgba(11,10,9,.6) 18%,transparent 30%,transparent 73%,rgba(11,10,9,.6) 85%,rgba(11,10,9,.92) 100%)}
+  .pack__body{display:grid;grid-template-columns:min(370px,calc(30vw - var(--gutter) - 20px)) minmax(0,1fr) min(340px,calc(27vw - var(--gutter) - 20px));align-items:center;max-width:none;min-height:min(80vh,720px);padding-block:clamp(48px,8vw,96px)}
+  .pack__aside{grid-column:3}
+  .labels{grid-template-columns:minmax(0,1fr);gap:12px;margin-top:0}
+  .label__btn{flex-direction:row;align-items:center;min-height:88px;padding:10px 16px 10px 12px;background:rgba(11,10,9,.8)}
+}
+/* blends: 夜の12時間を三つに分けた帯を、そのまま選択欄にする */
+.blends-head{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:24px;align-items:end}
+.now{display:none;font-family:var(--font-mono);font-size:12px;line-height:1.9;letter-spacing:.08em;color:var(--mist)}
+.js .now{display:block}
+.tabs{display:none}
+.js .tabs{display:flex;margin-top:clamp(28px,4vw,48px);overflow:hidden;border:1px solid var(--line-strong);border-radius:2px}
+.tab{--tone:var(--paper);position:relative;flex:var(--w) 1 0%;display:flex;flex-direction:column;gap:6px;min-width:0;padding:14px 16px 18px;border:0;border-left:1px solid var(--line-strong);background:color-mix(in srgb,var(--tone) 6%,var(--ink));color:var(--paper);text-align:left;cursor:pointer;transition:background-color .25s}
+.tab:first-child{border-left:0}
+.tab::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--tone);opacity:.4;transition:opacity .25s}
+.tab__time{font-family:var(--font-mono);font-size:12px;line-height:1.5;letter-spacing:.06em;color:var(--paper-2)}
+.tab__name{font-family:var(--font-mincho);font-weight:600;font-size:clamp(22px,1.4vw,30px);line-height:1.2;letter-spacing:.14em}
+.tab__sub{font-size:12px;line-height:1.6;color:var(--mist)}
+.tab--reiji{--tone:var(--reiji)}
+.tab--zankyo{--tone:var(--zankyo)}
+.tab--byakuya{--tone:var(--byakuya)}
+.tab--w6{--w:6}
+.tab--w3{--w:3}
+.tab:hover{background:color-mix(in srgb,var(--tone) 16%,var(--ink))}
+.tab[aria-selected="true"]{background:color-mix(in srgb,var(--tone) 30%,var(--ink))}
+.tab[aria-selected="true"]::before{opacity:1}
+.tab[aria-selected="true"] .tab__sub{color:var(--paper-2)}
+.js .tab[aria-selected="false"] .tab__name{color:var(--paper-2)}
+.hours{display:none}
+.js .hours{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;color:var(--mist)}
+.blend{--tone:var(--paper);margin-top:clamp(28px,4vw,48px);padding-top:clamp(28px,4vw,48px);border-top:1px solid var(--line)}
+.blend--reiji{--tone:var(--reiji)}
+.blend--zankyo{--tone:var(--zankyo)}
+.blend--byakuya{--tone:var(--byakuya)}
+.js .blend.is-in{animation:fade .45s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.blend__grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(28px,5vw,72px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:2px 10px;border:1px solid var(--line-strong);border-radius:2px;font-size:12px;line-height:1.5;letter-spacing:.08em;color:var(--paper-2)}
+.chip--tone{border-color:var(--tone);color:var(--paper);background:color-mix(in srgb,var(--tone) 14%,transparent)}
+.blend__name{margin-top:18px;font-family:var(--font-mincho);font-weight:600;font-size:clamp(76px,9.5vw,148px);line-height:1;letter-spacing:.1em}
+.blend__romaji{margin-top:14px;font-family:var(--font-mono);font-size:12px;letter-spacing:.36em;color:var(--tone)}
+.blend__copy{margin-top:22px;max-width:30em;color:var(--paper-2);font-size:15.5px;line-height:2.05;text-wrap:pretty}
+.blend__scene{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;line-height:1.8}
+.blend__scene .num{flex:none;padding-top:2px;font-size:13px;color:var(--tone)}
+.spec{border-top:1px solid var(--line-strong)}
+.spec__sec{padding:22px 0;border-bottom:1px solid var(--line)}
+.spec__h{display:flex;justify-content:space-between;gap:16px;align-items:baseline;font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--paper-2)}
+.spec__h .num{font-weight:500;letter-spacing:.04em;color:var(--mist)}
+.meters{display:grid;gap:10px;margin-top:14px}
+.meter{display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:center;gap:12px;font-size:14px}
+.meter__track{position:relative;height:6px;border-radius:3px;background:rgba(239,232,220,.1);overflow:hidden}
+.meter__fill{position:absolute;inset:0 auto 0 0;width:calc(var(--v)*20%);background:var(--tone);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.meter__num{text-align:right;font-family:var(--font-mono);font-size:13px;color:var(--paper-2)}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
+.kv div{padding:12px 12px 10px;border:1px solid var(--line);background:var(--ink-2)}
+.kv dt{font-size:11.5px;line-height:1.5;letter-spacing:.1em;color:var(--mist)}
+.kv dd{margin-top:4px;font-family:var(--font-gothic);font-size:14px;font-weight:700;color:var(--paper)}
+.spec__price{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:22px 0}
+.price{font-family:var(--font-mono);font-size:28px;font-weight:500;line-height:1.2;letter-spacing:0}
+.price small{margin-left:6px;font-family:var(--font-gothic);font-size:12px;font-weight:400;letter-spacing:.06em;color:var(--mist)}
+.spec__cta{display:flex;flex-wrap:wrap;gap:12px}
+/* comparison table: 三つをならべて、選んだ列を残す */
+.cmp{margin-top:clamp(48px,7vw,88px)}
+.cmp__h{font-family:var(--font-mincho);font-weight:600;font-size:clamp(20px,0.8vw + 17px,26px);line-height:1.5;letter-spacing:.06em}
+.tablewrap{margin-top:18px;overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+.cmp th,.cmp td{padding:13px 10px;text-align:left;vertical-align:middle;border-bottom:1px solid var(--line);transition:background-color .25s}
+.cmp thead th{padding-top:8px;padding-bottom:10px;border-bottom:1px solid var(--line-strong)}
+.cmp thead th[data-blend]{--tone:var(--paper);border-top:3px solid var(--tone)}
+.cmp tbody th{font-weight:500;color:var(--paper-2);white-space:nowrap}
+.cmp td .num{white-space:nowrap}
+.cmp .th__sub{white-space:nowrap}
+.cmp [data-blend="reiji"]{--tone:var(--reiji)}
+.cmp [data-blend="zankyo"]{--tone:var(--zankyo)}
+.cmp [data-blend="byakuya"]{--tone:var(--byakuya)}
+.cmp .th__ja{display:block;font-family:var(--font-mincho);font-weight:600;font-size:20px;letter-spacing:.14em}
+.cmp .th__sub{display:block;font-size:12px;font-weight:400;color:var(--mist)}
+.cmp .is-on{background:rgba(239,232,220,.06)}
+.cmp td .num{font-size:13px}
+.cmp td small{font-size:12px;color:var(--mist)}
+.dots{display:inline-flex;gap:3px;margin-right:6px;vertical-align:1px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(239,232,220,.14)}
+.dots i.on{background:var(--tone)}
+/* brew: 手順の時刻を左に並べ、写真は抽出の場所として右に置く */
+.brew__body{grid-column:1/6;align-self:center}
+.brew__media{grid-column:6/13}
+.brew__media img{object-position:100% 50%}
+.steps{margin-top:28px}
+.steps li{display:grid;grid-template-columns:56px minmax(0,1fr);gap:16px;padding:16px 0;border-top:1px solid var(--line)}
+.steps li:last-child{border-bottom:1px solid var(--line)}
+.steps__time{padding-top:3px;font-family:var(--font-mono);font-size:14px;color:var(--paper)}
+.steps__title{font-weight:700;font-size:15px;line-height:1.6;letter-spacing:.06em}
+.steps p{margin-top:4px;font-size:13.5px;line-height:1.8;color:var(--mist)}
+.params{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:12px 32px;align-items:start;margin-top:clamp(32px,5vw,56px)}
+.params__h{font-size:14px;font-weight:700;letter-spacing:.1em}
+.params p{margin-top:6px;font-size:13px;line-height:1.75;color:var(--mist)}
+.params table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.6}
+.params th,.params td{padding:12px;border-bottom:1px solid var(--line);text-align:left;transition:background-color .25s}
+.params tbody th{font-family:var(--font-mincho);font-weight:600;font-size:18px;letter-spacing:.16em;color:var(--paper-2);white-space:nowrap;transition:box-shadow .25s,color .25s}
+.params tbody tr{--tone:var(--paper)}
+.params tbody tr[data-blend="reiji"]{--tone:var(--reiji)}
+.params tbody tr[data-blend="zankyo"]{--tone:var(--zankyo)}
+.params tbody tr[data-blend="byakuya"]{--tone:var(--byakuya)}
+.params tbody tr.is-on th{color:var(--paper);box-shadow:inset 3px 0 0 var(--tone)}
+.params tbody tr.is-on td{background:rgba(239,232,220,.06)}
+/* night: 机の写真の脇に、三つの夜 */
+.night__media{grid-column:1/9}
+.night__body{grid-column:9/13;align-self:center}
+.scenes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(28px,4vw,48px)}
+.scene{--tone:var(--paper);padding:20px 20px 4px 18px;border-left:1px solid var(--line-strong)}
+.scene--reiji{--tone:var(--reiji)}
+.scene--zankyo{--tone:var(--zankyo)}
+.scene--byakuya{--tone:var(--byakuya)}
+.scene__time{font-family:var(--font-mono);font-size:13px;color:var(--tone)}
+.scene__name{margin-top:4px;font-family:var(--font-mincho);font-weight:600;font-size:22px;line-height:1.4;letter-spacing:.16em}
+.scene p{margin-top:8px;font-size:14px;line-height:1.85;color:var(--paper-2);text-wrap:pretty}
+/* plan + form */
+.plan{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,5vw,72px);align-items:start;margin-top:clamp(32px,5vw,56px)}
+.fieldset{min-width:0;margin:0;padding:0;border:0}
+.fieldset+.fieldset,.fieldset+.fields,.fields+.form__foot{margin-top:32px}
+.legend{margin-bottom:12px;padding:0;font-size:14px;font-weight:700;line-height:1.6;letter-spacing:.1em}
+.opt{position:relative;display:block;cursor:pointer}
+.opt input{position:absolute;inset:0;z-index:2;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.opt__box{display:flex;flex-direction:column;gap:2px;min-height:64px;padding:14px 16px;background:var(--ink);transition:background-color .2s,color .2s}
+.opt__box b{font-weight:700;font-size:15px;line-height:1.5;letter-spacing:.06em}
+.opt__box small{font-size:12px;line-height:1.6;color:var(--mist)}
+.opt__box .dot{width:8px;height:8px;margin-bottom:8px;border-radius:50%;background:var(--tone,var(--paper))}
+.opt:hover .opt__box{background:var(--ink-3)}
+.opt input:checked+.opt__box{background:var(--paper);color:var(--ink)}
+.opt input:checked+.opt__box small{color:#4d473f}
+.opt:hover input:checked+.opt__box{background:var(--paper)}
+.opt input:focus-visible+.opt__box{outline:2px solid var(--focus);outline-offset:-5px}
+.seg,.tiles{display:grid;gap:1px;overflow:hidden;border:1px solid var(--line-strong);border-radius:2px;background:var(--line-strong)}
+.seg{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opt--reiji .opt__box{--tone:var(--reiji)}
+.opt--zankyo .opt__box{--tone:var(--zankyo)}
+.opt--byakuya .opt__box{--tone:var(--byakuya)}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field--wide{grid-column:1/-1}
+.field label{font-size:13px;font-weight:700;line-height:1.6;letter-spacing:.08em}
+.field label i{margin-left:8px;font-style:normal;font-weight:400;font-size:12px;color:var(--mist)}
+.field input{width:100%;min-height:48px;padding:8px 14px;border:1px solid var(--line-strong);border-radius:2px;background:var(--ink-2);color:var(--paper);font-size:16px;transition:border-color .2s}
+.field input::placeholder{color:#6f6961}
+.field input:hover{border-color:var(--paper-2)}
+.field input:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-color:var(--focus)}
+.field input[aria-invalid="true"]{border-color:#f08a72}
+.err{display:none;font-size:12.5px;line-height:1.6;color:#f6ab96}
+.field.is-invalid .err{display:block}
+.form__foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.form__foot .btn{min-width:min(100%,280px)}
+.result{margin-top:24px;padding:22px 24px;border:1px solid var(--paper);background:var(--ink-2)}
+.result[hidden]{display:none}
+.result__h{font-family:var(--font-mincho);font-weight:600;font-size:20px;line-height:1.5;letter-spacing:.06em}
+.result p{margin-top:8px;font-size:14px;line-height:1.85;color:var(--paper-2)}
+.summary{position:sticky;top:calc(var(--headh) + 24px);padding:26px 26px 24px;border:1px solid var(--line-strong);background:var(--ink-2)}
+.summary__h{font-size:13px;font-weight:700;letter-spacing:.16em;color:var(--paper-2)}
+.summary dl{margin-top:14px}
+.summary .row{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-top:1px solid var(--line);font-size:14px;line-height:1.7}
+.summary dt{flex:none;color:var(--mist)}
+.summary dd{margin:0;text-align:right;color:var(--paper)}
+.summary__total{margin-top:14px;padding-top:16px;border-top:1px solid var(--line-strong)}
+.summary__total .price{font-size:32px}
+.summary p{margin-top:12px;font-size:12.5px;line-height:1.75;color:var(--mist)}
+/* faq + footer */
+.faq{max-width:840px;margin-top:clamp(28px,4vw,48px)}
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;gap:16px;padding:20px 0;list-style:none;cursor:pointer;font-weight:700;font-size:15px;line-height:1.7;letter-spacing:.04em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:none;font-family:var(--font-mono);font-size:20px;font-weight:400;line-height:1.4;color:var(--paper-2)}
+.faq details[open] summary::after{content:"−"}
+.faq__a{max-width:40em;padding-bottom:22px;font-size:14.5px;line-height:1.95;color:var(--paper-2)}
+.foot{border-top:1px solid var(--line);padding-block:36px 44px}
+.foot .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:16px 32px}
+.foot__nav{display:flex;flex-wrap:wrap;gap:4px 20px;margin-left:auto;font-size:13px}
+.foot__nav a{color:var(--paper-2);text-decoration:none}
+.foot__nav a:hover{color:var(--paper)}
+.foot small{flex-basis:100%;font-family:var(--font-mono);font-size:11px;line-height:1.7;letter-spacing:.12em;color:var(--mist)}
+@media (max-width:899px){
+  .blends-head,.blend__grid,.params,.plan{grid-template-columns:minmax(0,1fr)}
+  .brew__body,.brew__media,.night__media,.night__body{grid-column:1/-1}
+  .brew__media{margin-top:32px}
+  .night__body{margin-top:28px}
+  .summary{position:static;order:-1}
+}
+@media (max-width:599px){
+  :root{--headh:60px}
+  .brand__en{display:none}
+  .site-head .btn{padding-inline:14px}
+  .tab{padding:12px 10px 14px}
+  .tab__time{font-size:11px}
+  .tab__sub{display:none}
+  .scenes,.fields{grid-template-columns:minmax(0,1fr)}
+  .scene{padding:18px 0 18px 16px}
+  .cmp th,.cmp td{padding:12px 6px}
+  .cmp{font-size:12.5px}
+  .cmp .th__ja{font-size:18px}
+  .seg,.tiles{grid-template-columns:minmax(0,1fr)}
+  .summary{padding:22px 20px}
+  .hero__actions .btn{padding-inline:16px;font-size:13.5px}
+}
+@media (max-width:359px){.dots{display:none}.cmp{font-size:12px}.cmp th,.cmp td{padding-inline:4px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">本文へ移動</a>
+<header class="site-head" data-head>
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand__ja">黒曜焙煎所</span><span class="brand__en">KOKUYO ROASTERY</span></a>
+    <nav class="site-nav" aria-label="ページ内の案内">
+      <a href="#roast">焙煎</a>
+      <a href="#blends">ブレンド</a>
+      <a href="#brew">抽出</a>
+      <a href="#night">夜の机</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <a class="btn btn--primary btn--sm" href="#plan">定期便を申し込む</a>
+  </div>
+</header>
+<main id="main">
+<!-- 1. hero: ハンドドリップの映像 -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="media hero__media">
+    <video id="hero-video" src="../assets/kokuyo-pour-over.mp4" autoplay muted loop playsinline preload="auto" poster="../assets/kokuyo-coffee.jpg" width="1280" height="720" aria-label="黒いドリッパーに細い湯が注がれ、粉の上でコーヒーが膨らむ様子。音はなく、約8秒で繰り返します"></video>
+  </div>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__foot">
+    <div class="wrap">
+      <button type="button" class="vtoggle" data-video-toggle="hero-video" aria-controls="hero-video"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l9 6-9 6z"/></svg><span data-label>動画を停止</span></button>
+    </div>
+  </div>
+  <div class="hero__inner">
+    <div class="wrap">
+      <p class="eyebrow"><span class="eyebrow__time num">23:00</span><span>夜間専門コーヒー豆定期便</span></p>
+      <h1 class="hero__title" id="hero-title">夜のために、<br>夜に焙煎する。</h1>
+      <p class="hero__lead">23時、街が眠ったあとに火を入れる。夜更かしの頭を、最後まで醒ますための定期便です。</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#blends">3種のブレンドを比べる</a>
+        <a class="btn" href="#plan">定期便を申し込む</a>
+      </div>
+      <ul class="hero__meta">
+        <li>3種のブレンド</li>
+        <li>100g × 2袋から</li>
+        <li>月1回 / 隔週</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- 2. roasting: 焙煎機の写真・焙煎の映像・夜の工程・黒い袋 -->
+<section class="sec" id="roast" aria-labelledby="roast-title">
+  <div class="wrap">
+    <div class="grid12 roast-a">
+      <div class="roast-a__text">
+        <p class="eyebrow"><span class="eyebrow__time num">22:00–1:00</span><span>焙煎所</span></p>
+        <h2 class="h2" id="roast-title">23時。街が寝たあとに、<br>火を入れる。</h2>
+        <p class="lead">昼の焙煎所は、届いた生豆と出荷の準備で動いている。火を入れるのは、電話も来客もない夜だけ。豆の音と温度だけを見ていられる時間に、その日の分を煎ります。</p>
+      </div>
+      <figure class="roast-a__media">
+        <div class="photo ratio-169"><img src="../assets/kokuyo-roaster.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="暗い木造の工房に置かれた黒鉄のドラム焙煎機。真鍮のランプがドラムを照らし、手前の冷却盤には煎ったばかりの豆が広がっている"></div>
+        <figcaption class="media__cap">黒鉄のドラム焙煎機。一回ごとに、火を確かめながら。</figcaption>
+      </figure>
+    </div>
+    <div class="grid12 roast-b">
+      <figure class="roast-b__media">
+        <div class="media ratio-169">
+          <video id="roast-video" src="../assets/kokuyo-roasting-loop.mp4" autoplay muted loop playsinline preload="metadata" loading="lazy" poster="../assets/kokuyo-roaster.jpg" width="1280" height="720" aria-label="ランプの下、冷却盤の上で煎りたての豆から湯気が立つ様子。音はなく、約8秒で繰り返します"></video>
+          <button type="button" class="vtoggle" data-video-toggle="roast-video" aria-controls="roast-video"><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 2h4v12H3zM9 2h4v12H9z"/></svg><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2l9 6-9 6z"/></svg><span data-label>動画を停止</span></button>
+        </div>
+        <figcaption class="media__cap"><span class="num">23:25</span>　冷却盤の上。豆が冷えるまで、夜は少しだけ止まる。</figcaption>
+      </figure>
+      <div class="roast-b__log">
+        <h3 class="h3">一晩の工程</h3>
+        <ol class="log">
+          <li><span class="log__time num">22:00</span><div><strong class="log__title">予熱</strong><p>ドラムを空焚きし、炉の温度を整える。</p></div></li>
+          <li><span class="log__time num">23:00</span><div><strong class="log__title">投入</strong><p>その日に出す分だけ、生豆を落とす。</p></div></li>
+          <li><span class="log__time num">23:09</span><div><strong class="log__title">一ハジケ</strong><p>豆が鳴り、香りが立ちのぼる。</p></div></li>
+          <li><span class="log__time num">23:24</span><div><strong class="log__title">煎り上げ</strong><p>零時は深く、残響は香りを残して。</p></div></li>
+          <li><span class="log__time num">23:25</span><div><strong class="log__title">冷却<span class="log__chip">映像はこの時間</span></strong><p>冷却盤の上で一気に冷やし、味を止める。</p></div></li>
+          <li><span class="log__time num">0:10</span><div><strong class="log__title">計量・包装</strong><p>黒い袋に詰めて、封をする。</p></div></li>
+          <li><span class="log__time num">6:00</span><div><strong class="log__title">出荷</strong><p>夜が明ける前に、集配へ。</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="pack">
+    <div class="pack__img"><img src="../assets/kokuyo-packages.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="暗い木の台に置かれたスレートの板の上に、マットブラックの紙袋が三つ並んでいる"></div>
+    <div class="pack__scrim" aria-hidden="true"></div>
+    <div class="wrap pack__body">
+      <div class="pack__text">
+        <p class="eyebrow"><span class="eyebrow__time num">0:10–1:00</span><span>計量・包装</span></p>
+        <h3 class="h3" id="pack-title">その夜のうちに、<br>黒い袋へ。</h3>
+        <p class="lead">煎った豆は、冷めてから計量し、マットブラックの紙袋に封をします。袋に柄はありません。代わりに、飲むべき時間を印しました。</p>
+      </div>
+      <div class="pack__aside">
+        <ol class="labels" aria-label="三つのブレンド">
+          <li class="label--zankyo"><a class="label__btn" href="#blends" data-goto="zankyo"><span class="label__ja">残響</span><span class="label__meta"><b>中深煎り</b><span class="num">18:00–24:00</span></span></a></li>
+          <li class="label--reiji"><a class="label__btn" href="#blends" data-goto="reiji"><span class="label__ja">零時</span><span class="label__meta"><b>深煎り</b><span class="num">0:00–3:00</span></span></a></li>
+          <li class="label--byakuya"><a class="label__btn" href="#blends" data-goto="byakuya"><span class="label__ja">白夜</span><span class="label__meta"><b>デカフェ</b><span class="num">3:00–6:00</span></span></a></li>
+        </ol>
+        <p class="label__hint">時間帯を選ぶと、味の設計を見られます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 3. blends: 夜の時間帯で選び、三つをならべて比べる -->
+<section class="sec" id="blends" aria-labelledby="blends-title">
+  <div class="wrap">
+    <div class="blends-head">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__time num">18:00–6:00</span><span>三つのブレンド</span></p>
+        <h2 class="h2" id="blends-title">あなたの夜は、何時まで？</h2>
+        <p class="lead">夜の12時間を三つに分け、時間帯ごとにブレンドを煎じました。帯の長さが、そのまま推奨の時間帯です。選ぶと、味の設計が見えます。</p>
+      </div>
+      <p class="now" data-now></p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="時間帯から選ぶ">
+      <button type="button" class="tab tab--zankyo tab--w6" id="tab-zankyo" role="tab" aria-selected="true" aria-controls="panel-zankyo" data-tab="zankyo"><span class="tab__time num">18:00–24:00</span><span class="tab__name">残響</span><span class="tab__sub">日の残響が続く、夜のはじまり</span></button>
+      <button type="button" class="tab tab--reiji tab--w3" id="tab-reiji" role="tab" aria-selected="false" aria-controls="panel-reiji" tabindex="-1" data-tab="reiji"><span class="tab__time num">0:00–3:00</span><span class="tab__name">零時</span><span class="tab__sub">一日が変わる、深い一杯</span></button>
+      <button type="button" class="tab tab--byakuya tab--w3" id="tab-byakuya" role="tab" aria-selected="false" aria-controls="panel-byakuya" tabindex="-1" data-tab="byakuya"><span class="tab__time num">3:00–6:00</span><span class="tab__name">白夜</span><span class="tab__sub">夜の味のまま、朝へ</span></button>
+    </div>
+    <div class="hours" aria-hidden="true"><span>18:00</span><span>21:00</span><span>0:00</span><span>3:00</span><span>6:00</span></div>
+
+    <div class="blend blend--zankyo" id="panel-zankyo" role="tabpanel" aria-labelledby="tab-zankyo" data-panel="zankyo">
+      <div class="blend__grid">
+        <div>
+          <div class="chips"><span class="chip chip--tone">中深煎り</span><span class="chip">香りと酸味のバランス</span></div>
+          <h3 class="blend__name">残響</h3>
+          <p class="blend__romaji">ZANKYO</p>
+          <p class="blend__copy">仕事が終わり、日の物音が引いていく時間。まだ頭が軽いうちに飲む一杯です。ココアとドライフィグの甘い香り、ローストナッツのような余韻が、夜の速度を少しだけ上げます。</p>
+          <p class="blend__scene"><span class="num">味わい</span><span>ココア、ドライフィグ、ローストナッツ</span></p>
+          <p class="blend__scene"><span class="num">18:00</span><span>提出前の最終チェックに。まだ余裕のある、夜のはじまり。</span></p>
+        </div>
+        <div class="spec">
+          <div class="spec__sec">
+            <p class="spec__h">風味プロファイル<span class="num">5段階</span></p>
+            <ul class="meters">
+              <li class="meter"><span>苦味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+              <li class="meter"><span>甘味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+              <li class="meter"><span>酸味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+              <li class="meter"><span>香り</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:4"></span></span><span class="meter__num">4</span></li>
+              <li class="meter"><span>コク</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+            </ul>
+          </div>
+          <div class="spec__sec">
+            <p class="spec__h">淹れ方の目安</p>
+            <dl class="kv"><div><dt>湯温</dt><dd>92°C</dd></div><div><dt>挽き目</dt><dd>中挽き</dd></div><div><dt>粉 15g・抽出</dt><dd>3:00</dd></div></dl>
+          </div>
+          <div class="spec__sec spec__price"><p class="price">990<small>円 / 100g・税込</small></p></div>
+          <div class="spec__cta"><a class="btn btn--primary" href="#plan" data-apply="zankyo">残響で申し込む</a><a class="btn" href="#brew">淹れ方を見る</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blend blend--reiji" id="panel-reiji" role="tabpanel" aria-labelledby="tab-reiji" data-panel="reiji">
+      <div class="blend__grid">
+        <div>
+          <div class="chips"><span class="chip chip--tone">深煎り</span><span class="chip">重い苦味と余韻</span></div>
+          <h3 class="blend__name">零時</h3>
+          <p class="blend__romaji">REIJI</p>
+          <p class="blend__copy">日付が変わった瞬間から。深く煎った豆の苦味と、黒糖のような甘さが、眠気との境目をはっきり切ります。焼き締まった重さのある杯は、夜の半ばで立ち返るための一杯です。</p>
+          <p class="blend__scene"><span class="num">味わい</span><span>ダークチョコレート、黒糖、燻製のような香り</span></p>
+          <p class="blend__scene"><span class="num">0:00</span><span>〆切まであと三時間。ここからが本番の夜に。</span></p>
+        </div>
+        <div class="spec">
+          <div class="spec__sec">
+            <p class="spec__h">風味プロファイル<span class="num">5段階</span></p>
+            <ul class="meters">
+              <li class="meter"><span>苦味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:5"></span></span><span class="meter__num">5</span></li>
+              <li class="meter"><span>甘味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:2"></span></span><span class="meter__num">2</span></li>
+              <li class="meter"><span>酸味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:1"></span></span><span class="meter__num">1</span></li>
+              <li class="meter"><span>香り</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:4"></span></span><span class="meter__num">4</span></li>
+              <li class="meter"><span>コク</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:5"></span></span><span class="meter__num">5</span></li>
+            </ul>
+          </div>
+          <div class="spec__sec">
+            <p class="spec__h">淹れ方の目安</p>
+            <dl class="kv"><div><dt>湯温</dt><dd>88°C</dd></div><div><dt>挽き目</dt><dd>中細挽き</dd></div><div><dt>粉 15g・抽出</dt><dd>3:30</dd></div></dl>
+          </div>
+          <div class="spec__sec spec__price"><p class="price">990<small>円 / 100g・税込</small></p></div>
+          <div class="spec__cta"><a class="btn btn--primary" href="#plan" data-apply="reiji">零時で申し込む</a><a class="btn" href="#brew">淹れ方を見る</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="blend blend--byakuya" id="panel-byakuya" role="tabpanel" aria-labelledby="tab-byakuya" data-panel="byakuya">
+      <div class="blend__grid">
+        <div>
+          <div class="chips"><span class="chip chip--tone">デカフェ</span><span class="chip">就寝前の一杯</span></div>
+          <h3 class="blend__name">白夜</h3>
+          <p class="blend__romaji">BYAKUYA</p>
+          <p class="blend__copy">カフェインを除いた豆を、ほかの二つと同じ23時に煎りました。カカオニブとはちみつのような落ち着いた甘さ。夜の味のまま、朝を迎えられる一杯です。</p>
+          <p class="blend__scene"><span class="num">味わい</span><span>カカオニブ、はちみつ、焙煎した穀物</span></p>
+          <p class="blend__scene"><span class="num">3:00</span><span>作業は終わった。眠る前に、もう一杯だけ欲しい夜に。</span></p>
+        </div>
+        <div class="spec">
+          <div class="spec__sec">
+            <p class="spec__h">風味プロファイル<span class="num">5段階</span></p>
+            <ul class="meters">
+              <li class="meter"><span>苦味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:2"></span></span><span class="meter__num">2</span></li>
+              <li class="meter"><span>甘味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+              <li class="meter"><span>酸味</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:2"></span></span><span class="meter__num">2</span></li>
+              <li class="meter"><span>香り</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:3"></span></span><span class="meter__num">3</span></li>
+              <li class="meter"><span>コク</span><span class="meter__track" aria-hidden="true"><span class="meter__fill" style="--v:2"></span></span><span class="meter__num">2</span></li>
+            </ul>
+          </div>
+          <div class="spec__sec">
+            <p class="spec__h">淹れ方の目安</p>
+            <dl class="kv"><div><dt>湯温</dt><dd>93°C</dd></div><div><dt>挽き目</dt><dd>中細挽き</dd></div><div><dt>粉 15g・抽出</dt><dd>3:00</dd></div></dl>
+          </div>
+          <div class="spec__sec spec__price"><p class="price">990<small>円 / 100g・税込</small></p></div>
+          <div class="spec__cta"><a class="btn btn--primary" href="#plan" data-apply="byakuya">白夜で申し込む</a><a class="btn" href="#brew">淹れ方を見る</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmp">
+      <h3 class="cmp__h">三つをならべて比べる</h3>
+      <div class="tablewrap">
+        <table>
+          <caption class="sr-only">三つのブレンドの焙煎、推奨時間帯、風味、価格の比較。選択中のブレンドの列を目立たせています</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="sr-only">項目</span></th>
+              <th scope="col" data-blend="zankyo"><span class="th__ja">残響</span><span class="th__sub">中深煎り</span></th>
+              <th scope="col" data-blend="reiji"><span class="th__ja">零時</span><span class="th__sub">深煎り</span></th>
+              <th scope="col" data-blend="byakuya"><span class="th__ja">白夜</span><span class="th__sub">デカフェ</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">推奨の時間帯</th><td data-blend="zankyo"><span class="num">18:00<br>–24:00</span></td><td data-blend="reiji"><span class="num">0:00<br>–3:00</span></td><td data-blend="byakuya"><span class="num">3:00<br>–6:00</span></td></tr>
+            <tr><th scope="row">苦味</th><td data-blend="zankyo"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td><td data-blend="reiji"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="num">5/5</span></td><td data-blend="byakuya"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="num">2/5</span></td></tr>
+            <tr><th scope="row">甘味</th><td data-blend="zankyo"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td><td data-blend="reiji"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="num">2/5</span></td><td data-blend="byakuya"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td></tr>
+            <tr><th scope="row">酸味</th><td data-blend="zankyo"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td><td data-blend="reiji"><span class="dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="num">1/5</span></td><td data-blend="byakuya"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="num">2/5</span></td></tr>
+            <tr><th scope="row">香り</th><td data-blend="zankyo"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="num">4/5</span></td><td data-blend="reiji"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="num">4/5</span></td><td data-blend="byakuya"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td></tr>
+            <tr><th scope="row">コク</th><td data-blend="zankyo"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="num">3/5</span></td><td data-blend="reiji"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="num">5/5</span></td><td data-blend="byakuya"><span class="dots" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="num">2/5</span></td></tr>
+            <tr><th scope="row">主な香り</th><td data-blend="zankyo">ココア</td><td data-blend="reiji">黒糖</td><td data-blend="byakuya">はちみつ</td></tr>
+            <tr><th scope="row">カフェイン</th><td data-blend="zankyo">あり</td><td data-blend="reiji">あり</td><td data-blend="byakuya">なし</td></tr>
+            <tr><th scope="row">1袋 100g</th><td data-blend="zankyo"><span class="num">990</span> 円</td><td data-blend="reiji"><span class="num">990</span> 円</td><td data-blend="byakuya"><span class="num">990</span> 円</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- 4. brew: 抽出ガイド -->
+<section class="sec" id="brew" aria-labelledby="brew-title">
+  <div class="wrap">
+    <div class="grid12">
+      <div class="brew__body">
+        <p class="eyebrow"><span class="eyebrow__time num">1:10</span><span>抽出</span></p>
+        <h2 class="h2" id="brew-title">3分30秒の、静かな作業。</h2>
+        <p class="lead">ドリッパーとフィルター、秤があれば足りる。湯を注ぐ数分間は、夜のうちでいちばん目的のない時間です。</p>
+        <ol class="steps">
+          <li><span class="steps__time num">0:00</span><div><strong class="steps__title">15g を挽く</strong><p>フィルターを湯で湿らせ、粉を入れて表面を平らにする。</p></div></li>
+          <li><span class="steps__time num">0:30</span><div><strong class="steps__title">蒸らし</strong><p>湯 30g を中央から。粉が膨らんで、香りが立ち始める。</p></div></li>
+          <li><span class="steps__time num">1:00</span><div><strong class="steps__title">一投目</strong><p>膨らんだふちから円を描いて、秤が 120g を指すまで。</p></div></li>
+          <li><span class="steps__time num">1:45</span><div><strong class="steps__title">二投目</strong><p>同じ太さの細い湯で 240g まで。注ぎながら秤を見る。</p></div></li>
+          <li><span class="steps__time num">3:30</span><div><strong class="steps__title">できあたり</strong><p>液面が粉の底まで下がったらフィルターを外す。軽く回して、器に注ぐ。</p></div></li>
+        </ol>
+      </div>
+      <figure class="brew__media">
+        <div class="photo ratio-43"><img src="../assets/kokuyo-coffee.jpg" width="2752" height="1536" loading="lazy" decoding="async" alt="黒いドリッパーからガラスのサーバーに落ちたコーヒー。湯気が立ち、手前の黒い石の台には煎った豆が散らばっている"></div>
+        <figcaption class="media__cap">黒陶のドリッパーと、ガラスのサーバー。湯温が高いほど苦味が先に立ちます。</figcaption>
+      </figure>
+    </div>
+    <div class="params">
+      <div>
+        <h3 class="params__h">ブレンド別の、さじ加減</h3>
+        <p>手順は三つとも同じ。湯温と挽き目だけ、選んだブレンドに合わせる。いま選んでいる行を目印で示します。</p>
+      </div>
+      <table>
+        <thead><tr><th scope="col">ブレンド</th><th scope="col">湯温</th><th scope="col">挽き目</th><th scope="col">抽出時間</th></tr></thead>
+        <tbody>
+          <tr data-blend="zankyo"><th scope="row">残響</th><td><span class="num">92</span>°C</td><td>中挽き</td><td><span class="num">3:00</span></td></tr>
+          <tr data-blend="reiji"><th scope="row">零時</th><td><span class="num">88</span>°C</td><td>中細挽き</td><td><span class="num">3:30</span></td></tr>
+          <tr data-blend="byakuya"><th scope="row">白夜</th><td><span class="num">93</span>°C</td><td>中細挽き</td><td><span class="num">3:00</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+<!-- 5. night: 深夜の使用シーン -->
+<section class="sec" id="night" aria-labelledby="night-title">
+  <div class="wrap">
+    <div class="grid12">
+      <figure class="night__media">
+        <div class="photo ratio-169"><img src="../assets/kokuyo-night-desk.jpg" width="1376" height="768" loading="lazy" decoding="async" alt="夜の作業机。建物の図を描いたスケッチブックに鉛筆が置かれ、脇の黒い陶器のカップから湯気が立っている。右上のデスクライトだけが橙色に光る"></div>
+      </figure>
+      <div class="night__body">
+        <p class="eyebrow"><span class="eyebrow__time num">2:00</span><span>夜の机</span></p>
+        <h2 class="h2" id="night-title">誰も起きていない<br>時間の、隣に。</h2>
+        <p class="lead">図を描き、文章を直し、原稿を送る。夜更かしの机には、同じ夜更かしのコーヒーが似合います。時間帯ごとに、三つの夜を用意しました。</p>
+      </div>
+    </div>
+    <ol class="scenes">
+      <li class="scene scene--zankyo"><p class="scene__time num">22:40</p><p class="scene__name">残響</p><p>提出前の最終チェック。まだ余裕のある夜。</p></li>
+      <li class="scene scene--reiji"><p class="scene__time num">0:50</p><p class="scene__name">零時</p><p>〆切まで、あと三時間。ここが本番。</p></li>
+      <li class="scene scene--byakuya"><p class="scene__time num">3:10</p><p class="scene__name">白夜</p><p>作業は終わった。眠る前に、もう一杯だけ。</p></li>
+    </ol>
+  </div>
+</section>
+<!-- 6. plan: 月1回／隔週の切替と申し込みフォーム -->
+<section class="sec" id="plan" aria-labelledby="plan-title">
+  <div class="wrap">
+    <p class="eyebrow"><span class="eyebrow__time num">6:00</span><span>定期便</span></p>
+    <h2 class="h2" id="plan-title">夜ごとの一杯を、定期便で。</h2>
+    <p class="lead">煎った翌朝に出荷するので、定期便はサイクルで選びます。毎月じっくりか、隔週で切らさずか。ブレンドは三つを順番に、またはひとつに決められます。</p>
+    <div class="plan">
+      <form class="form" id="apply" novalidate>
+        <fieldset class="fieldset">
+          <legend class="legend">お届けのサイクル</legend>
+          <div class="seg">
+            <label class="opt"><input type="radio" name="cycle" value="月1回" data-price="1980" data-monthly="1980" data-per="毎月1回" checked><span class="opt__box"><b>月1回</b><small>毎月1回・100g × 2袋</small></span></label>
+            <label class="opt"><input type="radio" name="cycle" value="隔週" data-price="1870" data-monthly="3740" data-per="2週ごと"><span class="opt__box"><b>隔週</b><small>2週ごと・100g × 2袋</small></span></label>
+          </div>
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend class="legend">ブレンドの選び方</legend>
+          <div class="tiles">
+            <label class="opt"><input type="radio" name="blend" value="三つを順番に" checked><span class="opt__box"><span class="dot" aria-hidden="true"></span><b>三つを順番に</b><small>残響 → 零時 → 白夜</small></span></label>
+            <label class="opt opt--zankyo"><input type="radio" name="blend" value="残響" data-blend="zankyo"><span class="opt__box"><span class="dot" aria-hidden="true"></span><b>残響だけ</b><small>18:00–24:00</small></span></label>
+            <label class="opt opt--reiji"><input type="radio" name="blend" value="零時" data-blend="reiji"><span class="opt__box"><span class="dot" aria-hidden="true"></span><b>零時だけ</b><small>0:00–3:00</small></span></label>
+            <label class="opt opt--byakuya"><input type="radio" name="blend" value="白夜" data-blend="byakuya"><span class="opt__box"><span class="dot" aria-hidden="true"></span><b>白夜だけ</b><small>3:00–6:00</small></span></label>
+          </div>
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend class="legend">粉の状態</legend>
+          <div class="seg">
+            <label class="opt"><input type="radio" name="grind" value="豆のまま" checked><span class="opt__box"><b>豆のまま</b><small>淹れる直前に挽く</small></span></label>
+            <label class="opt"><input type="radio" name="grind" value="ドリップ用に挽く"><span class="opt__box"><b>ドリップ用に挽く</b><small>到着後、すぐ淹れられる</small></span></label>
+          </div>
+        </fieldset>
+        <div class="fields">
+          <h3 class="legend field--wide">お届け先</h3>
+          <div class="field field--wide">
+            <label for="f-name">お名前</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+            <p class="err" id="e-name">お名前を入力してください。</p>
+          </div>
+          <div class="field">
+            <label for="f-email">メールアドレス</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="e-email">
+            <p class="err" id="e-email">メールアドレスの形式を確認してください。</p>
+          </div>
+          <div class="field">
+            <label for="f-postal">郵便番号</label>
+            <input id="f-postal" name="postal" type="text" autocomplete="postal-code" inputmode="numeric" required pattern="[0-9]{7}|[0-9]{3}-[0-9]{4}" aria-describedby="h-postal e-postal">
+            <p class="note" id="h-postal">7桁の数字。例）1500001</p>
+            <p class="err" id="e-postal">郵便番号は7桁の数字で入力してください。</p>
+          </div>
+          <div class="field field--wide">
+            <label for="f-address">住所</label>
+            <input id="f-address" name="address" type="text" autocomplete="street-address" required aria-describedby="e-address">
+            <p class="err" id="e-address">住所を入力してください。</p>
+          </div>
+        </div>
+        <div class="form__foot">
+          <button class="btn btn--primary" type="submit">この内容で申し込む</button>
+          <p class="note">申し込み後、確認のメールをお送りします。スキップ・変更・停止は、いつでもメールでどうぞ。</p>
+        </div>
+        <div class="result" id="result" role="status" tabindex="-1" hidden>
+          <p class="result__h">入力内容を確かめました</p>
+          <p>このページは試作のため、実際の申し込みは送信されていません。本番では、このあと確認のメールをお送りします。</p>
+          <p data-result></p>
+        </div>
+      </form>
+      <aside class="summary" aria-labelledby="summary-title">
+        <h3 class="summary__h" id="summary-title">お申し込み内容</h3>
+        <dl>
+          <div class="row"><dt>サイクル</dt><dd data-s="cycle">月1回</dd></div>
+          <div class="row"><dt>ブレンド</dt><dd data-s="blend">三つを順番に</dd></div>
+          <div class="row"><dt>粉の状態</dt><dd data-s="grind">豆のまま</dd></div>
+          <div class="row"><dt>1回のお届け</dt><dd>100g × 2袋</dd></div>
+          <div class="row"><dt>送料</dt><dd>込み</dd></div>
+        </dl>
+        <div class="summary__total">
+          <p class="note">1回あたり・税込</p>
+          <p class="price"><span data-s="price">1,980</span><small>円</small></p>
+          <p class="note"><span data-s="per">毎月1回</span>なら、月あたり約 <span data-s="monthly">1,980</span> 円</p>
+        </div>
+        <p>翌々営業日の23時に煎り、翌朝に出荷します。初回のお届けは、申し込みから4〜6日後です。</p>
+      </aside>
+    </div>
+  </div>
+</section>
+<!-- 7. faq -->
+<section class="sec" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+  <div class="wrap">
+    <h2 class="h3" id="faq-title">よくある質問</h2>
+    <div class="faq">
+      <details><summary>カフェインはどのくらい含まれていますか？</summary><p class="faq__a">残響と零時は、通常のコーヒー豆と同程度です。白夜はカフェインを除けたデカフェで、抽出の方法や量によって残る量は変わります。夜の終わりの一杯には、白夜をどうぞ。</p></details>
+      <details><summary>豆はいつ届きますか？</summary><p class="faq__a">毎週火曜の23時に煎り、翌朝に出荷します。初回は申し込みから4〜6日後、以降は選んだサイクルに合わせてお届けします。</p></details>
+      <details><summary>スキップや停止はできますか？</summary><p class="faq__a">できます。お届けの3日前までにメールをいただければ、その回を飛ばせます。停止や再開も、同じメールでどうぞ。</p></details>
+      <details><summary>挽いた状態で届けてもらえますか？</summary><p class="faq__a">はい。申し込みのときに「ドリップ用に挽く」を選んでください。粉の状態では、豆のままより香りが早く抜けるため、2週間ほどで飲み切るのが目安です。</p></details>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand__ja">黒曜焙煎所</span><span class="brand__en">KOKUYO ROASTERY</span></a>
+    <nav class="foot__nav" aria-label="ページの最後の案内">
+      <a href="#roast">焙煎</a>
+      <a href="#blends">ブレンド</a>
+      <a href="#brew">抽出</a>
+      <a href="#night">夜の机</a>
+      <a href="#plan">定期便</a>
+    </nav>
+    <small>© KOKUYO ROASTERY — Roasted at 23:00, for the night.</small>
+  </div>
+</footer>
+<script>
+(function () {
+  'use strict';
+  var doc = document;
+  var reduce = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function all(sel, ctx) { return Array.prototype.slice.call((ctx || doc).querySelectorAll(sel)); }
+
+  /* header: scroll */
+  try {
+    var head = doc.querySelector('[data-head]');
+    var onScroll = function () { head.classList.toggle('is-scrolled', window.scrollY > 24); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  } catch (e) {}
+
+  /* videos: auto-start only while in view, stop toggle per video */
+  var vids = {};
+  try {
+    all('[data-video-toggle]').forEach(function (btn) {
+      var v = doc.getElementById(btn.getAttribute('aria-controls'));
+      if (!v) return;
+      var st = { v: v, btn: btn, label: btn.querySelector('[data-label]'), userPaused: false, motionOff: !!(reduce && reduce.matches), visible: true };
+      vids[v.id] = st;
+      st.sync = function () {
+        var paused = v.paused;
+        btn.classList.toggle('is-paused', paused);
+        st.label.textContent = paused ? '動画を再生' : '動画を停止';
+      };
+      st.tryPlay = function () {
+        if (st.userPaused || st.motionOff || !st.visible) { if (!v.paused) v.pause(); return; }
+        var p = v.play();
+        if (p && p.catch) p.catch(function () { st.sync(); });
+      };
+      btn.addEventListener('click', function () {
+        if (v.paused) { st.userPaused = false; st.motionOff = false; st.visible = true; st.tryPlay(); }
+        else { st.userPaused = true; v.pause(); }
+        st.sync();
+      });
+      v.addEventListener('play', st.sync);
+      v.addEventListener('pause', st.sync);
+      v.muted = true;
+      st.sync();
+      st.tryPlay();
+    });
+    if ('IntersectionObserver' in window && Object.keys(vids).length) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          var st = vids[en.target.id];
+          if (!st) return;
+          st.visible = en.isIntersecting;
+          if (st.visible) st.tryPlay(); else if (!st.v.paused) st.v.pause();
+        });
+      }, { threshold: [0, 0.1] });
+      Object.keys(vids).forEach(function (id) { io.observe(vids[id].v); });
+    } else {
+      Object.keys(vids).forEach(function (id) { vids[id].visible = true; vids[id].tryPlay(); });
+    }
+    var applyMotion = function () {
+      var off = !!(reduce && reduce.matches);
+      Object.keys(vids).forEach(function (id) {
+        var st = vids[id];
+        st.motionOff = off;
+        if (off) {
+          if (!st.v.paused) st.v.pause();
+          /* static frame instead of the poster, so the same photo is not shown twice */
+          if (st.v.id === 'roast-video') { try { st.v.currentTime = 1.5; } catch (err) {} }
+        } else { st.tryPlay(); }
+      });
+    };
+    if (reduce) {
+      if (reduce.addEventListener) reduce.addEventListener('change', applyMotion); else if (reduce.addListener) reduce.addListener(applyMotion);
+      applyMotion();
+    }
+  } catch (e) {}
+
+  /* blends: night-band tabs, synced to the comparison table and brew table */
+  var NAMES = { zankyo: '残響', reiji: '零時', byakuya: '白夜' };
+  var active = 'reiji';
+  try {
+    var tabs = all('[data-tab]');
+    var panels = {};
+    all('[data-panel]').forEach(function (p) { panels[p.getAttribute('data-panel')] = p; });
+    var cmpCells = all('.cmp [data-blend]');
+    var paramRows = all('.params tbody tr');
+    var select = function (id, focus) {
+      if (!panels[id]) id = tabs[0].getAttribute('data-tab');
+      tabs.forEach(function (t) {
+        var on = t.getAttribute('data-tab') === id;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      Object.keys(panels).forEach(function (k) {
+        var p = panels[k];
+        if (k === id) {
+          if (p.hidden) { p.hidden = false; p.classList.remove('is-in'); void p.offsetWidth; p.classList.add('is-in'); }
+        } else { p.hidden = true; }
+      });
+      cmpCells.forEach(function (c) { c.classList.toggle('is-on', c.getAttribute('data-blend') === id); });
+      paramRows.forEach(function (r) { r.classList.toggle('is-on', r.getAttribute('data-blend') === id); });
+      active = id;
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(t.getAttribute('data-tab')); });
+      t.addEventListener('keydown', function (e) {
+        var j = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = tabs.length - 1;
+        if (j !== null) { e.preventDefault(); select(tabs[j].getAttribute('data-tab'), true); }
+      });
+    });
+    /* default band = the visitor's own hour of the night */
+    var d = new Date(), h = d.getHours(), mi = d.getMinutes();
+    var band = h >= 18 ? 'zankyo' : (h < 3 ? 'reiji' : (h < 6 ? 'byakuya' : null));
+    var nowEl = doc.querySelector('[data-now]');
+    if (nowEl) {
+      var hm = (h < 10 ? '0' : '') + h + ':' + (mi < 10 ? '0' : '') + mi;
+      nowEl.textContent = band ? '今 ' + hm + '。あなたの時間帯は「' + NAMES[band] + '」。' : '今 ' + hm + '。夜は18:00から始まります。';
+    }
+    select(band || 'reiji');
+    all('[data-goto]').forEach(function (a) { a.addEventListener('click', function () { select(a.getAttribute('data-goto')); }); });
+  } catch (e) {}
+
+  /* form: preselect, live summary, validation, demo result */
+  try {
+    var form = doc.getElementById('apply');
+    var plan = form.parentElement;
+    var cell = function (k) { return plan.querySelector('[data-s="' + k + '"]'); };
+    var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+    var pick = function (name, val) {
+      var r = form.querySelector('input[name="' + name + '"][value="' + val + '"]');
+      if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
+    };
+    all('[data-apply]').forEach(function (a) { a.addEventListener('click', function () { pick('blend', NAMES[a.getAttribute('data-apply')]); }); });
+    var update = function () {
+      var cycle = form.querySelector('input[name="cycle"]:checked');
+      cell('cycle').textContent = cycle.value;
+      cell('blend').textContent = form.querySelector('input[name="blend"]:checked').value;
+      cell('grind').textContent = form.querySelector('input[name="grind"]:checked').value;
+      cell('price').textContent = fmt(cycle.getAttribute('data-price'));
+      cell('monthly').textContent = fmt(cycle.getAttribute('data-monthly'));
+      cell('per').textContent = cycle.getAttribute('data-per');
+    };
+    form.addEventListener('change', update);
+    update();
+    var check = function (inp) {
+      var ok = inp.validity.valid;
+      inp.closest('.field').classList.toggle('is-invalid', !ok);
+      if (ok) inp.removeAttribute('aria-invalid'); else inp.setAttribute('aria-invalid', 'true');
+      return ok;
+    };
+    var required = all('input[required]', form);
+    required.forEach(function (inp) {
+      inp.addEventListener('input', function () { if (inp.getAttribute('aria-invalid') === 'true') check(inp); });
+    });
+    var result = doc.getElementById('result');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var bad = required.filter(function (inp) { return !check(inp); });
+      if (bad.length) { result.hidden = true; bad[0].focus(); return; }
+      result.querySelector('[data-result]').textContent = 'サイクル：' + cell('cycle').textContent + '／ブレンド：' + cell('blend').textContent + '／粉の状態：' + cell('grind').textContent + '／1回あたり ' + cell('price').textContent + ' 円';
+      result.hidden = false;
+      result.focus();
+    });
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
