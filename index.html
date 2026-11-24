@@ -3,176 +3,728 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GLM-5.4 Art Direction Lab — T3 Code × anything-frontend-art-direction × Google Flow</title>
+<title>GLM-5.4 Art Direction Lab — 題材から、画面を立ち上げる。</title>
+<meta name="description" content="T3 Code 上の GLM-5.4 に anything-frontend-art-direction スキルを適用し、Google Flow のオリジナル画像・動画13点のみで制作したフロントエンド並列実験の展示図録。">
 <link rel="icon" type="image/svg+xml" href="./docs/icon.svg">
-<meta name="description" content="Experimental showcase of 100% pure GLM-5.4 frontend builds guided by anything-frontend-art-direction in T3 Code, using 13 original images and videos generated with Google Flow.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=IBM+Plex+Sans+JP:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f4ef;
-  --surface: #fbfbf8;
-  --ink: #171819;
-  --ink-2: #4b5054;
-  --ink-3: #6c7276;
-  --rule: #d6d4cd;
-  --accent: #a65e2e;
-  --min: "Shippori Mincho", "Yu Mincho", serif;
-  --sans: "IBM Plex Sans JP", "Hiragino Sans", sans-serif;
+  --paper: #f3f1ea;
+  --paper-2: #faf9f5;
+  --ink: #151617;
+  --ink-2: #494e52;
+  --ink-3: #6c7275;
+  --rule: #d5d2c8;
+  --rule-strong: #151617;
+  --vermilion: #b8422b;
+  --cedar: #8a5a33;
+  --obsidian: #0c0b0a;
+  --obsidian-2: #151310;
+  --cream: #ece1cc;
+  --cream-2: #b9ab93;
+  --amber: #d9944e;
+  --mx: clamp(20px, 4.2vw, 64px);
+  --max: 1520px;
+  --hh: 58px;
+  --min: "Shippori Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  --sans: "IBM Plex Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   --mono: "IBM Plex Mono", Consolas, monospace;
 }
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 15px/1.85 var(--sans); -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--hh) + 16px); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 15px/1.9 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img, video { display: block; max-width: 100%; }
 a { color: inherit; }
-.wrap { max-width: 1320px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px); }
-header { border-bottom: 1px solid var(--ink); padding: clamp(32px, 5vw, 64px) 0 32px; }
-.eyebrow { font: 500 11px/1 var(--mono); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
-h1 { margin: 0; font: 700 clamp(28px, 4.2vw, 50px)/1.25 var(--min); letter-spacing: .06em; }
-.lead { margin: 18px 0 0; max-width: 52em; color: var(--ink-2); font-size: 15px; }
-.meta-row { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--rule); font: 500 12px/1.6 var(--mono); color: var(--ink-3); }
-.meta-row strong { color: var(--ink); font-weight: 500; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--vermilion); outline-offset: 3px; }
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--mx); }
+.mono { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
 
-main { padding: clamp(40px, 6vw, 72px) 0 80px; }
-.sec-title { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; border-top: 1px solid var(--ink); padding-top: 14px; margin: 0 0 28px; }
-.sec-title h2 { margin: 0; font: 700 clamp(20px, 2.4vw, 28px)/1.4 var(--min); letter-spacing: .08em; }
-.sec-title span { font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--ink-3); text-transform: uppercase; }
+/* ========== Header: single hairline, quiet navigation ========== */
+.hdr {
+  position: sticky; top: 0; z-index: 30;
+  background: rgba(243, 241, 234, .92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.hdr .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: var(--hh); }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; white-space: nowrap; }
+.brand img { width: 22px; height: 22px; }
+.brand b { font: 600 14px/1 var(--min); letter-spacing: .16em; }
+.brand span { font: 500 10px/1 var(--mono); letter-spacing: .2em; color: var(--ink-3); }
+.nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 32px); }
+.nav a { text-decoration: none; font-size: 13px; letter-spacing: .12em; color: var(--ink-2); padding: 6px 0; border-bottom: 1px solid transparent; transition: color .2s, border-color .2s; }
+.nav a:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
-.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--rule); transition: border-color .2s ease, transform .2s ease; }
-.card:hover { border-color: var(--ink); transform: translateY(-2px); }
-.thumb { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #141414; border-bottom: 1px solid var(--rule); }
-.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.tag { position: absolute; left: 10px; top: 10px; background: rgba(23,24,25,.84); color: #f5f4ef; padding: 4px 8px; font: 500 10px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; }
-.body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
-.no { font: 500 11px/1 var(--mono); letter-spacing: .2em; color: var(--accent); margin-bottom: 8px; }
-.card h3 { margin: 0 0 10px; font: 700 20px/1.45 var(--min); letter-spacing: .06em; }
-.card p { margin: 0 0 18px; font-size: 13.5px; color: var(--ink-2); flex: 1; }
-.specs { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 500 11px/1.6 var(--mono); color: var(--ink-3); padding-top: 12px; border-top: 1px solid var(--rule); margin-bottom: 16px; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--ink); color: var(--bg); text-decoration: none; font: 500 12px/1 var(--mono); letter-spacing: .12em; border: 1px solid var(--ink); }
-.btn:hover { background: var(--bg); color: var(--ink); }
-.btn--sub { background: transparent; color: var(--ink); border-color: var(--rule); }
-.btn--sub:hover { border-color: var(--ink); }
+/* ========== Hero: Exhibition Specimen Stage ========== */
+.hero {
+  min-height: calc(100svh - var(--hh));
+  display: grid;
+  grid-template-columns: minmax(320px, 40%) minmax(0, 60%);
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  padding-block: clamp(28px, 4vw, 56px);
+}
+.hero-copy { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+.hero-kicker { color: var(--vermilion); margin: 0 0 14px; }
+.hero-title {
+  margin: 0;
+  font: 700 clamp(28px, 3.05vw, 44px)/1.34 var(--min);
+  letter-spacing: .06em;
+  word-break: keep-all;
+}
+.hero-lead {
+  margin: 18px 0 0;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 2;
+  max-width: 34em;
+}
+.hero-index {
+  list-style: none; margin: 0; padding: 0;
+  border-top: 1px solid var(--ink);
+}
+.hero-index li { border-bottom: 1px solid var(--rule); }
+.idx-btn {
+  width: 100%; background: none; border: 0; padding: 15px 4px;
+  display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: baseline;
+  text-align: left; cursor: pointer; color: var(--ink-3);
+  transition: color .2s, padding-left .2s;
+}
+.idx-btn:hover { color: var(--ink); }
+.idx-btn[aria-pressed="true"] { color: var(--ink); padding-left: 10px; }
+.idx-btn .n { font: 500 11px/1 var(--mono); letter-spacing: .16em; }
+.idx-btn[aria-pressed="true"] .n { color: var(--vermilion); }
+.idx-btn .t { font: 600 17px/1.4 var(--min); letter-spacing: .08em; }
+.idx-btn .m { font: 500 10px/1 var(--mono); letter-spacing: .16em; color: var(--ink-3); }
 
-.archive { margin-top: 64px; }
-.archive-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.archive-item { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--rule); text-decoration: none; }
-.archive-item:hover { border-color: var(--ink); }
-.archive-item b { display: block; font: 600 15px/1.5 var(--min); }
-.archive-item small { display: block; font-size: 12.5px; color: var(--ink-2); }
-.archive-item span { font: 500 11px/1 var(--mono); color: var(--accent); white-space: nowrap; }
+.stage-wrap { display: flex; flex-direction: column; gap: 14px; }
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--obsidian);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.stage-slide {
+  position: absolute; inset: 0;
+  opacity: 0; pointer-events: none;
+  transition: opacity .45s ease;
+}
+.stage-slide.is-active { opacity: 1; pointer-events: auto; }
+.stage-slide img, .stage-slide video { width: 100%; height: 100%; object-fit: cover; }
+.stage-badge {
+  position: absolute; left: 16px; top: 16px; z-index: 2;
+  background: rgba(12, 11, 10, .78); color: var(--cream);
+  padding: 5px 10px; font: 500 10px/1 var(--mono); letter-spacing: .18em;
+}
+.stage-ctrl {
+  position: absolute; right: 16px; bottom: 16px; z-index: 2;
+  background: rgba(12, 11, 10, .78); color: var(--cream);
+  border: 1px solid rgba(236, 225, 204, .35);
+  padding: 7px 12px; font: 500 10px/1 var(--mono); letter-spacing: .16em; cursor: pointer;
+}
+.stage-ctrl:hover { border-color: var(--amber); color: var(--amber); }
+.stage-bar {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  padding-top: 12px; border-top: 1px solid var(--ink);
+}
+.stage-cap b { display: block; font: 600 16px/1.5 var(--min); letter-spacing: .08em; }
+.stage-cap span { font-size: 12.5px; color: var(--ink-2); }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 22px; background: var(--ink); color: var(--paper);
+  text-decoration: none; font: 500 12px/1 var(--mono); letter-spacing: .16em;
+  border: 1px solid var(--ink); white-space: nowrap; transition: background .2s, color .2s;
+}
+.btn:hover { background: transparent; color: var(--ink); }
+.btn--ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+.btn--ghost:hover { border-color: var(--ink); }
+.btn--amber { background: var(--amber); color: #140d07; border-color: var(--amber); font-weight: 600; }
+.btn--amber:hover { background: #e8aa67; border-color: #e8aa67; color: #140d07; }
+.btn--dark-ghost { background: transparent; color: var(--cream); border-color: rgba(236, 225, 204, .32); }
+.btn--dark-ghost:hover { border-color: var(--cream); color: var(--cream); }
 
-footer { border-top: 1px solid var(--rule); padding: 28px 0 44px; font: 400 12px/1.8 var(--mono); color: var(--ink-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-@media (max-width: 980px) { .grid, .archive-list { grid-template-columns: minmax(0, 1fr); } }
+/* ========== Room 01 / 02 / 03: Curated Exhibition Spreads ========== */
+.room { padding-block: clamp(72px, 9vw, 132px); border-top: 1px solid var(--rule); }
+.room--dark { background: var(--obsidian); color: var(--cream); border-top-color: #24211c; }
+.room--dark .room-head { border-top-color: rgba(236, 225, 204, .34); }
+.room--dark .room-no { border-color: var(--amber); color: var(--amber); }
+.room--dark .room-sub, .room--dark .room-meta, .room--dark .room-desc, .room--dark .spec-dl dt { color: var(--cream-2); }
+.room--dark .spec-dl dt, .room--dark .spec-dl dd { border-top-color: rgba(236, 225, 204, .16); }
+.room--dark .plate-fig { border-color: rgba(236, 225, 204, .18); background: var(--obsidian-2); }
+.room--dark .plate-fig figcaption { color: var(--cream-2); border-top-color: rgba(236, 225, 204, .14); }
+
+.room-head {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px 28px; align-items: end;
+  border-top: 1px solid var(--ink); padding-top: 16px; margin-bottom: clamp(32px, 4.5vw, 56px);
+}
+.room-no {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%;
+  font: 500 12px/1 var(--mono); align-self: start;
+}
+.room-title { margin: 0; font: 600 clamp(26px, 3.2vw, 44px)/1.3 var(--min); letter-spacing: .1em; }
+.room-sub { display: block; margin-top: 6px; font: 500 11px/1 var(--mono); letter-spacing: .22em; color: var(--ink-3); text-transform: uppercase; }
+.room-meta { text-align: right; font: 500 11px/1.8 var(--mono); letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; }
+
+.spread { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: clamp(28px, 4.5vw, 64px); align-items: start; }
+.spread--rev { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); }
+.spread-visuals { display: grid; gap: 18px; }
+.spread-subgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.plate-fig { margin: 0; border: 1px solid var(--rule); background: var(--paper-2); overflow: hidden; }
+.plate-fig img { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+.plate-fig:hover img { transform: scale(1.015); }
+.plate-fig figcaption {
+  padding: 10px 14px; border-top: 1px solid var(--rule);
+  font: 500 11px/1.6 var(--mono); letter-spacing: .12em; color: var(--ink-3);
+  display: flex; justify-content: space-between; gap: 12px;
+}
+.room-lead { margin: 0 0 18px; font: 600 clamp(19px, 2vw, 26px)/1.65 var(--min); letter-spacing: .06em; }
+.room-desc { margin: 0 0 28px; color: var(--ink-2); font-size: 14.5px; line-height: 2; }
+.spec-dl { margin: 0 0 28px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 22px; font-size: 13px; }
+.spec-dl dt { padding: 10px 0; border-top: 1px solid var(--rule); color: var(--ink-3); font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.spec-dl dd { margin: 0; padding: 10px 0; border-top: 1px solid var(--rule); }
+.room-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* ========== Contact Sheet: 13 Local Google Flow Assets ========== */
+.contact-sec { padding-block: clamp(72px, 9vw, 128px); border-top: 1px solid var(--rule); }
+.filter-bar { display: flex; flex-wrap: wrap; gap: 8px 24px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; align-items: center; }
+.f-tab {
+  background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  padding: 12px 2px; font: 500 13px/1 var(--sans); letter-spacing: .12em; color: var(--ink-3); cursor: pointer;
+}
+.f-tab:hover { color: var(--ink); }
+.f-tab[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.f-tab sup { font: 500 10px/1 var(--mono); margin-left: 5px; color: var(--vermilion); }
+.filter-note { margin-left: auto; font: 500 11px/1 var(--mono); color: var(--ink-3); letter-spacing: .12em; }
+
+.sheet-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.asset-card {
+  margin: 0; background: var(--paper-2); border: 1px solid var(--rule);
+  cursor: pointer; transition: border-color .2s, transform .2s; text-align: left; padding: 0;
+  display: flex; flex-direction: column;
+}
+.asset-card:hover { border-color: var(--ink); transform: translateY(-2px); }
+.asset-card[hidden] { display: none; }
+.asset-thumb { position: relative; aspect-ratio: 16 / 10; background: #141414; overflow: hidden; }
+.asset-thumb img, .asset-thumb video { width: 100%; height: 100%; object-fit: cover; }
+.asset-kind {
+  position: absolute; right: 8px; top: 8px;
+  background: rgba(12, 11, 10, .82); color: var(--cream);
+  padding: 3px 7px; font: 500 10px/1 var(--mono); letter-spacing: .14em;
+}
+.asset-kind--vid { background: var(--vermilion); color: #fff; }
+.asset-meta { padding: 10px 12px 12px; border-top: 1px solid var(--rule); }
+.asset-meta b { display: block; font: 600 13px/1.45 var(--sans); }
+.asset-meta span { font: 400 11px/1.5 var(--mono); color: var(--ink-3); }
+
+/* ========== Ledger: Experiment Notes & Specs ========== */
+.ledger-sec { padding-block: clamp(64px, 8vw, 112px); border-top: 1px solid var(--rule); background: var(--paper-2); }
+.ledger-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(28px, 4.5vw, 64px); align-items: start; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tbl th, .tbl td { padding: 12px 10px 12px 0; border-bottom: 1px solid var(--rule); text-align: left; }
+.tbl th { font: 500 11px/1.4 var(--mono); letter-spacing: .14em; color: var(--ink-3); text-transform: uppercase; border-bottom-color: var(--ink); }
+.tbl td.num { font-family: var(--mono); }
+.codebox {
+  background: var(--obsidian); color: var(--cream);
+  padding: 18px 20px; border: 1px solid var(--ink);
+  font: 400 12.5px/1.75 var(--mono); overflow-x: auto; margin: 14px 0 0;
+}
+
+/* ========== Lightbox Dialog ========== */
+.lb {
+  max-width: min(1120px, 94vw); width: 100%; padding: 0;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+}
+.lb::backdrop { background: rgba(12, 11, 10, .74); }
+.lb-head {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 14px 20px; border-bottom: 1px solid var(--ink);
+}
+.lb-head b { font: 600 15px/1.4 var(--min); letter-spacing: .08em; }
+.lb-head span { font: 500 11px/1 var(--mono); color: var(--ink-3); margin-left: 12px; }
+.lb-close { background: none; border: 1px solid var(--ink); padding: 7px 14px; font: 500 11px/1 var(--mono); letter-spacing: .16em; cursor: pointer; }
+.lb-close:hover { background: var(--ink); color: var(--paper); }
+.lb-body { background: var(--obsidian); }
+.lb-body img, .lb-body video { width: 100%; max-height: 76vh; object-fit: contain; margin: 0 auto; }
+
+/* ========== Footer ========== */
+.ftr { border-top: 1px solid var(--ink); padding: 28px 0 44px; font: 400 12px/1.8 var(--mono); color: var(--ink-3); }
+.ftr .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 28px; }
+.ftr a { text-decoration: none; border-bottom: 1px solid var(--rule); }
+.ftr a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+@media (max-width: 1080px) {
+  .hero, .spread, .spread--rev, .ledger-grid { grid-template-columns: minmax(0, 1fr); }
+  .sheet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .brand span, .filter-note { display: none; }
+  .room-head { grid-template-columns: auto minmax(0, 1fr); }
+  .room-meta { grid-column: 1 / -1; text-align: left; }
+  .spread-subgrid, .sheet-grid { grid-template-columns: minmax(0, 1fr); }
+}
 </style>
 </head>
 <body>
-<header>
+<header class="hdr">
   <div class="wrap">
-    <p class="eyebrow">T3 Code × GLM-5.4 × anything-frontend-art-direction × Google Flow</p>
-    <h1>GLM-5.4 Art Direction Lab</h1>
-    <p class="lead">
-      T3 Code 上で <strong>GLM-5.4</strong> に <code>anything-frontend-art-direction</code> スキルを適用し、フローチャート・LP・ホームページの3題材を並列で制作した実験アーカイブです。外部Webアセットは一切使わず、<strong>Google Flow</strong> で生成した全13点のオリジナル画像・動画のみで完結しています。
-    </p>
-    <div class="meta-row">
-      <span><strong>MODEL</strong> glm-5.4 (Z.ai Anthropic API)</span>
-      <span><strong>RETRY</strong> CLAUDE_CODE_MAX_RETRIES=100</span>
-      <span><strong>ASSETS</strong> 13 local files (3 MP4 + 10 JPG)</span>
-      <span><strong>EXTERNAL ASSETS</strong> 0</span>
-    </div>
+    <a class="brand" href="#top">
+      <img src="./docs/icon.svg" alt="" width="22" height="22">
+      <b>GLM-5.4 Art Direction Lab</b>
+      <span>EXHIBITION ARCHIVE</span>
+    </a>
+    <nav class="nav" aria-label="サイト内ナビゲーション">
+      <a href="#room-01">01 図面</a>
+      <a href="#room-02">02 LP</a>
+      <a href="#room-03">03 建築HP</a>
+      <a href="#assets">素材標本</a>
+      <a href="#ledger">実験記録</a>
+      <a href="https://github.com/Sunwood-ai-labs/glm54-art-direction-lab" target="_blank" rel="noopener">GitHub ↗</a>
+    </nav>
   </div>
 </header>
 
-<main class="wrap">
-  <div class="sec-title">
-    <h2>100% 純 GLM-5.4 成果物ギャラリー</h2>
-    <span>Pure GLM-5.4 Self-Completed Builds</span>
-  </div>
+<main id="top">
+  <!-- Hero: Interactive Exhibition Specimen Stage -->
+  <section class="hero wrap" aria-label="展示イントロダクション">
+    <div class="hero-copy">
+      <div>
+        <p class="hero-kicker mono">T3 CODE × GLM-5.4 × GOOGLE FLOW</p>
+        <h1 class="hero-title">題材から、<br>画面を立ち上げる。</h1>
+        <p class="hero-lead">
+          T3 Code 上で <strong>GLM-5.4</strong> に <code>anything-frontend-art-direction</code> スキルを適用し、工業製図面・深夜の焙煎所・神保町の建築設計事務所という3つの題材を並列制作した展示図録です。外部Webアセットは一切使わず、<strong>Google Flow</strong> で生成した全13点のオリジナル画像・動画のみで完結しています。
+        </p>
+      </div>
 
-  <div class="grid">
-    <article class="card">
-      <div class="thumb">
-        <span class="tag">Flowchart · Pure GLM-5.4</span>
-        <img src="./docs/screenshots/flowchart-initial.png" alt="自律AIエージェント開発パイプライン フローチャート">
-      </div>
-      <div class="body">
-        <span class="no">01 / INTERACTIVE FLOWCHART</span>
-        <h3>自律AI開発パイプライン図面</h3>
-        <p>JIS 工業製図面（DWG AP-FLT-001）の佇まいで構成したインタラクティブ・フローチャート。座標グリッド・表題欄・並列ハッチング・朱色の自己修復ループ・フィルタ＆詳細パネルを実装。</p>
-        <div class="specs">
-          <span>48.5 KB</span><span>Inline SVG</span><span>0 external URLs</span>
-        </div>
-        <div class="actions">
-          <a class="btn" href="./flowchart/">OPEN DEMO →</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="thumb">
-        <span class="tag">LP · Pure GLM-5.4</span>
-        <img src="./docs/screenshots/lp-hero.png" alt="黒曜焙煎所 KOKUYO ROASTERY LP">
-      </div>
-      <div class="body">
-        <span class="no">02 / LANDING PAGE</span>
-        <h3>黒曜焙煎所 KOKUYO ROASTERY</h3>
-        <p>夜間専門スペシャルティコーヒー豆定期便の LP。ハンドドリップ＆冷却盤のオリジナル動画2本、黒鉄焙煎機・パッケージ・深夜デスク写真、一晩の工程タイムラインと3種ブレンド比較を自力実装。</p>
-        <div class="specs">
-          <span>71.3 KB</span><span>6/6 local assets (2 MP4 + 4 JPG)</span><span>0 errors</span>
-        </div>
-        <div class="actions">
-          <a class="btn" href="./lp-pure-glm54/">OPEN PURE DEMO →</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="card">
-      <div class="thumb">
-        <span class="tag">Homepage · Pure GLM-5.4</span>
-        <img src="./docs/screenshots/hp-works.png" alt="回路建築設計事務所 KAIRO STUDIO ホームページ">
-      </div>
-      <div class="body">
-        <span class="no">03 / STUDIO HOMEPAGE</span>
-        <h3>回路建築設計事務所 KAIRO STUDIO</h3>
-        <p>東京・神保町の建築＆空間設計スタジオ公式サイト。建築フィルム動画、非対称スタッガード写真グリッド、ドット方眼SVG平面図・断面図付き詳細モーダル、3原則図解、アトリエ紹介まで完全実装。</p>
-        <div class="specs">
-          <span>110.9 KB</span><span>7/7 local assets (1 MP4 + 6 JPG)</span><span>0 errors</span>
-        </div>
-        <div class="actions">
-          <a class="btn" href="./homepage-pure-glm54/">OPEN PURE DEMO →</a>
-        </div>
-      </div>
-    </article>
-  </div>
-
-  <section class="archive">
-    <div class="sec-title">
-      <h2>比較用アーカイブ（初期版＋アセット統合版）</h2>
-      <span>Earlier Variants for Side-by-Side Comparison</span>
+      <ul class="hero-index" role="group" aria-label="展示作品のプレビュー切替">
+        <li>
+          <button class="idx-btn" type="button" data-stage="0" aria-pressed="false">
+            <span class="n">01</span>
+            <span class="t">自律AI開発パイプライン図面</span>
+            <span class="m">FLOWCHART · 48.5 KB</span>
+          </button>
+        </li>
+        <li>
+          <button class="idx-btn" type="button" data-stage="1" aria-pressed="true">
+            <span class="n">02</span>
+            <span class="t">黒曜焙煎所 KOKUYO ROASTERY</span>
+            <span class="m">LP · 71.3 KB · 2 VIDEOS</span>
+          </button>
+        </li>
+        <li>
+          <button class="idx-btn" type="button" data-stage="2" aria-pressed="false">
+            <span class="n">03</span>
+            <span class="t">回路建築設計事務所 KAIRO STUDIO</span>
+            <span class="m">HP · 110.9 KB · 1 FILM</span>
+          </button>
+        </li>
+      </ul>
     </div>
-    <div class="archive-list">
-      <a class="archive-item" href="./lp/">
-        <div>
-          <b>LP 縦書き版（黒曜焙煎所 v1）</b>
-          <small>初期 GLM-5.4 縦書き「夜を、煎る。」ベースに全6アセットを統合した比較版（54.8 KB）</small>
+
+    <div class="stage-wrap">
+      <div class="stage">
+        <div class="stage-slide" data-slide="0">
+          <span class="stage-badge">01 · PURE GLM-5.4 · JIS BLUEPRINT</span>
+          <img src="./docs/screenshots/flowchart-initial.png" alt="自律AI開発パイプライン JIS製図面フローチャート">
         </div>
-        <span>OPEN →</span>
-      </a>
-      <a class="archive-item" href="./homepage/">
-        <div>
-          <b>HP 縦書きモノグラフ版（回路建築設計事務所 v1）</b>
-          <small>初期 GLM-5.4 縦書きヒーロー＋見開きカード（写真＋平面図SVG）の比較版（87.9 KB）</small>
+        <div class="stage-slide is-active" data-slide="1">
+          <span class="stage-badge">02 · PURE GLM-5.4 · LIVE VIDEO HERO</span>
+          <video id="stage-vid-1" autoplay muted loop playsinline poster="./assets/kokuyo-coffee.jpg">
+            <source src="./assets/kokuyo-pour-over.mp4" type="video/mp4">
+          </video>
+          <button class="stage-ctrl" type="button" data-toggle-vid="stage-vid-1">PAUSE VIDEO</button>
         </div>
-        <span>OPEN →</span>
-      </a>
+        <div class="stage-slide" data-slide="2">
+          <span class="stage-badge">03 · PURE GLM-5.4 · ARCHITECTURAL FILM</span>
+          <video id="stage-vid-2" autoplay muted loop playsinline poster="./assets/kairo-architecture.jpg">
+            <source src="./assets/kairo-light-motion.mp4" type="video/mp4">
+          </video>
+          <button class="stage-ctrl" type="button" data-toggle-vid="stage-vid-2">PAUSE VIDEO</button>
+        </div>
+      </div>
+
+      <div class="stage-bar">
+        <div class="stage-cap">
+          <b id="stage-title">02 — 黒曜焙煎所 KOKUYO ROASTERY</b>
+          <span id="stage-sub">100% 純 GLM-5.4 自力完走 · ローカルアセット 6/6（動画2本＋静止画4枚）· コンソールエラー 0</span>
+        </div>
+        <a class="btn" id="stage-cta" href="./lp-pure-glm54/">作品を開く →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room 01: Flowchart -->
+  <section class="room" id="room-01" aria-labelledby="r1-title">
+    <div class="wrap">
+      <header class="room-head">
+        <span class="room-no">01</span>
+        <div>
+          <h2 class="room-title" id="r1-title">自律AI開発パイプライン図面</h2>
+          <span class="room-sub">Interactive Flowchart · Pure GLM-5.4 · DWG AP-FLT-001</span>
+        </div>
+        <div class="room-meta">48.5 KB · Inline SVG<br>0 External URLs · 0 Errors</div>
+      </header>
+
+      <div class="spread">
+        <div class="spread-visuals">
+          <figure class="plate-fig">
+            <img src="./docs/screenshots/flowchart-initial.png" alt="自律AI開発パイプライン 初期全体図" loading="lazy">
+            <figcaption><span>PLATE 01A — 初期全体表示</span><span>製図用紙・座標グリッド・表題欄</span></figcaption>
+          </figure>
+          <figure class="plate-fig">
+            <img src="./docs/screenshots/flowchart-interactive.png" alt="失敗・自己修復ループのハイライトと詳細パネル" loading="lazy">
+            <figcaption><span>PLATE 01B — インタラクション状態</span><span>朱色破線ループ＋04b Unit 詳細パネル</span></figcaption>
+          </figure>
+        </div>
+
+        <div>
+          <p class="room-lead">角丸ボックスの図解を捨て、JIS 工業製図面の佇まいで設計工程を描く。</p>
+          <p class="room-desc">
+            要件分解から並列コード生成、自動検証ゲート、失敗時の自己修復ループまでを、暖かい製図用紙（<code>#f2f0eb</code>）と座標グリッド（A/B, 1–4）、左下の表題欄で構築。フィルタ切替で対象経路だけを濃く残し、ノード選択で役割・入出力・判定条件・所要時間目安を右パネルに表示します。
+          </p>
+          <dl class="spec-dl">
+            <dt>Build</dt><dd>100% 純 GLM-5.4（T3 Code 並列スレッド）</dd>
+            <dt>Art Direction</dt><dd>製図用紙・青い斜線ハッチング並列区間・朱色破線の不合格ループ</dd>
+            <dt>Interaction</dt><dd>4種フローフィルタ切替・全ノード詳細インスペクタ</dd>
+            <dt>Assets</dt><dd>純粋インライン SVG のみ（外部画像 0）</dd>
+          </dl>
+          <div class="room-actions">
+            <a class="btn" href="./flowchart/">フローチャートを開く →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room 02: Dark Spread for KOKUYO ROASTERY LP -->
+  <section class="room room--dark" id="room-02" aria-labelledby="r2-title">
+    <div class="wrap">
+      <header class="room-head">
+        <span class="room-no">02</span>
+        <div>
+          <h2 class="room-title" id="r2-title">黒曜焙煎所 KOKUYO ROASTERY</h2>
+          <span class="room-sub">Landing Page · 100% Pure GLM-5.4 · CLAUDE_CODE_MAX_RETRIES=100</span>
+        </div>
+        <div class="room-meta">71.3 KB · 6 / 6 Local Assets<br>2 MP4 Videos + 4 Photos · 0 Errors</div>
+      </header>
+
+      <div class="spread spread--rev">
+        <div>
+          <p class="room-lead">夜のために、夜に焙煎する。動画2本と「一晩の工程」で語る黒曜石のLP。</p>
+          <p class="room-desc">
+            深夜にものづくりをする人のためのコーヒー豆定期便。Google Flow で生成したハンドドリップ動画と冷却盤の焙煎動画を軸に、黒鉄ドラム焙煎機・3種のマットブラック紙パッケージ・深夜の作業机写真を配置。「23:25 冷却（映像はこの時間）」のタイムライン演出や、3種ブレンド（零時・残響・白夜）のインタラクティブ比較まで GLM-5.4 が自力で完走しました。
+          </p>
+          <dl class="spec-dl">
+            <dt>Build</dt><dd>100% 純 GLM-5.4（リトライ上限100設定で自力完走）</dd>
+            <dt>Palette &amp; Type</dt><dd>黒曜石 <code>#0c0b0a</code> × 琥珀 <code>#d9944e</code> × Shippori Mincho</dd>
+            <dt>Local Media</dt><dd>動画2本（pour-over / roasting-loop）＋静止画4点</dd>
+            <dt>Features</dt><dd>動画停止トグル・3種ブレンド比較・隔週/月1プラン切替・申込UI</dd>
+          </dl>
+          <div class="room-actions">
+            <a class="btn btn--amber" href="./lp-pure-glm54/">純 GLM-5.4 LP を開く →</a>
+            <a class="btn btn--dark-ghost" href="./lp/">比較用 v1（縦書き版）</a>
+          </div>
+        </div>
+
+        <div class="spread-visuals">
+          <figure class="plate-fig">
+            <img src="./docs/screenshots/lp-hero.png" alt="黒曜焙煎所 LP 動画ヒーロー" loading="lazy">
+            <figcaption><span>PLATE 02A — ファーストビュー</span><span>フルブリード抽出動画＋停止トグル</span></figcaption>
+          </figure>
+          <div class="spread-subgrid">
+            <figure class="plate-fig">
+              <img src="./docs/screenshots/lp-roastery.png" alt="焙煎所と一晩の工程タイムライン" loading="lazy">
+              <figcaption><span>PLATE 02B — 焙煎所</span><span>冷却盤動画＋一晩の工程</span></figcaption>
+            </figure>
+            <figure class="plate-fig">
+              <img src="./docs/screenshots/lp-blends.png" alt="3種ブレンド比較" loading="lazy">
+              <figcaption><span>PLATE 02C — ブレンド比較</span><span>零時・残響・白夜</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room 03: KAIRO STUDIO Homepage -->
+  <section class="room" id="room-03" aria-labelledby="r3-title">
+    <div class="wrap">
+      <header class="room-head">
+        <span class="room-no">03</span>
+        <div>
+          <h2 class="room-title" id="r3-title">回路建築設計事務所 KAIRO STUDIO</h2>
+          <span class="room-sub">Studio Homepage · 100% Pure GLM-5.4 · Architectural Monograph</span>
+        </div>
+        <div class="room-meta">110.9 KB · 7 / 7 Local Assets<br>1 MP4 Film + 6 Photos · 0 Errors</div>
+      </header>
+
+      <div class="spread">
+        <div class="spread-visuals">
+          <figure class="plate-fig">
+            <img src="./docs/screenshots/hp-works.png" alt="Selected Works スタッガード写真グリッド" loading="lazy">
+            <figcaption><span>PLATE 03A — Selected Works</span><span>非対称スタッガード写真グリッド</span></figcaption>
+          </figure>
+          <div class="spread-subgrid">
+            <figure class="plate-fig">
+              <img src="./docs/screenshots/hp-modal.png" alt="作品詳細モーダルとドット方眼SVG平面図" loading="lazy">
+              <figcaption><span>PLATE 03B — 詳細モーダル</span><span>写真＋1F平面図・断面図SVG</span></figcaption>
+            </figure>
+            <figure class="plate-fig">
+              <img src="./docs/screenshots/hp-film.png" alt="設計思想3原則SVGと建築フィルム" loading="lazy">
+              <figcaption><span>PLATE 03C — 設計思想</span><span>3原則SVG＋KAIRO FILM 01</span></figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div>
+          <p class="room-lead">光と風と人の、回路をつくる。110KB に凝縮された建築作品集。</p>
+          <p class="room-desc">
+            東京・神保町の架空建築設計事務所の公式サイト。朝の斜光が杉ルーバーとコンクリートを移ろう建築フィルム動画をファーストビューに据え、Selected Works の非対称スタッガード写真グリッド、各作品をクリックすると開くドット方眼紙上の平面図・断面図 SVG（「人の回路／光の回路」切替付き）、神保町アトリエ写真とアクセス図まで、コンソールエラー 0 で自力実装しています。
+          </p>
+          <dl class="spec-dl">
+            <dt>Build</dt><dd>100% 純 GLM-5.4（110.9 KB・SVG エラー 0）</dd>
+            <dt>Palette &amp; Type</dt><dd>生成り紙 <code>#f4f3ef</code> × 杉色 × Shippori Mincho</dd>
+            <dt>Local Media</dt><dd>建築フィルム動画1本＋建築・アトリエ写真6点</dd>
+            <dt>Features</dt><dd>カテゴリフィルタ・SVG図面付き詳細モーダル・問い合わせバリデーション</dd>
+          </dl>
+          <div class="room-actions">
+            <a class="btn" href="./homepage-pure-glm54/">純 GLM-5.4 HP を開く →</a>
+            <a class="btn btn--ghost" href="./homepage/">比較用 v1（縦書き見開き版）</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Sheet: 13 Google Flow Local Assets -->
+  <section class="contact-sec" id="assets" aria-labelledby="assets-title">
+    <div class="wrap">
+      <header class="room-head">
+        <span class="room-no">04</span>
+        <div>
+          <h2 class="room-title" id="assets-title">Google Flow オリジナル素材標本</h2>
+          <span class="room-sub">Contact Sheet · 13 Local Assets (3 MP4 Videos + 10 Photographs)</span>
+        </div>
+        <div class="room-meta">External Web Assets: 0<br>Click any tile to inspect</div>
+      </header>
+
+      <div class="filter-bar" role="group" aria-label="素材の絞り込み">
+        <button class="f-tab" type="button" data-filter="all" aria-pressed="true">すべて<sup>13</sup></button>
+        <button class="f-tab" type="button" data-filter="video" aria-pressed="false">動画<sup>03</sup></button>
+        <button class="f-tab" type="button" data-filter="lp" aria-pressed="false">黒曜焙煎所<sup>06</sup></button>
+        <button class="f-tab" type="button" data-filter="hp" aria-pressed="false">回路建築設計事務所<sup>07</sup></button>
+        <span class="filter-note">ALL FILES SERVED FROM ./assets/</span>
+      </div>
+
+      <div class="sheet-grid" id="asset-grid">
+        <button class="asset-card" type="button" data-tags="lp video" data-type="video" data-src="./assets/kokuyo-pour-over.mp4" data-title="ハンドドリップ抽出映像（LP ヒーロー動画）" data-file="kokuyo-pour-over.mp4 · 720p 8s">
+          <div class="asset-thumb"><span class="asset-kind asset-kind--vid">MP4 · 8s</span><video muted loop playsinline poster="./assets/kokuyo-coffee.jpg"><source src="./assets/kokuyo-pour-over.mp4" type="video/mp4"></video></div>
+          <div class="asset-meta"><b>ハンドドリップ抽出映像</b><span>kokuyo-pour-over.mp4</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="lp video" data-type="video" data-src="./assets/kokuyo-roasting-loop.mp4" data-title="冷却盤の焙煎映像（LP 焙煎セクション動画）" data-file="kokuyo-roasting-loop.mp4 · 720p 8s">
+          <div class="asset-thumb"><span class="asset-kind asset-kind--vid">MP4 · 8s</span><video muted loop playsinline poster="./assets/kokuyo-roaster.jpg"><source src="./assets/kokuyo-roasting-loop.mp4" type="video/mp4"></video></div>
+          <div class="asset-meta"><b>冷却盤の焙煎映像</b><span>kokuyo-roasting-loop.mp4</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp video" data-type="video" data-src="./assets/kairo-light-motion.mp4" data-title="朝の斜光と杉ルーバー（HP 建築フィルム動画）" data-file="kairo-light-motion.mp4 · 720p 8s">
+          <div class="asset-thumb"><span class="asset-kind asset-kind--vid">MP4 · 8s</span><video muted loop playsinline poster="./assets/kairo-architecture.jpg"><source src="./assets/kairo-light-motion.mp4" type="video/mp4"></video></div>
+          <div class="asset-meta"><b>朝の斜光と杉ルーバー映像</b><span>kairo-light-motion.mp4</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="lp image" data-type="image" data-src="./assets/kokuyo-coffee.jpg" data-title="黒陶器ドリッパーと深煎り豆" data-file="kokuyo-coffee.jpg · 2752×1536">
+          <div class="asset-thumb"><span class="asset-kind">2K JPG</span><img src="./assets/kokuyo-coffee.jpg" alt="黒陶器ドリッパーと深煎り豆" loading="lazy"></div>
+          <div class="asset-meta"><b>黒陶器ドリッパーと豆</b><span>kokuyo-coffee.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="lp image" data-type="image" data-src="./assets/kokuyo-roaster.jpg" data-title="深夜の黒鉄ドラム焙煎機" data-file="kokuyo-roaster.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kokuyo-roaster.jpg" alt="深夜の黒鉄ドラム焙煎機" loading="lazy"></div>
+          <div class="asset-meta"><b>黒鉄ドラム焙煎機</b><span>kokuyo-roaster.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="lp image" data-type="image" data-src="./assets/kokuyo-packages.jpg" data-title="3種ブレンド マットブラック紙袋" data-file="kokuyo-packages.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kokuyo-packages.jpg" alt="3種ブレンド マットブラック紙袋" loading="lazy"></div>
+          <div class="asset-meta"><b>マットブラック紙パッケージ</b><span>kokuyo-packages.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="lp image" data-type="image" data-src="./assets/kokuyo-night-desk.jpg" data-title="深夜のクリエイター作業机" data-file="kokuyo-night-desk.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kokuyo-night-desk.jpg" alt="深夜のクリエイター作業机" loading="lazy"></div>
+          <div class="asset-meta"><b>深夜のクリエイター作業机</b><span>kokuyo-night-desk.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-architecture.jpg" data-title="神保町しおりホール（打放しコンクリート×杉ルーバー）" data-file="kairo-architecture.jpg · 2752×1536">
+          <div class="asset-thumb"><span class="asset-kind">2K JPG</span><img src="./assets/kairo-architecture.jpg" alt="神保町しおりホール" loading="lazy"></div>
+          <div class="asset-meta"><b>神保町しおりホール</b><span>kairo-architecture.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-work-house.jpg" data-title="千駄木 回路の家（中庭と水盤）" data-file="kairo-work-house.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kairo-work-house.jpg" alt="千駄木 回路の家" loading="lazy"></div>
+          <div class="asset-meta"><b>千駄木 回路の家</b><span>kairo-work-house.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-work-library-house.jpg" data-title="谷中・書庫のある家（吹抜け本棚と天窓）" data-file="kairo-work-library-house.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kairo-work-library-house.jpg" alt="谷中・書庫のある家" loading="lazy"></div>
+          <div class="asset-meta"><b>谷中・書庫のある家</b><span>kairo-work-library-house.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-work-exhibition.jpg" data-title="光と紙のパビリオン（和紙スクリーン展示室）" data-file="kairo-work-exhibition.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kairo-work-exhibition.jpg" alt="光と紙のパビリオン" loading="lazy"></div>
+          <div class="asset-meta"><b>光と紙のパビリオン</b><span>kairo-work-exhibition.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-work-kindergarten.jpg" data-title="富士見坂こども園（木の縁側と中庭）" data-file="kairo-work-kindergarten.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kairo-work-kindergarten.jpg" alt="富士見坂こども園" loading="lazy"></div>
+          <div class="asset-meta"><b>富士見坂こども園</b><span>kairo-work-kindergarten.jpg</span></div>
+        </button>
+        <button class="asset-card" type="button" data-tags="hp image" data-type="image" data-src="./assets/kairo-studio.jpg" data-title="神保町アトリエ（建築模型と作業台）" data-file="kairo-studio.jpg · 1376×768">
+          <div class="asset-thumb"><span class="asset-kind">JPG</span><img src="./assets/kairo-studio.jpg" alt="神保町アトリエ" loading="lazy"></div>
+          <div class="asset-meta"><b>神保町アトリエ</b><span>kairo-studio.jpg</span></div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ledger: Experiment Specs & Retry Setup -->
+  <section class="ledger-sec" id="ledger" aria-labelledby="ledger-title">
+    <div class="wrap">
+      <header class="room-head">
+        <span class="room-no">05</span>
+        <div>
+          <h2 class="room-title" id="ledger-title">実験記録と再現条件</h2>
+          <span class="room-sub">Experiment Ledger · T3 Code × GLM-5.4</span>
+        </div>
+        <div class="room-meta">MIT License · Static Deploy</div>
+      </header>
+
+      <div class="ledger-grid">
+        <div>
+          <table class="tbl">
+            <thead>
+              <tr><th>Work</th><th>Size</th><th>Local Assets</th><th>Errors</th><th>Demo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>01. Flowchart (Pure GLM-5.4)</td><td class="num">48.5 KB</td><td>Inline SVG</td><td class="num">0</td><td><a href="./flowchart/">Open →</a></td></tr>
+              <tr><td>02. LP KOKUYO (100% Pure GLM-5.4)</td><td class="num">71.3 KB</td><td>6 / 6 (2 MP4 + 4 JPG)</td><td class="num">0</td><td><a href="./lp-pure-glm54/">Open →</a></td></tr>
+              <tr><td>03. HP KAIRO (100% Pure GLM-5.4)</td><td class="num">110.9 KB</td><td>7 / 7 (1 MP4 + 6 JPG)</td><td class="num">0</td><td><a href="./homepage-pure-glm54/">Open →</a></td></tr>
+              <tr><td>Archive v1: Vertical LP</td><td class="num">54.8 KB</td><td>6 / 6</td><td class="num">0</td><td><a href="./lp/">Open →</a></td></tr>
+              <tr><td>Archive v1: Vertical Monograph HP</td><td class="num">87.9 KB</td><td>7 / 7</td><td class="num">0</td><td><a href="./homepage/">Open →</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <p class="mono" style="color:var(--vermilion);margin:0 0 8px">T3 CODE PROVIDER TUNING</p>
+          <p style="margin:0;font-size:13.5px;color:var(--ink-2)">
+            Z.ai の Anthropic 互換エンドポイントで並列ビルドすると既定リトライ10回で 429 停止するため、<code>~/.t3/userdata/settings.json</code> の <code>claude_glm</code> に以下を設定して自力完走を実現しました。
+          </p>
+          <pre class="codebox">{
+  "name": "CLAUDE_CODE_MAX_RETRIES",
+  "value": "100"
+},
+{
+  "name": "API_TIMEOUT_MS",
+  "value": "3000000"
+}</pre>
+        </div>
+      </div>
     </div>
   </section>
 </main>
 
-<footer class="wrap">
-  <span>GLM-5.4 Art Direction Lab — Built in T3 Code with anything-frontend-art-direction</span>
-  <span>All images &amp; videos generated locally via Google Flow · MIT License</span>
+<footer class="ftr">
+  <div class="wrap">
+    <span>GLM-5.4 Art Direction Lab — T3 Code × anything-frontend-art-direction × Google Flow</span>
+    <span>
+      <a href="https://github.com/Sunwood-ai-labs/glm54-art-direction-lab" target="_blank" rel="noopener">GitHub Repository</a> ·
+      <a href="https://github.com/RNA4219/anything-frontend-art-direction" target="_blank" rel="noopener">Skill Repo</a> ·
+      MIT License
+    </span>
+  </div>
 </footer>
+
+<dialog class="lb" id="lb" aria-labelledby="lb-title">
+  <div class="lb-head">
+    <div><b id="lb-title"></b><span id="lb-file"></span></div>
+    <button class="lb-close" type="button" id="lb-close">CLOSE ×</button>
+  </div>
+  <div class="lb-body" id="lb-body"></div>
+</dialog>
+
+<script>
+(function () {
+  'use strict';
+  const STAGES = [
+    { title: '01 — 自律AI開発パイプライン図面', sub: '純 GLM-5.4 · JIS 工業製図面スタイル · 48.5 KB · インラインSVG図解', href: './flowchart/' },
+    { title: '02 — 黒曜焙煎所 KOKUYO ROASTERY', sub: '100% 純 GLM-5.4 自力完走 · ローカルアセット 6/6（動画2本＋静止画4枚）· コンソールエラー 0', href: './lp-pure-glm54/' },
+    { title: '03 — 回路建築設計事務所 KAIRO STUDIO', sub: '100% 純 GLM-5.4 自力完走 · ローカルアセット 7/7（動画1本＋建築写真6枚）· SVGエラー 0', href: './homepage-pure-glm54/' }
+  ];
+
+  const idxBtns = Array.from(document.querySelectorAll('.idx-btn'));
+  const slides = Array.from(document.querySelectorAll('.stage-slide'));
+  const stTitle = document.getElementById('stage-title');
+  const stSub = document.getElementById('stage-sub');
+  const stCta = document.getElementById('stage-cta');
+
+  function setStage(i) {
+    idxBtns.forEach((b, k) => b.setAttribute('aria-pressed', k === i ? 'true' : 'false'));
+    slides.forEach((s, k) => {
+      const active = k === i;
+      s.classList.toggle('is-active', active);
+      const v = s.querySelector('video');
+      if (v) { if (active) v.play().catch(() => {}); else v.pause(); }
+    });
+    stTitle.textContent = STAGES[i].title;
+    stSub.textContent = STAGES[i].sub;
+    stCta.href = STAGES[i].href;
+  }
+  idxBtns.forEach((b) => b.addEventListener('click', () => setStage(Number(b.dataset.stage))));
+
+  document.querySelectorAll('[data-toggle-vid]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const v = document.getElementById(btn.dataset.toggleVid);
+      if (!v) return;
+      if (v.paused) { v.play().catch(() => {}); btn.textContent = 'PAUSE VIDEO'; }
+      else { v.pause(); btn.textContent = 'PLAY VIDEO'; }
+    });
+  });
+
+  // Contact sheet filter
+  const fTabs = Array.from(document.querySelectorAll('.f-tab'));
+  const cards = Array.from(document.querySelectorAll('.asset-card'));
+  fTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const f = tab.dataset.filter;
+      fTabs.forEach((t) => t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'));
+      cards.forEach((c) => {
+        c.hidden = f !== 'all' && !c.dataset.tags.split(' ').includes(f);
+      });
+    });
+  });
+
+  // Lightbox for contact sheet
+  const lb = document.getElementById('lb');
+  const lbTitle = document.getElementById('lb-title');
+  const lbFile = document.getElementById('lb-file');
+  const lbBody = document.getElementById('lb-body');
+  cards.forEach((c) => {
+    c.addEventListener('click', () => {
+      lbTitle.textContent = c.dataset.title;
+      lbFile.textContent = c.dataset.file;
+      if (c.dataset.type === 'video') {
+        lbBody.innerHTML = '<video controls autoplay loop playsinline><source src="' + c.dataset.src + '" type="video/mp4"></video>';
+      } else {
+        lbBody.innerHTML = '<img src="' + c.dataset.src + '" alt="' + c.dataset.title + '">';
+      }
+      lb.showModal();
+    });
+  });
+  function closeLb() {
+    lbBody.innerHTML = '';
+    if (lb.open) lb.close();
+  }
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+})();
+</script>
 </body>
 </html>
